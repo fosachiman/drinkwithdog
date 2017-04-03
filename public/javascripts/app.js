@@ -7,12 +7,9 @@ export default class App extends React.Component {
     super(props);
   }
 
-
-
   render() {
     return (
       <div>
-        <h1>Hellooooo</h1>
         <Map />
       </div>
     );

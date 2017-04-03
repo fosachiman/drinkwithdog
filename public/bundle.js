@@ -21806,11 +21806,6 @@ var App = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         null,
-        _react2.default.createElement(
-          'h1',
-          null,
-          'Hellooooo'
-        ),
         _react2.default.createElement(_Map2.default, null)
       );
     }
@@ -21900,7 +21895,11 @@ var Map = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      return _react2.default.createElement('div', { id: 'map' });
+      return _react2.default.createElement(
+        'div',
+        { className: 'map-container' },
+        _react2.default.createElement('div', { id: 'map' })
+      );
     }
   }]);
 
