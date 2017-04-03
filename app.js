@@ -16,7 +16,7 @@ var app = express();
 mongoose.connect('mongodb://localhost/test');
 var db = mongoose.connection;
 
-var otherHalf = require('./models/bars');
+var otherHalf = require('./models/data');
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
   otherHalf.save(function (err, otherHalf) {
