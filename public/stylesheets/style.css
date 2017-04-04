@@ -18,13 +18,21 @@ a {
 #map {
   height: 600px;
   width: 100%;
-  display: absolute;
+  position: absolute;
   margin: 0;
   padding: 0; }
 
 .map-container {
   height: 100%;
   width: 100%;
-  display: relative; }
+  position: relative; }
+
+.bar-menu {
+  position: fixed;
+  left: calc(100% - 450px);
+  top: 2%;
+  border: 2px solid black;
+  height: 500px;
+  z-index: 100000; }
 
 /*# sourceMappingURL=style.css.map */

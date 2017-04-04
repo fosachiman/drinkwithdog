@@ -18,12 +18,12 @@ var db = mongoose.connection;
 
 var otherHalf = require('./models/data');
 db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {
-  otherHalf.save(function (err, otherHalf) {
-  if (err) return console.error(err);
-  console.log(otherHalf);
-  })
-});
+// db.once('open', function() {
+//   otherHalf.save(function (err, otherHalf) {
+//   if (err) return console.error(err);
+//   console.log(otherHalf);
+//   })
+// });
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
