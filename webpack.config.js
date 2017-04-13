@@ -1,8 +1,15 @@
+const webpack = require('webpack');
+
 module.exports = {
   entry: "./public/reactApp.js",
   output: {
     path: __dirname + "/public",
     filename: "bundle.js"
+  },
+  resolve: {
+    alias: {
+      'mapbox-gl/js/mapbox-gl.js': 'mapbox-gl/dist/mapbox-gl.js'
+    }
   },
   module: {
     loaders: [
@@ -16,5 +23,13 @@ module.exports = {
     ]
   },
   watch: true,
-  target: "node"
+  target: "node",
+  plugins: [
+        new webpack.DefinePlugin({
+            'process.env': {
+              'NODE_ENV': `"production"`
+            },
+            'global': {},
+        }),
+    ]
 }

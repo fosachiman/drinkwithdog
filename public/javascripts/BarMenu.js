@@ -6,6 +6,10 @@ export default class BarMenu extends React.Component {
 
   constructor(props) {
     super(props);
+
+    this.state = {
+      bars: []
+    }
   }
 
   componentDidMount() {
@@ -23,22 +27,18 @@ export default class BarMenu extends React.Component {
     let names = response.map((bar) => {
       return bar.name;
     })
-    this.renderBars(names);
-  }
-
-  renderBars(bars) {
-    let barNames = bars.forEach((bar, index) => {
-      return (
-        <BarListing key={index} name={bar}/>
-      )
-    })
+    this.setState({ bars: names });
   }
 
   render() {
+    let renderBars = this.state.bars.map((bar, index) => {
+      return (
+        <BarListing key={index} name={bar}/>
+        )
+    })
     return (
       <div className="bar-menu">
-        hello hello hello
-        {this.renderBars}
+        {renderBars}
       </div>
     );
   }

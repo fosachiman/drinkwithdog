@@ -8,7 +8,7 @@ export default class BarListing extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="bar-listing" onClick={(e) => {showMap(e)}}>
         {this.props.name}
       </div>
     );

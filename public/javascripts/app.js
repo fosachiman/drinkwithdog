@@ -1,6 +1,5 @@
 import React from 'react';
 import Map from './Map';
-import mapboxgl from 'mapbox-gl/dist/mapbox-gl.js'
 
 export default class App extends React.Component {
 
