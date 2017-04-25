@@ -6,7 +6,6 @@ export default class BarMenu extends React.Component {
 
   constructor(props) {
     super(props);
-
     this.state = {
       bars: []
     }
@@ -15,25 +14,28 @@ export default class BarMenu extends React.Component {
   componentDidMount() {
     axios.get('api')
     .then((response) => {
-      console.log(response);
-      this.parseResponse(response.data.bars)
+      this.setState({ bars: response.data.bars })
     })
     .catch((error) => {
       console.log(error);
     })
   }
 
-  parseResponse(response) {
-    let names = response.map((bar) => {
-      return bar.name;
-    })
-    this.setState({ bars: names });
-  }
-
   render() {
     let renderBars = this.state.bars.map((bar, index) => {
       return (
-        <BarListing key={index} name={bar}/>
+        <BarListing
+          key={index}
+          name={bar.name}
+          address={bar.address}
+          copy={bar.copy}
+          hours={bar.hours}
+          website={bar.website}
+          type={bar.type}
+          latitude={bar.latitude}
+          longitude={bar.longitude}
+          map={this.props.map}
+        />
         )
     })
     return (

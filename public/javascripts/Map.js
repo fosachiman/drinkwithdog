@@ -6,6 +6,10 @@ export default class Map extends React.Component {
     super(props);
   }
 
+  makeMarkers() {
+    let marker = new mapboxgl.Marker()
+  }
+
   render() {
     return (
       <div className="map-container">
