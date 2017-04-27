@@ -7,12 +7,12 @@ export default class BarListing extends React.Component {
   }
 
   showMarker() {
-    let marker = new mapboxgl.Marker()
-    .setLngLat([this.props.longitude, this.props.latitude])
-    .addTo(this.props.map);
-    console.log(this.props.map);
+  //   let marker = new mapboxgl.Marker()
+  //   .setLngLat([this.props.longitude, this.props.latitude])
+  //   .addTo(this.props.map);
+  //   console.log(this.props.map);
     console.log(this.props.longitude);
-    console.log(marker);
+    // console.log(marker);
   }
 
 

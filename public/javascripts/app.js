@@ -43,11 +43,6 @@ export default class App extends React.Component {
     console.log(map)
   }
 
-  // setMapState(map) {
-  //   console.log(map)
-  //   this.setState({ map })
-  // }
-
   render() {
     return (
       <div>

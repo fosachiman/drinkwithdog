@@ -9840,12 +9840,6 @@ var App = function (_React$Component) {
       this.setState({ map: map });
       console.log(map);
     }
-
-    // setMapState(map) {
-    //   console.log(map)
-    //   this.setState({ map })
-    // }
-
   }, {
     key: 'render',
     value: function render() {
@@ -11184,10 +11178,12 @@ var BarListing = function (_React$Component) {
   _createClass(BarListing, [{
     key: "showMarker",
     value: function showMarker() {
-      var marker = new mapboxgl.Marker().setLngLat([this.props.longitude, this.props.latitude]).addTo(this.props.map);
-      console.log(this.props.map);
+      //   let marker = new mapboxgl.Marker()
+      //   .setLngLat([this.props.longitude, this.props.latitude])
+      //   .addTo(this.props.map);
+      //   console.log(this.props.map);
       console.log(this.props.longitude);
-      console.log(marker);
+      // console.log(marker);
     }
   }, {
     key: "render",
@@ -11233,6 +11229,10 @@ var _axios2 = _interopRequireDefault(_axios);
 var _BarListing = __webpack_require__(109);
 
 var _BarListing2 = _interopRequireDefault(_BarListing);
+
+var _BarMarker = __webpack_require__(211);
+
+var _BarMarker2 = _interopRequireDefault(_BarMarker);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -11286,10 +11286,23 @@ var BarMenu = function (_React$Component) {
           map: _this3.props.map
         });
       });
+      var renderMarkers = void 0;
+      if (this.props.map) {
+        renderMarkers = this.state.bars.map(function (bar, index) {
+          return _react2.default.createElement(_BarMarker2.default, {
+            key: index,
+            name: bar.name,
+            latitude: bar.latitude,
+            longitude: bar.longitude,
+            map: _this3.props.map
+          });
+        });
+      }
       return _react2.default.createElement(
         'div',
         { className: 'bar-menu' },
-        renderBars
+        renderBars,
+        renderMarkers
       );
     }
   }]);
@@ -11338,11 +11351,6 @@ var Map = function (_React$Component) {
   }
 
   _createClass(Map, [{
-    key: 'makeMarkers',
-    value: function makeMarkers() {
-      var marker = new mapboxgl.Marker();
-    }
-  }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
@@ -23232,6 +23240,59 @@ module.exports = require("util");
 /***/ (function(module, exports) {
 
 module.exports = require("zlib");
+
+/***/ }),
+/* 211 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(19);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var BarMarker = function (_React$Component) {
+  _inherits(BarMarker, _React$Component);
+
+  function BarMarker(props) {
+    _classCallCheck(this, BarMarker);
+
+    return _possibleConstructorReturn(this, (BarMarker.__proto__ || Object.getPrototypeOf(BarMarker)).call(this, props));
+  }
+
+  _createClass(BarMarker, [{
+    key: 'createMarker',
+    value: function createMarker() {
+      var marker = new mapboxgl.Marker().setLngLat([this.props.longitude, this.props.latitude]).addTo(this.props.map);
+      return marker;
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var barMarker = this.createMarker();
+      return _react2.default.createElement('div', null);
+    }
+  }]);
+
+  return BarMarker;
+}(_react2.default.Component);
+
+exports.default = BarMarker;
 
 /***/ })
 /******/ ]);
