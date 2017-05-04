@@ -23281,8 +23281,8 @@ var BarMarker = function (_React$Component) {
       var el = document.createElement('div');
       el.className = 'marker';
       el.setAttribute('id', this.props.name.replace(/\s/g, '') + '-marker');
-      var popup = new mapboxgl.Popup({ offset: 5 }).setText(this.props.name);
-      var marker = new mapboxgl.Marker(el).setLngLat([this.props.longitude, this.props.latitude]).setPopup(popup).addTo(this.props.map);
+      var popup = new mapboxgl.Popup({ offset: 25 }).setText(this.props.name);
+      var marker = new mapboxgl.Marker(el, { offset: [-25, -25] }).setLngLat([this.props.longitude, this.props.latitude]).setPopup(popup).addTo(this.props.map);
     }
   }, {
     key: 'render',

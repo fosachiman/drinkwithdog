@@ -15,13 +15,16 @@ var app = express();
 
 mongoose.connect('mongodb://localhost/test');
 var db = mongoose.connection;
+var dataModel = require('./models/bars');
 
-var otherHalf = require('./models/data');
+var bars = require('./models/data');
 db.on('error', console.error.bind(console, 'connection error:'));
 // db.once('open', function() {
-//   otherHalf.save(function (err, otherHalf) {
-//   if (err) return console.error(err);
-//   console.log(otherHalf);
+//   bars.bars.forEach((bar) => {
+//     bar.save(function (err, bars) {
+//       if (err) return console.error(err);
+//       console.log(bars);
+//     })
 //   })
 // });
 

@@ -44,19 +44,12 @@ a {
   background-color: orange; }
 
 .marker {
-  height: 10px;
-  width: 10px;
-  background-color: green; }
+  height: 50px;
+  width: 50px;
+  background-image: url("../images/DWD_Location-Static.svg");
+  background-size: cover; }
 
 .marker:hover {
-  background-color: orange;
   cursor: pointer; }
-
-.bubble {
-  position: absolute;
-  height: 50px;
-  width: 100px;
-  z-index: 100000;
-  background-color: white; }
 
 /*# sourceMappingURL=style.css.map */
