@@ -6,20 +6,17 @@ export default class BarListing extends React.Component {
     super(props);
   }
 
-  showMarker() {
-  //   let marker = new mapboxgl.Marker()
-  //   .setLngLat([this.props.longitude, this.props.latitude])
-  //   .addTo(this.props.map);
-  //   console.log(this.props.map);
-    console.log(this.props.longitude);
-    // console.log(marker);
+  handleBarClick() {
+    console.log('clickity clack');
   }
 
 
   render() {
     return (
-      <div className="bar-listing" onClick={() => {this.showMarker()}}>
-        {this.props.name}
+      <div className="bar-listing" onClick={() => {this.handleBarClick()}}>
+        <div className="bar-name">{this.props.name}</div>
+        <div className="bar-type">{this.props.type}</div>
+        <div className="dog-policy">{this.props.policy}</div>
       </div>
     );
   }

@@ -11176,26 +11176,35 @@ var BarListing = function (_React$Component) {
   }
 
   _createClass(BarListing, [{
-    key: "showMarker",
-    value: function showMarker() {
-      //   let marker = new mapboxgl.Marker()
-      //   .setLngLat([this.props.longitude, this.props.latitude])
-      //   .addTo(this.props.map);
-      //   console.log(this.props.map);
-      console.log(this.props.longitude);
-      // console.log(marker);
+    key: 'handleBarClick',
+    value: function handleBarClick() {
+      console.log('clickity clack');
     }
   }, {
-    key: "render",
+    key: 'render',
     value: function render() {
       var _this2 = this;
 
       return _react2.default.createElement(
-        "div",
-        { className: "bar-listing", onClick: function onClick() {
-            _this2.showMarker();
+        'div',
+        { className: 'bar-listing', onClick: function onClick() {
+            _this2.handleBarClick();
           } },
-        this.props.name
+        _react2.default.createElement(
+          'div',
+          { className: 'bar-name' },
+          this.props.name
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'bar-type' },
+          this.props.type
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'dog-policy' },
+          this.props.policy
+        )
       );
     }
   }]);
@@ -11234,6 +11243,10 @@ var _BarMarker = __webpack_require__(211);
 
 var _BarMarker2 = _interopRequireDefault(_BarMarker);
 
+var _MenuHeader = __webpack_require__(212);
+
+var _MenuHeader2 = _interopRequireDefault(_MenuHeader);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -11251,7 +11264,8 @@ var BarMenu = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (BarMenu.__proto__ || Object.getPrototypeOf(BarMenu)).call(this, props));
 
     _this.state = {
-      bars: []
+      bars: [],
+      menu: 'list'
     };
     return _this;
   }
@@ -11281,6 +11295,7 @@ var BarMenu = function (_React$Component) {
           hours: bar.hours,
           website: bar.website,
           type: bar.type,
+          policy: bar.dogPolicy,
           latitude: bar.latitude,
           longitude: bar.longitude,
           map: _this3.props.map
@@ -11301,6 +11316,7 @@ var BarMenu = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         { className: 'bar-menu' },
+        _react2.default.createElement(_MenuHeader2.default, null),
         renderBars,
         renderMarkers
       );
@@ -23296,6 +23312,56 @@ var BarMarker = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = BarMarker;
+
+/***/ }),
+/* 212 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(19);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var MenuHeader = function (_React$Component) {
+  _inherits(MenuHeader, _React$Component);
+
+  function MenuHeader(props) {
+    _classCallCheck(this, MenuHeader);
+
+    return _possibleConstructorReturn(this, (MenuHeader.__proto__ || Object.getPrototypeOf(MenuHeader)).call(this, props));
+  }
+
+  _createClass(MenuHeader, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        { className: 'menu-header' },
+        'List View'
+      );
+    }
+  }]);
+
+  return MenuHeader;
+}(_react2.default.Component);
+
+exports.default = MenuHeader;
 
 /***/ })
 /******/ ]);

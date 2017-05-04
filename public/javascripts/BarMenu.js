@@ -2,13 +2,15 @@ import React from 'react';
 import axios from 'axios';
 import BarListing from './BarListing';
 import BarMarker from './BarMarker';
+import MenuHeader from './MenuHeader';
 
 export default class BarMenu extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      bars: []
+      bars: [],
+      menu: 'list',
     }
   }
 
@@ -33,6 +35,7 @@ export default class BarMenu extends React.Component {
           hours={bar.hours}
           website={bar.website}
           type={bar.type}
+          policy={bar.dogPolicy}
           latitude={bar.latitude}
           longitude={bar.longitude}
           map={this.props.map}
@@ -55,6 +58,7 @@ export default class BarMenu extends React.Component {
     }
     return (
       <div className="bar-menu">
+      <MenuHeader />
         {renderBars}
         {renderMarkers}
       </div>
