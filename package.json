@@ -20,7 +20,6 @@
     "dotenv": "^4.0.0",
     "ejs": "~2.5.2",
     "express": "~4.14.0",
-    "mapbox-gl": "^0.34.0",
     "mongodb": "^2.2.25",
     "mongoose": "^4.9.3",
     "morgan": "~1.7.0",
