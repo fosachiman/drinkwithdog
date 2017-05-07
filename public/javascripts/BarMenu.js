@@ -14,7 +14,8 @@ export default class BarMenu extends React.Component {
       menu: 'list',
       singleBar: null
     }
-    this.singleBarView =this.singleBarView.bind(this);
+    this.singleBarView = this.singleBarView.bind(this);
+    this.multiBarView = this.multiBarView.bind(this);
   }
 
   componentDidMount() {
@@ -39,9 +40,9 @@ export default class BarMenu extends React.Component {
       />
       )
   }
-
-  //if menu state is bar, return expanded bar component, if menu state is list,
-  //return barListing components with renderBars loop
+  multiBarView() {
+    this.setState({ menu: 'list' })
+  }
 
   render() {
     let renderBars;
@@ -85,7 +86,7 @@ export default class BarMenu extends React.Component {
     }
     return (
       <div className="bar-menu">
-      <MenuHeader />
+      <MenuHeader menuState={this.state.menu} multiBarView={this.multiBarView}/>
         {renderBars}
         {renderMarkers}
       </div>

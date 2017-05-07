@@ -11328,6 +11328,7 @@ var BarMenu = function (_React$Component) {
       singleBar: null
     };
     _this.singleBarView = _this.singleBarView.bind(_this);
+    _this.multiBarView = _this.multiBarView.bind(_this);
     return _this;
   }
 
@@ -11355,10 +11356,11 @@ var BarMenu = function (_React$Component) {
         bar: bar
       });
     }
-
-    //if menu state is bar, return expanded bar component, if menu state is list,
-    //return barListing components with renderBars loop
-
+  }, {
+    key: 'multiBarView',
+    value: function multiBarView() {
+      this.setState({ menu: 'list' });
+    }
   }, {
     key: 'render',
     value: function render() {
@@ -11401,7 +11403,7 @@ var BarMenu = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         { className: 'bar-menu' },
-        _react2.default.createElement(_MenuHeader2.default, null),
+        _react2.default.createElement(_MenuHeader2.default, { menuState: this.state.menu, multiBarView: this.multiBarView }),
         renderBars,
         renderMarkers
       );
@@ -11508,12 +11510,40 @@ var MenuHeader = function (_React$Component) {
   }
 
   _createClass(MenuHeader, [{
-    key: 'render',
-    value: function render() {
+    key: 'listMenuHeader',
+    value: function listMenuHeader() {
       return _react2.default.createElement(
         'div',
         { className: 'menu-header' },
         'List View'
+      );
+    }
+  }, {
+    key: 'singleBarMenuHeader',
+    value: function singleBarMenuHeader() {
+      var _this2 = this;
+
+      return _react2.default.createElement(
+        'div',
+        { className: 'menu-header' },
+        _react2.default.createElement(
+          'div',
+          { onClick: function onClick() {
+              return _this2.props.multiBarView();
+            } },
+          'Return to List View'
+        )
+      );
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var menuHeader = void 0;
+      if (this.props.menuState === 'list') menuHeader = this.listMenuHeader();else menuHeader = this.singleBarMenuHeader();
+      return _react2.default.createElement(
+        'div',
+        null,
+        menuHeader
       );
     }
   }]);
@@ -23431,7 +23461,11 @@ var ExpandedBar = function (_React$Component) {
   _createClass(ExpandedBar, [{
     key: 'render',
     value: function render() {
-      return _react2.default.createElement('div', null);
+      return _react2.default.createElement(
+        'div',
+        null,
+        this.props.bar.name
+      );
     }
   }]);
 
