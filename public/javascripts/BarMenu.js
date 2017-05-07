@@ -3,6 +3,7 @@ import axios from 'axios';
 import BarListing from './BarListing';
 import BarMarker from './BarMarker';
 import MenuHeader from './MenuHeader';
+import ExpandedBar from './ExpandedBar';
 
 export default class BarMenu extends React.Component {
 
@@ -11,7 +12,9 @@ export default class BarMenu extends React.Component {
     this.state = {
       bars: [],
       menu: 'list',
+      singleBar: null
     }
+    this.singleBarView =this.singleBarView.bind(this);
   }
 
   componentDidMount() {
@@ -24,8 +27,29 @@ export default class BarMenu extends React.Component {
     })
   }
 
+  singleBarView(bar) {
+    this.setState({ menu: 'bar' });
+    this.setState({ singleBar: bar });
+  }
+
+  renderSingleBarMenu(bar) {
+    return (
+      <ExpandedBar
+        bar={bar}
+      />
+      )
+  }
+
+  //if menu state is bar, return expanded bar component, if menu state is list,
+  //return barListing components with renderBars loop
+
   render() {
-    let renderBars = this.state.bars.map((bar, index) => {
+    let renderBars;
+    if (this.state.menu === 'bar') {
+      renderBars = this.renderSingleBarMenu(this.state.singleBar);
+    }
+    else {
+      renderBars = this.state.bars.map((bar, index) => {
       return (
         <BarListing
           key={index}
@@ -39,9 +63,12 @@ export default class BarMenu extends React.Component {
           latitude={bar.latitude}
           longitude={bar.longitude}
           map={this.props.map}
+          bar={bar}
+          singleBarView={this.singleBarView}
         />
       )
       })
+    }
     let renderMarkers;
     if (this.props.map) {
       renderMarkers = this.state.bars.map((bar, index) => {

@@ -7,10 +7,9 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       map: null,
-      latlng: [50,50]
+      latlng: [50,50],
     }
     this.getCurrentPosition = this.getCurrentPosition.bind(this);
-    // this.setMapState = this.setMapState.bind(this);
     this.success = this.success.bind(this);
   }
 
@@ -46,7 +45,7 @@ export default class App extends React.Component {
   render() {
     return (
       <div>
-        <Map map={this.state.map} latlng={this.state.latlng}/>
+        <Map map={this.state.map} latlng={this.state.latlng} menu={this.state.menu}/>
       </div>
     );
   }
