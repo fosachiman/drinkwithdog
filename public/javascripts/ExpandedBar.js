@@ -1,4 +1,5 @@
 import React from 'react';
+import SingleBarInfo from './SingleBarInfo';
 
 export default class ExpandedBar extends React.Component {
 
@@ -9,7 +10,12 @@ export default class ExpandedBar extends React.Component {
   render() {
     return (
       <div>
-        <div className="bar-name-single">{this.props.bar.name}</div>
+        <div className="single-bar-header">
+          <div className="bar-name-single">{this.props.bar.name}</div>
+          <div className="bar-type">{this.props.bar.type} - </div>
+          <div className="dog-policy">{this.props.bar.dogPolicy}</div>
+        </div>
+        <SingleBarInfo />
       </div>
     );
   }
