@@ -23459,12 +23459,16 @@ var ExpandedBar = function (_React$Component) {
   }
 
   _createClass(ExpandedBar, [{
-    key: 'render',
+    key: "render",
     value: function render() {
       return _react2.default.createElement(
-        'div',
+        "div",
         null,
-        this.props.bar.name
+        _react2.default.createElement(
+          "div",
+          { className: "bar-name-single" },
+          this.props.bar.name
+        )
       );
     }
   }]);

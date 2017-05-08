@@ -9,7 +9,7 @@ export default class ExpandedBar extends React.Component {
   render() {
     return (
       <div>
-        {this.props.bar.name}
+        <div className="bar-name-single">{this.props.bar.name}</div>
       </div>
     );
   }

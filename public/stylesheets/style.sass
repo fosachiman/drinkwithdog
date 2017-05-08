@@ -1,3 +1,8 @@
+@font-face
+  font-family: LeagueSpartan
+  src: url('../fonts/LeagueSpartan-Bold.otf')
+  font-weight: bold
+
 html
   height: 100%
   width: 100%
@@ -33,12 +38,13 @@ a
   top: 2%
   z-index: 100000
   overflow: hidden
-  background-color: white
+  background-color: rgba(255,255,255,.8)
 
 .bar-listing
   border-bottom: 3px solid #ef7048
   padding 5px
   cursor: pointer
+  font-family: LeagueSpartan
 
 .bar-listing:hover
   background-color: #fdb02e
@@ -48,6 +54,7 @@ a
   width: 50px
   background-image: url("../images/DWD_Location-Static.svg")
   background-size: cover
+  font-family: LeagueSpartan
 
 .marker:hover
   cursor: pointer
@@ -56,3 +63,16 @@ a
   background-color: #fdb02e
   padding: 10px
   text-align: center
+  font-family: LeagueSpartan
+
+.mapboxgl-popup-content
+  background: #fdb02e
+  font-family: LeagueSpartan
+
+.mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip
+  border-top-color: #fdb02e
+
+.bar-name-single
+  background-color: #ef7048
+  text-align: center
+  font-family: LeagueSpartan
