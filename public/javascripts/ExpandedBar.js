@@ -15,7 +15,7 @@ export default class ExpandedBar extends React.Component {
           <div className="bar-type">{this.props.bar.type} - </div>
           <div className="dog-policy">{this.props.bar.dogPolicy}</div>
         </div>
-        <SingleBarInfo />
+        <SingleBarInfo bar={this.props.bar}/>
       </div>
     );
   }

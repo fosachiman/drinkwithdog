@@ -23489,7 +23489,7 @@ var ExpandedBar = function (_React$Component) {
             this.props.bar.dogPolicy
           )
         ),
-        _react2.default.createElement(_SingleBarInfo2.default, null)
+        _react2.default.createElement(_SingleBarInfo2.default, { bar: this.props.bar })
       );
     }
   }]);
@@ -23539,7 +23539,7 @@ var SingleBarInfo = function (_React$Component) {
       return _react2.default.createElement(
         "div",
         { className: "single-bar-info" },
-        "HELLO"
+        this.props.bar.copy
       );
     }
   }]);

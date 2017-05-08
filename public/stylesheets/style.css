@@ -73,6 +73,9 @@ a {
 .mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip {
   border-top-color: #fdb02e; }
 
+.mapboxgl-popup-anchor-top .mapboxgl-popup-tip {
+  border-bottom-color: #fdb02e; }
+
 .single-bar-header {
   background-color: #ef7048;
   text-align: center;

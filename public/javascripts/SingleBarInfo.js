@@ -9,7 +9,7 @@ export default class SingleBarInfo extends React.Component {
   render() {
     return (
       <div className="single-bar-info">
-        HELLO
+        {this.props.bar.copy}
       </div>
     );
   }
