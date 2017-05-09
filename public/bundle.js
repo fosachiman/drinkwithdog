@@ -23530,15 +23530,20 @@ var SingleBarInfo = function (_React$Component) {
   function SingleBarInfo(props) {
     _classCallCheck(this, SingleBarInfo);
 
-    return _possibleConstructorReturn(this, (SingleBarInfo.__proto__ || Object.getPrototypeOf(SingleBarInfo)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (SingleBarInfo.__proto__ || Object.getPrototypeOf(SingleBarInfo)).call(this, props));
+
+    _this.state = {
+      view: 'description'
+    };
+    return _this;
   }
 
   _createClass(SingleBarInfo, [{
-    key: "render",
+    key: 'render',
     value: function render() {
       return _react2.default.createElement(
-        "div",
-        { className: "single-bar-info" },
+        'div',
+        { className: 'single-bar-info' },
         this.props.bar.copy
       );
     }
