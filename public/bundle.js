@@ -11516,7 +11516,11 @@ var MenuHeader = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         { className: 'menu-header' },
-        'List View'
+        _react2.default.createElement(
+          'h3',
+          { className: 'menu-title' },
+          'List View'
+        )
       );
     }
   }, {
@@ -11529,10 +11533,19 @@ var MenuHeader = function (_React$Component) {
         { className: 'menu-header' },
         _react2.default.createElement(
           'div',
-          { onClick: function onClick() {
+          { className: 'arrow-cont' },
+          _react2.default.createElement('img', { className: 'back-arrow', src: './images/DWD_Icon_Arrow.svg', onClick: function onClick() {
               return _this2.props.multiBarView();
-            } },
-          'Return to List View'
+            } })
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'menu-cont' },
+          _react2.default.createElement(
+            'h3',
+            { className: 'menu-title' },
+            'Return to List View'
+          )
         )
       );
     }
@@ -11543,7 +11556,7 @@ var MenuHeader = function (_React$Component) {
       if (this.props.menuState === 'list') menuHeader = this.listMenuHeader();else menuHeader = this.singleBarMenuHeader();
       return _react2.default.createElement(
         'div',
-        null,
+        { className: 'menu-header-bg' },
         menuHeader
       );
     }
@@ -23533,18 +23546,33 @@ var SingleBarInfo = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (SingleBarInfo.__proto__ || Object.getPrototypeOf(SingleBarInfo)).call(this, props));
 
     _this.state = {
-      view: 'description'
+      view: 'copy'
     };
+    _this.toggleState = _this.toggleState.bind(_this);
     return _this;
   }
 
   _createClass(SingleBarInfo, [{
+    key: 'toggleState',
+    value: function toggleState() {
+      if (this.state.view === 'copy') this.setState({ view: 'info' });else this.setState({ view: 'copy' });
+    }
+  }, {
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
       return _react2.default.createElement(
         'div',
         { className: 'single-bar-info' },
-        this.props.bar.copy
+        _react2.default.createElement(
+          'div',
+          null,
+          this.props.bar.copy
+        ),
+        _react2.default.createElement('img', { className: 'down-arrow', onClick: function onClick() {
+            return _this2.toggleState();
+          }, src: './images/DWD_Icon_Arrow.svg' })
       );
     }
   }]);

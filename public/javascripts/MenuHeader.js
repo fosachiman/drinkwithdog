@@ -9,7 +9,7 @@ export default class MenuHeader extends React.Component {
   listMenuHeader() {
     return (
       <div className='menu-header'>
-        List View
+        <h3 className="menu-title">List View</h3>
       </div>
     )
   }
@@ -17,7 +17,12 @@ export default class MenuHeader extends React.Component {
   singleBarMenuHeader() {
     return (
       <div className='menu-header'>
-        <div onClick={() => this.props.multiBarView()}>Return to List View</div>
+        <div className="arrow-cont">
+          <img className="back-arrow" src="./images/DWD_Icon_Arrow.svg" onClick={() => this.props.multiBarView()} />
+        </div>
+        <div className="menu-cont">
+        <h3 className="menu-title">Return to List View</h3>
+        </div>
       </div>
     )
   }
@@ -29,7 +34,7 @@ export default class MenuHeader extends React.Component {
       else
         menuHeader = this.singleBarMenuHeader();
     return (
-      <div>
+      <div className="menu-header-bg">
         {menuHeader}
       </div>
     );
