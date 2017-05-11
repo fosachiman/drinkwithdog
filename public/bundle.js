@@ -11175,34 +11175,52 @@ var BarListing = function (_React$Component) {
   }
 
   _createClass(BarListing, [{
-    key: "handleBarClick",
-    value: function handleBarClick(bar) {
+    key: 'handleBarClick',
+    value: function handleBarClick(bar, marker) {
       this.props.singleBarView(bar);
+      this.openPopup(bar, marker);
+      this.props.map.flyTo({ center: [this.props.longitude, this.props.latitude] });
     }
   }, {
-    key: "render",
+    key: 'createMarker',
+    value: function createMarker() {
+      var el = document.createElement('div');
+      el.className = 'marker';
+      el.setAttribute('id', this.props.name.replace(/\s/g, '') + '-marker');
+      var popup = new mapboxgl.Popup({ closeButton: false, offset: 25 }).setText(this.props.name);
+      var marker = new mapboxgl.Marker(el, { offset: [-25, -25] }).setLngLat([this.props.longitude, this.props.latitude]).setPopup(popup).addTo(this.props.map);
+      return marker;
+    }
+  }, {
+    key: 'openPopup',
+    value: function openPopup(bar, marker) {
+      marker.togglePopup();
+    }
+  }, {
+    key: 'render',
     value: function render() {
       var _this2 = this;
 
+      var barMarker = this.createMarker();
       return _react2.default.createElement(
-        "div",
-        { className: "bar-listing", onClick: function onClick() {
-            _this2.handleBarClick(_this2.props.bar);
+        'div',
+        { className: 'bar-listing', onClick: function onClick() {
+            _this2.handleBarClick(_this2.props.bar, barMarker);
           } },
         _react2.default.createElement(
-          "div",
-          { className: "bar-name" },
+          'div',
+          { className: 'bar-name' },
           this.props.name
         ),
         _react2.default.createElement(
-          "div",
-          { className: "bar-type" },
+          'div',
+          { className: 'bar-type' },
           this.props.type,
-          " - "
+          ' - '
         ),
         _react2.default.createElement(
-          "div",
-          { className: "dog-policy" },
+          'div',
+          { className: 'dog-policy' },
           this.props.policy
         )
       );
@@ -11248,19 +11266,22 @@ var BarMarker = function (_React$Component) {
     return _possibleConstructorReturn(this, (BarMarker.__proto__ || Object.getPrototypeOf(BarMarker)).call(this, props));
   }
 
+  // createMarker() {
+  //   let el = document.createElement('div');
+  //   el.className = 'marker';
+  //   el.setAttribute('id', this.props.name.replace(/\s/g, '') + '-marker');
+  //   let popup = new mapboxgl.Popup({closeButton: false, offset:25})
+  //     .setText(this.props.name)
+  //   let marker = new mapboxgl.Marker(el, {offset:[-25, -25]})
+  //     .setLngLat([this.props.longitude, this.props.latitude])
+  //     .setPopup(popup)
+  //     .addTo(this.props.map);
+  // }
+
   _createClass(BarMarker, [{
-    key: 'createMarker',
-    value: function createMarker() {
-      var el = document.createElement('div');
-      el.className = 'marker';
-      el.setAttribute('id', this.props.name.replace(/\s/g, '') + '-marker');
-      var popup = new mapboxgl.Popup({ offset: 25 }).setText(this.props.name);
-      var marker = new mapboxgl.Marker(el, { offset: [-25, -25] }).setLngLat([this.props.longitude, this.props.latitude]).setPopup(popup).addTo(this.props.map);
-    }
-  }, {
     key: 'render',
     value: function render() {
-      var barMarker = this.createMarker();
+      // let barMarker = this.createMarker();
       return _react2.default.createElement('div', null);
     }
   }]);
@@ -11371,42 +11392,31 @@ var BarMenu = function (_React$Component) {
       if (this.state.menu === 'bar') {
         renderBars = this.renderSingleBarMenu(this.state.singleBar);
       } else {
-        renderBars = this.state.bars.map(function (bar, index) {
-          return _react2.default.createElement(_BarListing2.default, {
-            key: index,
-            name: bar.name,
-            address: bar.address,
-            copy: bar.copy,
-            hours: bar.hours,
-            website: bar.website,
-            type: bar.type,
-            policy: bar.dogPolicy,
-            latitude: bar.latitude,
-            longitude: bar.longitude,
-            map: _this3.props.map,
-            bar: bar,
-            singleBarView: _this3.singleBarView
+        if (this.props.map) {
+          renderBars = this.state.bars.map(function (bar, index) {
+            return _react2.default.createElement(_BarListing2.default, {
+              key: index,
+              name: bar.name,
+              address: bar.address,
+              copy: bar.copy,
+              hours: bar.hours,
+              website: bar.website,
+              type: bar.type,
+              policy: bar.dogPolicy,
+              latitude: bar.latitude,
+              longitude: bar.longitude,
+              map: _this3.props.map,
+              bar: bar,
+              singleBarView: _this3.singleBarView
+            });
           });
-        });
-      }
-      var renderMarkers = void 0;
-      if (this.props.map) {
-        renderMarkers = this.state.bars.map(function (bar, index) {
-          return _react2.default.createElement(_BarMarker2.default, {
-            key: index,
-            name: bar.name,
-            latitude: bar.latitude,
-            longitude: bar.longitude,
-            map: _this3.props.map
-          });
-        });
+        }
       }
       return _react2.default.createElement(
         'div',
         { className: 'bar-menu' },
         _react2.default.createElement(_MenuHeader2.default, { menuState: this.state.menu, multiBarView: this.multiBarView }),
-        renderBars,
-        renderMarkers
+        renderBars
       );
     }
   }]);

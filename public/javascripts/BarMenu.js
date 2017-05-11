@@ -50,45 +50,32 @@ export default class BarMenu extends React.Component {
       renderBars = this.renderSingleBarMenu(this.state.singleBar);
     }
     else {
-      renderBars = this.state.bars.map((bar, index) => {
-      return (
-        <BarListing
-          key={index}
-          name={bar.name}
-          address={bar.address}
-          copy={bar.copy}
-          hours={bar.hours}
-          website={bar.website}
-          type={bar.type}
-          policy={bar.dogPolicy}
-          latitude={bar.latitude}
-          longitude={bar.longitude}
-          map={this.props.map}
-          bar={bar}
-          singleBarView={this.singleBarView}
-        />
-      )
-      })
-    }
-    let renderMarkers;
-    if (this.props.map) {
-      renderMarkers = this.state.bars.map((bar, index) => {
-      return (
-        <BarMarker
-          key={index}
-          name={bar.name}
-          latitude={bar.latitude}
-          longitude={bar.longitude}
-          map={this.props.map}
-        />
+      if (this.props.map) {
+        renderBars = this.state.bars.map((bar, index) => {
+        return (
+          <BarListing
+            key={index}
+            name={bar.name}
+            address={bar.address}
+            copy={bar.copy}
+            hours={bar.hours}
+            website={bar.website}
+            type={bar.type}
+            policy={bar.dogPolicy}
+            latitude={bar.latitude}
+            longitude={bar.longitude}
+            map={this.props.map}
+            bar={bar}
+            singleBarView={this.singleBarView}
+          />
         )
-    })
-    }
+        })
+      }
+   }
     return (
       <div className="bar-menu">
       <MenuHeader menuState={this.state.menu} multiBarView={this.multiBarView}/>
         {renderBars}
-        {renderMarkers}
       </div>
     );
   }
