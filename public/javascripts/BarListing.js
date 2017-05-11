@@ -8,7 +8,7 @@ export default class BarListing extends React.Component {
 
   handleBarClick(bar, marker) {
     this.props.singleBarView(bar);
-    this.openPopup(bar, marker);
+    this.openPopup(marker);
     this.props.map.flyTo({ center: [this.props.longitude, this.props.latitude] });
   }
 
@@ -16,6 +16,8 @@ export default class BarListing extends React.Component {
     let el = document.createElement('div');
     el.className = 'marker';
     el.setAttribute('id', this.props.name.replace(/\s/g, '') + '-marker');
+    console.log(this.props.bar);
+    el.addEventListener('click', () => this.props.singleBarView(this.props.bar));
     let popup = new mapboxgl.Popup({closeButton: false, offset:25})
       .setText(this.props.name)
     let marker = new mapboxgl.Marker(el, {offset:[-25, -25]})
@@ -25,7 +27,7 @@ export default class BarListing extends React.Component {
     return marker;
   }
 
-  openPopup(bar, marker) {
+  openPopup(marker) {
     marker.togglePopup();
   }
 

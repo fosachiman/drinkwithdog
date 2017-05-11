@@ -11178,34 +11178,40 @@ var BarListing = function (_React$Component) {
     key: 'handleBarClick',
     value: function handleBarClick(bar, marker) {
       this.props.singleBarView(bar);
-      this.openPopup(bar, marker);
+      this.openPopup(marker);
       this.props.map.flyTo({ center: [this.props.longitude, this.props.latitude] });
     }
   }, {
     key: 'createMarker',
     value: function createMarker() {
+      var _this2 = this;
+
       var el = document.createElement('div');
       el.className = 'marker';
       el.setAttribute('id', this.props.name.replace(/\s/g, '') + '-marker');
+      console.log(this.props.bar);
+      el.addEventListener('click', function () {
+        return _this2.props.singleBarView(_this2.props.bar);
+      });
       var popup = new mapboxgl.Popup({ closeButton: false, offset: 25 }).setText(this.props.name);
       var marker = new mapboxgl.Marker(el, { offset: [-25, -25] }).setLngLat([this.props.longitude, this.props.latitude]).setPopup(popup).addTo(this.props.map);
       return marker;
     }
   }, {
     key: 'openPopup',
-    value: function openPopup(bar, marker) {
+    value: function openPopup(marker) {
       marker.togglePopup();
     }
   }, {
     key: 'render',
     value: function render() {
-      var _this2 = this;
+      var _this3 = this;
 
       var barMarker = this.createMarker();
       return _react2.default.createElement(
         'div',
         { className: 'bar-listing', onClick: function onClick() {
-            _this2.handleBarClick(_this2.props.bar, barMarker);
+            _this3.handleBarClick(_this3.props.bar, barMarker);
           } },
         _react2.default.createElement(
           'div',
@@ -11233,65 +11239,7 @@ var BarListing = function (_React$Component) {
 exports.default = BarListing;
 
 /***/ }),
-/* 110 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(12);
-
-var _react2 = _interopRequireDefault(_react);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var BarMarker = function (_React$Component) {
-  _inherits(BarMarker, _React$Component);
-
-  function BarMarker(props) {
-    _classCallCheck(this, BarMarker);
-
-    return _possibleConstructorReturn(this, (BarMarker.__proto__ || Object.getPrototypeOf(BarMarker)).call(this, props));
-  }
-
-  // createMarker() {
-  //   let el = document.createElement('div');
-  //   el.className = 'marker';
-  //   el.setAttribute('id', this.props.name.replace(/\s/g, '') + '-marker');
-  //   let popup = new mapboxgl.Popup({closeButton: false, offset:25})
-  //     .setText(this.props.name)
-  //   let marker = new mapboxgl.Marker(el, {offset:[-25, -25]})
-  //     .setLngLat([this.props.longitude, this.props.latitude])
-  //     .setPopup(popup)
-  //     .addTo(this.props.map);
-  // }
-
-  _createClass(BarMarker, [{
-    key: 'render',
-    value: function render() {
-      // let barMarker = this.createMarker();
-      return _react2.default.createElement('div', null);
-    }
-  }]);
-
-  return BarMarker;
-}(_react2.default.Component);
-
-exports.default = BarMarker;
-
-/***/ }),
+/* 110 */,
 /* 111 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11315,10 +11263,6 @@ var _axios2 = _interopRequireDefault(_axios);
 var _BarListing = __webpack_require__(109);
 
 var _BarListing2 = _interopRequireDefault(_BarListing);
-
-var _BarMarker = __webpack_require__(110);
-
-var _BarMarker2 = _interopRequireDefault(_BarMarker);
 
 var _MenuHeader = __webpack_require__(113);
 

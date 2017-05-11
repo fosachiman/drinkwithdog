@@ -1,7 +1,6 @@
 import React from 'react';
 import axios from 'axios';
 import BarListing from './BarListing';
-import BarMarker from './BarMarker';
 import MenuHeader from './MenuHeader';
 import ExpandedBar from './ExpandedBar';
 
