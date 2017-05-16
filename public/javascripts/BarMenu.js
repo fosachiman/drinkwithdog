@@ -27,9 +27,14 @@ export default class BarMenu extends React.Component {
     })
   }
 
+  componentWillUpdate() {
+    console.log('update');
+  }
+
   singleBarView(bar) {
-    this.setState({ menu: 'bar' });
     this.setState({ singleBar: bar });
+    this.setState({ menu: 'bar' });
+
   }
 
   renderSingleBarMenu(bar) {

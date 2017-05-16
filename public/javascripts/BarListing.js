@@ -6,10 +6,6 @@ export default class BarListing extends React.Component {
     super(props);
   }
 
-  componentWillUpdate(nextProps, nextState) {
-    let marker = this.props.marker;
-  }
-
   handleBarClick(bar, marker) {
     this.props.singleBarView(bar);
     this.openPopup(marker);

@@ -11175,11 +11175,6 @@ var BarListing = function (_React$Component) {
   }
 
   _createClass(BarListing, [{
-    key: "componentWillUpdate",
-    value: function componentWillUpdate(nextProps, nextState) {
-      var marker = this.props.marker;
-    }
-  }, {
     key: "handleBarClick",
     value: function handleBarClick(bar, marker) {
       this.props.singleBarView(bar);
@@ -11298,10 +11293,15 @@ var BarMenu = function (_React$Component) {
       });
     }
   }, {
+    key: 'componentWillUpdate',
+    value: function componentWillUpdate() {
+      console.log('update');
+    }
+  }, {
     key: 'singleBarView',
     value: function singleBarView(bar) {
-      this.setState({ menu: 'bar' });
       this.setState({ singleBar: bar });
+      this.setState({ menu: 'bar' });
     }
   }, {
     key: 'renderSingleBarMenu',
