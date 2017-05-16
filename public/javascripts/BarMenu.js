@@ -18,8 +18,11 @@ export default class BarMenu extends React.Component {
   }
 
   closeLastMarker() {
-    if (this.state.singleMarker)
-      this.state.singleMarker.togglePopup();
+    if (this.state.singleMarker) {
+      let popup = this.state.singleMarker.getPopup();
+      if (popup.isOpen())
+        this.state.singleMarker.togglePopup();
+    }
   }
 
   singleBarView(bar, marker) {
