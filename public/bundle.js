@@ -11175,58 +11175,46 @@ var BarListing = function (_React$Component) {
   }
 
   _createClass(BarListing, [{
-    key: 'handleBarClick',
+    key: "componentWillUpdate",
+    value: function componentWillUpdate(nextProps, nextState) {
+      var marker = this.props.marker;
+    }
+  }, {
+    key: "handleBarClick",
     value: function handleBarClick(bar, marker) {
       this.props.singleBarView(bar);
       this.openPopup(marker);
       this.props.map.flyTo({ center: [this.props.longitude, this.props.latitude] });
     }
   }, {
-    key: 'createMarker',
-    value: function createMarker() {
-      var _this2 = this;
-
-      var el = document.createElement('div');
-      el.className = 'marker';
-      el.setAttribute('id', this.props.name.replace(/\s/g, '') + '-marker');
-      console.log(this.props.bar);
-      el.addEventListener('click', function () {
-        return _this2.props.singleBarView(_this2.props.bar);
-      });
-      var popup = new mapboxgl.Popup({ closeButton: false, offset: 25 }).setText(this.props.name);
-      var marker = new mapboxgl.Marker(el, { offset: [-25, -25] }).setLngLat([this.props.longitude, this.props.latitude]).setPopup(popup).addTo(this.props.map);
-      return marker;
-    }
-  }, {
-    key: 'openPopup',
+    key: "openPopup",
     value: function openPopup(marker) {
       marker.togglePopup();
     }
   }, {
-    key: 'render',
+    key: "render",
     value: function render() {
-      var _this3 = this;
+      var _this2 = this;
 
-      var barMarker = this.createMarker();
       return _react2.default.createElement(
-        'div',
-        { className: 'bar-listing', onClick: function onClick() {
-            _this3.handleBarClick(_this3.props.bar, barMarker);
+        "div",
+        { className: "bar-listing", onClick: function onClick() {
+            _this2.handleBarClick(_this2.props.bar, _this2.props.marker);
           } },
         _react2.default.createElement(
-          'div',
-          { className: 'bar-name' },
+          "div",
+          { className: "bar-name" },
           this.props.name
         ),
         _react2.default.createElement(
-          'div',
-          { className: 'bar-type' },
+          "div",
+          { className: "bar-type" },
           this.props.type,
-          ' - '
+          " - "
         ),
         _react2.default.createElement(
-          'div',
-          { className: 'dog-policy' },
+          "div",
+          { className: "dog-policy" },
           this.props.policy
         )
       );
@@ -11328,9 +11316,24 @@ var BarMenu = function (_React$Component) {
       this.setState({ menu: 'list' });
     }
   }, {
+    key: 'createMarker',
+    value: function createMarker(bar) {
+      var _this3 = this;
+
+      var el = document.createElement('div');
+      el.className = 'marker';
+      el.setAttribute('id', bar.name.replace(/\s/g, '') + '-marker');
+      el.addEventListener('click', function () {
+        return _this3.singleBarView(bar);
+      });
+      var popup = new mapboxgl.Popup({ closeButton: false, offset: 25 }).setText(bar.name);
+      var marker = new mapboxgl.Marker(el, { offset: [-25, -25] }).setLngLat([bar.longitude, bar.latitude]).setPopup(popup).addTo(this.props.map);
+      return marker;
+    }
+  }, {
     key: 'render',
     value: function render() {
-      var _this3 = this;
+      var _this4 = this;
 
       var renderBars = void 0;
       if (this.state.menu === 'bar') {
@@ -11338,6 +11341,7 @@ var BarMenu = function (_React$Component) {
       } else {
         if (this.props.map) {
           renderBars = this.state.bars.map(function (bar, index) {
+            var marker = _this4.createMarker(bar);
             return _react2.default.createElement(_BarListing2.default, {
               key: index,
               name: bar.name,
@@ -11349,9 +11353,10 @@ var BarMenu = function (_React$Component) {
               policy: bar.dogPolicy,
               latitude: bar.latitude,
               longitude: bar.longitude,
-              map: _this3.props.map,
+              map: _this4.props.map,
               bar: bar,
-              singleBarView: _this3.singleBarView
+              marker: marker,
+              singleBarView: _this4.singleBarView
             });
           });
         }

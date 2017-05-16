@@ -43,6 +43,20 @@ export default class BarMenu extends React.Component {
     this.setState({ menu: 'list' })
   }
 
+  createMarker(bar) {
+    let el = document.createElement('div');
+    el.className = 'marker';
+    el.setAttribute('id', bar.name.replace(/\s/g, '') + '-marker');
+    el.addEventListener('click', () => this.singleBarView(bar));
+    let popup = new mapboxgl.Popup({closeButton: false, offset:25})
+      .setText(bar.name)
+    let marker = new mapboxgl.Marker(el, {offset:[-25, -25]})
+      .setLngLat([bar.longitude, bar.latitude])
+      .setPopup(popup)
+      .addTo(this.props.map);
+    return marker;
+  }
+
   render() {
     let renderBars;
     if (this.state.menu === 'bar') {
@@ -51,6 +65,7 @@ export default class BarMenu extends React.Component {
     else {
       if (this.props.map) {
         renderBars = this.state.bars.map((bar, index) => {
+          let marker = this.createMarker(bar);
         return (
           <BarListing
             key={index}
@@ -65,6 +80,7 @@ export default class BarMenu extends React.Component {
             longitude={bar.longitude}
             map={this.props.map}
             bar={bar}
+            marker={marker}
             singleBarView={this.singleBarView}
           />
         )
