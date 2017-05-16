@@ -11177,7 +11177,8 @@ var BarListing = function (_React$Component) {
   _createClass(BarListing, [{
     key: "handleBarClick",
     value: function handleBarClick(bar, marker) {
-      this.props.singleBarView(bar);
+      this.props.closeLastMarker();
+      this.props.singleBarView(bar, marker);
       this.openPopup(marker);
       this.props.map.flyTo({ center: [this.props.longitude, this.props.latitude] });
     }
@@ -11274,10 +11275,12 @@ var BarMenu = function (_React$Component) {
     _this.state = {
       bars: [],
       menu: 'list',
-      singleBar: null
+      singleBar: null,
+      singleMarker: null
     };
     _this.singleBarView = _this.singleBarView.bind(_this);
     _this.multiBarView = _this.multiBarView.bind(_this);
+    _this.closeLastMarker = _this.closeLastMarker.bind(_this);
     return _this;
   }
 
@@ -11293,21 +11296,23 @@ var BarMenu = function (_React$Component) {
       });
     }
   }, {
-    key: 'componentWillUpdate',
-    value: function componentWillUpdate() {
-      console.log('update');
+    key: 'closeLastMarker',
+    value: function closeLastMarker() {
+      if (this.state.singleMarker) this.state.singleMarker.togglePopup();
     }
   }, {
     key: 'singleBarView',
-    value: function singleBarView(bar) {
+    value: function singleBarView(bar, marker) {
       this.setState({ singleBar: bar });
+      this.setState({ singleMarker: marker });
       this.setState({ menu: 'bar' });
     }
   }, {
     key: 'renderSingleBarMenu',
     value: function renderSingleBarMenu(bar) {
       return _react2.default.createElement(_ExpandedBar2.default, {
-        bar: bar
+        bar: bar,
+        marker: this.state.singleMarker
       });
     }
   }, {
@@ -11323,11 +11328,11 @@ var BarMenu = function (_React$Component) {
       var el = document.createElement('div');
       el.className = 'marker';
       el.setAttribute('id', bar.name.replace(/\s/g, '') + '-marker');
-      el.addEventListener('click', function () {
-        return _this3.singleBarView(bar);
-      });
       var popup = new mapboxgl.Popup({ closeButton: false, offset: 25 }).setText(bar.name);
       var marker = new mapboxgl.Marker(el, { offset: [-25, -25] }).setLngLat([bar.longitude, bar.latitude]).setPopup(popup).addTo(this.props.map);
+      el.addEventListener('click', function () {
+        return _this3.singleBarView(bar, marker);
+      });
       return marker;
     }
   }, {
@@ -11356,7 +11361,8 @@ var BarMenu = function (_React$Component) {
               map: _this4.props.map,
               bar: bar,
               marker: marker,
-              singleBarView: _this4.singleBarView
+              singleBarView: _this4.singleBarView,
+              closeLastMarker: _this4.closeLastMarker
             });
           });
         }

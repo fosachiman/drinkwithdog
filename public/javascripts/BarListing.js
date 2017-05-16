@@ -7,7 +7,8 @@ export default class BarListing extends React.Component {
   }
 
   handleBarClick(bar, marker) {
-    this.props.singleBarView(bar);
+    this.props.closeLastMarker()
+    this.props.singleBarView(bar, marker);
     this.openPopup(marker);
     this.props.map.flyTo({ center: [this.props.longitude, this.props.latitude] });
   }
