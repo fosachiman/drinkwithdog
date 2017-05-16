@@ -1,5 +1,6 @@
 import React from 'react';
 import Map from './Map';
+import axios from 'axios';
 
 export default class App extends React.Component {
 
@@ -8,6 +9,7 @@ export default class App extends React.Component {
     this.state = {
       map: null,
       latlng: [50,50],
+      bars: []
     }
     this.getCurrentPosition = this.getCurrentPosition.bind(this);
     this.success = this.success.bind(this);
@@ -16,6 +18,17 @@ export default class App extends React.Component {
   componentDidMount() {
     mapboxgl.accessToken = 'pk.eyJ1IjoiZm9zYWNoaW1hbiIsImEiOiJjajB4eng5M2owMW5sMzJtdGRzNHBjaGxsIn0.yWVExsYazGI3TOlGhLNv-w';
     let location = this.getCurrentPosition();
+    this.getBars();
+  }
+
+  getBars() {
+    axios.get('api')
+    .then((response) => {
+      this.setState({ bars: response.data.bars })
+    })
+    .catch((error) => {
+      console.log(error);
+    })
   }
 
   getCurrentPosition() {
@@ -39,13 +52,12 @@ export default class App extends React.Component {
       center: this.state.latlng
     });
     this.setState({ map });
-    console.log(map)
   }
 
   render() {
     return (
       <div>
-        <Map map={this.state.map} latlng={this.state.latlng} menu={this.state.menu}/>
+        <Map map={this.state.map} latlng={this.state.latlng} bars={this.state.bars}/>
       </div>
     );
   }

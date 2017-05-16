@@ -9782,6 +9782,10 @@ var _Map = __webpack_require__(112);
 
 var _Map2 = _interopRequireDefault(_Map);
 
+var _axios = __webpack_require__(91);
+
+var _axios2 = _interopRequireDefault(_axios);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -9800,7 +9804,8 @@ var App = function (_React$Component) {
 
     _this.state = {
       map: null,
-      latlng: [50, 50]
+      latlng: [50, 50],
+      bars: []
     };
     _this.getCurrentPosition = _this.getCurrentPosition.bind(_this);
     _this.success = _this.success.bind(_this);
@@ -9812,6 +9817,18 @@ var App = function (_React$Component) {
     value: function componentDidMount() {
       mapboxgl.accessToken = 'pk.eyJ1IjoiZm9zYWNoaW1hbiIsImEiOiJjajB4eng5M2owMW5sMzJtdGRzNHBjaGxsIn0.yWVExsYazGI3TOlGhLNv-w';
       var location = this.getCurrentPosition();
+      this.getBars();
+    }
+  }, {
+    key: 'getBars',
+    value: function getBars() {
+      var _this2 = this;
+
+      _axios2.default.get('api').then(function (response) {
+        _this2.setState({ bars: response.data.bars });
+      }).catch(function (error) {
+        console.log(error);
+      });
     }
   }, {
     key: 'getCurrentPosition',
@@ -9837,7 +9854,6 @@ var App = function (_React$Component) {
         center: this.state.latlng
       });
       this.setState({ map: map });
-      console.log(map);
     }
   }, {
     key: 'render',
@@ -9845,7 +9861,7 @@ var App = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         null,
-        _react2.default.createElement(_Map2.default, { map: this.state.map, latlng: this.state.latlng, menu: this.state.menu })
+        _react2.default.createElement(_Map2.default, { map: this.state.map, latlng: this.state.latlng, bars: this.state.bars })
       );
     }
   }]);
@@ -11240,10 +11256,6 @@ var _react = __webpack_require__(12);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _axios = __webpack_require__(91);
-
-var _axios2 = _interopRequireDefault(_axios);
-
 var _BarListing = __webpack_require__(109);
 
 var _BarListing2 = _interopRequireDefault(_BarListing);
@@ -11273,7 +11285,6 @@ var BarMenu = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (BarMenu.__proto__ || Object.getPrototypeOf(BarMenu)).call(this, props));
 
     _this.state = {
-      bars: [],
       menu: 'list',
       singleBar: null,
       singleMarker: null
@@ -11285,17 +11296,6 @@ var BarMenu = function (_React$Component) {
   }
 
   _createClass(BarMenu, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      var _this2 = this;
-
-      _axios2.default.get('api').then(function (response) {
-        _this2.setState({ bars: response.data.bars });
-      }).catch(function (error) {
-        console.log(error);
-      });
-    }
-  }, {
     key: 'closeLastMarker',
     value: function closeLastMarker() {
       if (this.state.singleMarker) this.state.singleMarker.togglePopup();
@@ -11323,7 +11323,7 @@ var BarMenu = function (_React$Component) {
   }, {
     key: 'createMarker',
     value: function createMarker(bar) {
-      var _this3 = this;
+      var _this2 = this;
 
       var el = document.createElement('div');
       el.className = 'marker';
@@ -11331,22 +11331,22 @@ var BarMenu = function (_React$Component) {
       var popup = new mapboxgl.Popup({ closeButton: false, offset: 25 }).setText(bar.name);
       var marker = new mapboxgl.Marker(el, { offset: [-25, -25] }).setLngLat([bar.longitude, bar.latitude]).setPopup(popup).addTo(this.props.map);
       el.addEventListener('click', function () {
-        return _this3.singleBarView(bar, marker);
+        return _this2.singleBarView(bar, marker);
       });
       return marker;
     }
   }, {
     key: 'render',
     value: function render() {
-      var _this4 = this;
+      var _this3 = this;
 
       var renderBars = void 0;
       if (this.state.menu === 'bar') {
         renderBars = this.renderSingleBarMenu(this.state.singleBar);
       } else {
         if (this.props.map) {
-          renderBars = this.state.bars.map(function (bar, index) {
-            var marker = _this4.createMarker(bar);
+          renderBars = this.props.bars.map(function (bar, index) {
+            var marker = _this3.createMarker(bar);
             return _react2.default.createElement(_BarListing2.default, {
               key: index,
               name: bar.name,
@@ -11358,11 +11358,11 @@ var BarMenu = function (_React$Component) {
               policy: bar.dogPolicy,
               latitude: bar.latitude,
               longitude: bar.longitude,
-              map: _this4.props.map,
+              map: _this3.props.map,
               bar: bar,
               marker: marker,
-              singleBarView: _this4.singleBarView,
-              closeLastMarker: _this4.closeLastMarker
+              singleBarView: _this3.singleBarView,
+              closeLastMarker: _this3.closeLastMarker
             });
           });
         }
@@ -11429,7 +11429,8 @@ var Map = function (_React$Component) {
           'div',
           { id: 'map' },
           _react2.default.createElement(_Barmenu2.default, {
-            map: this.props.map
+            map: this.props.map,
+            bars: this.props.bars
           })
         )
       );

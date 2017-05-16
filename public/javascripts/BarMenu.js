@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import BarListing from './BarListing';
 import MenuHeader from './MenuHeader';
 import ExpandedBar from './ExpandedBar';
@@ -9,7 +8,6 @@ export default class BarMenu extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      bars: [],
       menu: 'list',
       singleBar: null,
       singleMarker: null,
@@ -17,16 +15,6 @@ export default class BarMenu extends React.Component {
     this.singleBarView = this.singleBarView.bind(this);
     this.multiBarView = this.multiBarView.bind(this);
     this.closeLastMarker = this.closeLastMarker.bind(this);
-  }
-
-  componentDidMount() {
-    axios.get('api')
-    .then((response) => {
-      this.setState({ bars: response.data.bars })
-    })
-    .catch((error) => {
-      console.log(error);
-    })
   }
 
   closeLastMarker() {
@@ -73,7 +61,7 @@ export default class BarMenu extends React.Component {
     }
     else {
       if (this.props.map) {
-        renderBars = this.state.bars.map((bar, index) => {
+        renderBars = this.props.bars.map((bar, index) => {
           let marker = this.createMarker(bar);
         return (
           <BarListing

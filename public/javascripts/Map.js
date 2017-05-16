@@ -12,6 +12,7 @@ export default class Map extends React.Component {
         <div id="map">
           <BarMenu
             map={this.props.map}
+            bars={this.props.bars}
           />
         </div>
       </div>
