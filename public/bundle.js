@@ -23520,7 +23520,7 @@ var SingleBarInfo = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (SingleBarInfo.__proto__ || Object.getPrototypeOf(SingleBarInfo)).call(this, props));
 
     _this.state = {
-      view: 'copy'
+      view: 'info'
     };
     _this.toggleState = _this.toggleState.bind(_this);
     return _this;
@@ -23532,21 +23532,80 @@ var SingleBarInfo = function (_React$Component) {
       if (this.state.view === 'copy') this.setState({ view: 'info' });else this.setState({ view: 'copy' });
     }
   }, {
-    key: 'render',
-    value: function render() {
+    key: 'infoState',
+    value: function infoState() {
       var _this2 = this;
 
       return _react2.default.createElement(
         'div',
-        { className: 'single-bar-info' },
+        null,
+        _react2.default.createElement(
+          'div',
+          { className: 'single-bar-linecont' },
+          _react2.default.createElement('img', { className: 'single-bar-icon', src: './images/DWD_Icon_Paw.svg' }),
+          _react2.default.createElement(
+            'div',
+            { className: 'single-bar-line' },
+            this.props.bar.dogPolicy
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'single-bar-linecont' },
+          _react2.default.createElement('img', { className: 'single-bar-icon', src: './images/DWD_Icon_Location.svg' }),
+          _react2.default.createElement(
+            'div',
+            { className: 'single-bar-line' },
+            this.props.bar.address
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'single-bar-linecont' },
+          _react2.default.createElement('img', { className: 'single-bar-icon', src: './images/DWD_Icon_Clock.svg' }),
+          _react2.default.createElement(
+            'div',
+            { className: 'single-bar-line' },
+            this.props.bar.hours
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'single-bar-linecont' },
+          _react2.default.createElement('img', { className: 'single-bar-icon', src: './images/DWD_Icon_Link.svg' }),
+          _react2.default.createElement(
+            'div',
+            { className: 'single-bar-line' },
+            this.props.bar.website
+          )
+        ),
+        _react2.default.createElement('img', { className: 'down-arrow', onClick: function onClick() {
+            return _this2.toggleState();
+          }, src: './images/DWD_Icon_Arrow.svg' })
+      );
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this3 = this;
+
+      var view = void 0;
+      if (this.state.view === 'info') view = this.infoState();else view = _react2.default.createElement(
+        'div',
+        null,
         _react2.default.createElement(
           'div',
           null,
           this.props.bar.copy
         ),
         _react2.default.createElement('img', { className: 'down-arrow', onClick: function onClick() {
-            return _this2.toggleState();
+            return _this3.toggleState();
           }, src: './images/DWD_Icon_Arrow.svg' })
+      );
+      return _react2.default.createElement(
+        'div',
+        { className: 'single-bar-info' },
+        view
       );
     }
   }]);
