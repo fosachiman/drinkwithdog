@@ -54,7 +54,7 @@ export default class SingleBarInfo extends React.Component {
                 <img className="up-arrow" onClick={() => this.toggleState()} src="./images/DWD_Icon_Arrow.svg" />
                 <p onClick={() => this.toggleState()} className="arrow-label-bottom">Back</p>
                 </div>
-              <div>{this.props.bar.copy}</div>
+              <p>{this.props.bar.copy}</p>
              </div>
     return (
       <div className="single-bar-info">
