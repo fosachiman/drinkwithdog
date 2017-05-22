@@ -23579,9 +23579,20 @@ var SingleBarInfo = function (_React$Component) {
             this.props.bar.website
           )
         ),
-        _react2.default.createElement('img', { className: 'down-arrow', onClick: function onClick() {
-            return _this2.toggleState();
-          }, src: './images/DWD_Icon_Arrow.svg' })
+        _react2.default.createElement(
+          'div',
+          { className: 'arrow-area' },
+          _react2.default.createElement(
+            'p',
+            { onClick: function onClick() {
+                return _this2.toggleState();
+              }, className: 'arrow-label' },
+            'More Info'
+          ),
+          _react2.default.createElement('img', { className: 'down-arrow', onClick: function onClick() {
+              return _this2.toggleState();
+            }, src: './images/DWD_Icon_Arrow.svg' })
+        )
       );
     }
   }, {
@@ -23595,12 +23606,23 @@ var SingleBarInfo = function (_React$Component) {
         null,
         _react2.default.createElement(
           'div',
+          { className: 'arrow-area' },
+          _react2.default.createElement('img', { className: 'up-arrow', onClick: function onClick() {
+              return _this3.toggleState();
+            }, src: './images/DWD_Icon_Arrow.svg' }),
+          _react2.default.createElement(
+            'p',
+            { onClick: function onClick() {
+                return _this3.toggleState();
+              }, className: 'arrow-label-bottom' },
+            'Back'
+          )
+        ),
+        _react2.default.createElement(
+          'div',
           null,
           this.props.bar.copy
-        ),
-        _react2.default.createElement('img', { className: 'down-arrow', onClick: function onClick() {
-            return _this3.toggleState();
-          }, src: './images/DWD_Icon_Arrow.svg' })
+        )
       );
       return _react2.default.createElement(
         'div',

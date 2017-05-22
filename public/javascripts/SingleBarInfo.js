@@ -36,7 +36,10 @@ export default class SingleBarInfo extends React.Component {
         <img className="single-bar-icon" src="./images/DWD_Icon_Link.svg"/>
         <div className="single-bar-line">{this.props.bar.website}</div>
       </div>
-      <img className="down-arrow" onClick={() => this.toggleState()} src="./images/DWD_Icon_Arrow.svg" />
+      <div className="arrow-area">
+        <p onClick={() => this.toggleState()} className="arrow-label">More Info</p>
+        <img className="down-arrow" onClick={() => this.toggleState()} src="./images/DWD_Icon_Arrow.svg" />
+      </div>
       </div>
     )
   }
@@ -47,8 +50,11 @@ export default class SingleBarInfo extends React.Component {
       view = this.infoState();
     else
       view = <div>
-             <div>{this.props.bar.copy}</div>
-             <img className="down-arrow" onClick={() => this.toggleState()} src="./images/DWD_Icon_Arrow.svg" />
+                <div className="arrow-area">
+                <img className="up-arrow" onClick={() => this.toggleState()} src="./images/DWD_Icon_Arrow.svg" />
+                <p onClick={() => this.toggleState()} className="arrow-label-bottom">Back</p>
+                </div>
+              <div>{this.props.bar.copy}</div>
              </div>
     return (
       <div className="single-bar-info">

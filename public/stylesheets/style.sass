@@ -152,6 +152,9 @@ a
   left: 10px
   top: 10px
 
+.back-arrow:hover
+  cursor: pointer
+
 .down-arrow
   height: 20px
   width: 20px
@@ -162,7 +165,37 @@ a
 .down-arrow:hover
   cursor: pointer
 
-.back-arrow:hover
+.up-arrow
+  height: 20px
+  width: 20px
+  text-align: center
+  display: block
+  margin: 0 auto
+  transform: rotate(180deg)
+
+.up-arrow:hover
+  cursor: pointer
+
+.arrow-label
+  text-align: center
+  padding: 0
+  margin: 0
+  text-decoration: underline
+  margin-bottom: -5px
+
+.arrow-label-bottom
+  text-align: center
+  padding: 0
+  margin: 0
+  text-decoration: underline
+  margin-top: -5px
+
+.arrow-area:hover
+  cursor: pointer
+  font-weight: bold
+  transition: font-weight .2s ease-in
+
+.arrow-label-bottom:hover
   cursor: pointer
 
 .return-to-list
@@ -185,11 +218,13 @@ a
 .single-bar-icon
   display: inline-block
   height: 20px
+  vertical-align: top
 
 .single-bar-line
   display: inline-block
   margin-left: 20px
   max-width: 80%
+  vertical-align: top
 
 .single-bar-linecont
   margin-bottom: 15px
