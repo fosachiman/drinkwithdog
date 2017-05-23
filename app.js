@@ -28,6 +28,8 @@ db.on('error', console.error.bind(console, 'connection error:'));
 //   })
 // });
 
+console.log(bars);
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');

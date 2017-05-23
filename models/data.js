@@ -1,14 +1,19 @@
 let Bar = require('./bars');
+let helpers = require('../api-helpers/google-places');
 
-module.exports = {
-bars: [
+
+// "195 Centre St, Brooklyn\nTwo blocks from the Smith-9th (F, G) stops in Carroll Gardens."
+// "Monday Closed \nTue–Fri 5–10 \nSaturday Noon–10 \nSunday Noon–6"
+
+
+let bars = [
   new Bar({
     name: "Other Half Brewing Company",
     type: "Brewery with taproom",
     copy: "Other Half produces some of New York City's most sought after beers, especially New England-style IPAs and interesting Imperial Stouts. The tiny taproom situated close to the BQE in formerly industrial Gowanus also welcomes dogs. On some days, especially on can releases (check their Twitter), the bar taproom is extremely busy and loud, and it might not be the best place for dogs who are uncomfortable in such situations. However, on most days, there is enough space for your furry friend to lounge around, listen to hip-hop music, and watch you drink a triple IPA. At the taproom, you can also pick up their limited release bottles and cans and a bunch of well-designed merchandise.",
     dogPolicy: "Dogs allowed in taproom",
-    address: "195 Centre St, Brooklyn\nTwo blocks from the Smith-9th (F, G) stops in Carroll Gardens.",
-    hours: "Monday Closed \nTue–Fri 5–10 \nSaturday Noon–10 \nSunday Noon–6",
+    address: "helpers.getAddress(this.name, this.latitude, this.longitude)",
+    hours: "",
     website: "otherhalfbrewing.com",
     latitude: 40.67388,
     longitude: -73.99905
@@ -80,7 +85,14 @@ bars: [
     longitude: -73.95058
   })
 ]
-}
+
+
+
+bars.forEach((bar, index) => {
+  bars[index].hours = helpers.getHours(bar.name, bar.latitude, bar.longitude)
+})
+
+module.exports = bars;
 
 
 
