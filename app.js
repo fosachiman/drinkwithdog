@@ -20,7 +20,7 @@ var dataModel = require('./models/bars');
 var bars = require('./models/data');
 db.on('error', console.error.bind(console, 'connection error:'));
 // db.once('open', function() {
-//   bars.bars.forEach((bar) => {
+//   bars.forEach((bar) => {
 //     bar.save(function (err, bars) {
 //       if (err) return console.error(err);
 //       console.log(bars);
