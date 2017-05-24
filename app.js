@@ -28,7 +28,7 @@ db.on('error', console.error.bind(console, 'connection error:'));
 //   })
 // });
 
-console.log(bars);
+// console.log(bars);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
