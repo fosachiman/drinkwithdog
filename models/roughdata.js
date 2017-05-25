@@ -1,11 +1,5 @@
-let Bar = require('./bars');
-let helpers = require('../api-helpers/google-places');
-var mongoose = require('mongoose');
-var db = mongoose.connection;
-
-
-let bars = [
- new Bar({
+[
+  new Bar({
     name: "Other Half Brewing Company",
     type: "Brewery with taproom",
     copy: "Other Half produces some of New York City's most sought after beers, especially New England-style IPAs and interesting Imperial Stouts. The tiny taproom situated close to the BQE in formerly industrial Gowanus also welcomes dogs. On some days, especially on can releases (check their Twitter), the bar taproom is extremely busy and loud, and it might not be the best place for dogs who are uncomfortable in such situations. However, on most days, there is enough space for your furry friend to lounge around, listen to hip-hop music, and watch you drink a triple IPA. At the taproom, you can also pick up their limited release bottles and cans and a bunch of well-designed merchandise.",
@@ -213,87 +207,82 @@ let bars = [
     website: "bargreatharry.com",
     latitude: 40.68239,
     longitude: -73.99355
+  }),
+  new Bar({
+    name: "Lantern Hall",
+    type: "Bar with craft beer",
+    copy: "",
+    dogPolicy: "Dogs allowed in bar",
+    address: "",
+    hours: "",
+    website: "",
+    latitude: 40.70626,
+    longitude: -73.93136
+  }),
+  new Bar({
+    name: "Mission Dolores",
+    type: "Bar with craft beer",
+    copy: "",
+    dogPolicy: "Dogs allowed in bar",
+    address: "",
+    hours: "",
+    website: "",
+    latitude: 40.67618,
+    longitude: -73.98343
+  }),
+  new Bar({
+    name: "Nowadays",
+    type: "Outdoor space with cans",
+    copy: "",
+    dogPolicy: "Dogs allowed on premises",
+    address: "",
+    hours: "",
+    website: "",
+    latitude: 40.69252,
+    longitude: -73.90158
+  }),
+  new Bar({
+    name: "",
+    type: "",
+    copy: "",
+    dogPolicy: "",
+    address: "",
+    hours: "",
+    website: "",
+    latitude: "",
+    longitude: ""
+  }),
+  new Bar({
+    name: "Barrier",
+    type: "Brewery with taproom",
+    copy: "Barrier is a comparatively old brewery located in an industrial pocket of Oceanside, New York, on the southern shore of Long Island. The place gets pretty busy and rowdy on the weekends. There is a popcorn machine, which most dogs are quite fond of. The beer is usually standard American styles, but sometimes with an interesting twist. All of it is made with an eye toward quality. Since the place is packed, very rambunctious dogs may not have the best of times. Grolwer pours as well as 50cl bottles are available for sale at the brewery.",
+    dogPolicy: "Dogs allowed in taproom",
+    address: "",
+    hours: "",
+    website: "",
+    latitude: "",
+    longitude: ""
+  }),
+  new Bar({
+    name: "Barrage",
+    type: "Brewery with taproom",
+    copy: "",
+    dogPolicy: "Dogs allowed in taproom",
+    address: "",
+    hours: "",
+    website: "",
+    latitude: "",
+    longitude: ""
+  }),
+  new Bar({
+    name: "Lithology",
+    type: "Brewery with taproom",
+    copy: "",
+    dogPolicy: "Dogs allowed in taproom",
+    address: "",
+    hours: "",
+    website: "",
+    latitude: "",
+    longitude: ""
   })
-  // new Bar({
-  //   name: "Lantern Hall",
-  //   type: "Bar with craft beer",
-  //   copy: "",
-  //   dogPolicy: "Dogs allowed in bar",
-  //   address: "",
-  //   hours: "",
-  //   website: "",
-  //   latitude: 40.70626,
-  //   longitude: -73.93136
-  // }),
-  // new Bar({
-  //   name: "Mission Dolores",
-  //   type: "Bar with craft beer",
-  //   copy: "",
-  //   dogPolicy: "Dogs allowed in bar",
-  //   address: "",
-  //   hours: "",
-  //   website: "",
-  //   latitude: 40.67618,
-  //   longitude: -73.98343
-  // }),
-  // new Bar({
-  //   name: "Nowadays",
-  //   type: "Outdoor space with cans",
-  //   copy: "",
-  //   dogPolicy: "Dogs allowed on premises",
-  //   address: "",
-  //   hours: "",
-  //   website: "",
-  //   latitude: 40.69252,
-  //   longitude: -73.90158
-  // })
 ]
-
-// THIS CODE ADDS ALL BARS TO DATABASE
-// function updateBars(barData) {
-//   db.once('open', function() {
-//     barData.forEach((bar) => {
-//       bar.save(function (err, barData) {
-//         if (err) return console.error(err);
-//         console.log(barData);
-//       })
-//     })
-//   });
-// }
-
-// function updateBars(barData) {
-//   barData.forEach((bar) => {
-//     Bar.create(bar, function (err, barData) {
-//       if (err) return console.error(err);
-//         console.log(barData);
-//     })
-//   })
-// }
-
-// let promise = new Promise((resolve, reject) => {
-//   let promiseCounter = 0;
-//   bars.forEach((bar, index) => {
-//     helpers.getHours(bar.name, bar.latitude, bar.longitude)
-//     .then((result) => {
-//       bar.hours = result
-//       promiseCounter++
-//       if (bars.length === promiseCounter)
-//         resolve()
-//     })
-//   })
-// })
-
-// promise.then(() => {
-//   updateBars(bars);
-//   console.log('ok');
-// })
-
-// promise.catch((err) => {
-//   console.log(err)
-// })
-
-
-module.exports = bars;
-
-
-

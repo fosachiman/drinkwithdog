@@ -9,7 +9,7 @@ function parseText(text) {
 module.exports = {
   getHours(name, lat, lng) {
     return new Promise((resolve, reject) => {
-      axios.get(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lng}&radius=500&keyword=${name}&key=${process.env.GOOGLE}`)
+      axios.get(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lng}&radius=100&keyword=${name}&key=${process.env.GOOGLE}`)
       .then((response) => {
         axios.get(`https://maps.googleapis.com/maps/api/place/details/json?placeid=${response.data.results[0].place_id}&key=${process.env.GOOGLE}`)
         .then((response) => {

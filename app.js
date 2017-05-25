@@ -19,16 +19,11 @@ var dataModel = require('./models/bars');
 
 var bars = require('./models/data');
 db.on('error', console.error.bind(console, 'connection error:'));
-// db.once('open', function() {
-//   bars.forEach((bar) => {
-//     bar.save(function (err, bars) {
-//       if (err) return console.error(err);
-//       console.log(bars);
-//     })
-//   })
-// });
 
-// console.log(bars);
+// THIS CODE REMOVES ALL BARS FROM DATA MODEL BY TYPE
+// dataModel.remove({ type: "Bar with craft beer" }, function (err) {
+//   if (err) return handleError(err);
+// })
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
