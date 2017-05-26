@@ -11508,7 +11508,9 @@ var Map = function (_React$Component) {
         _react2.default.createElement(
           'div',
           { id: 'map' },
-          _react2.default.createElement(_SearchBar2.default, null),
+          _react2.default.createElement(_SearchBar2.default, {
+            bars: this.props.bars
+          }),
           _react2.default.createElement(_Barmenu2.default, {
             map: this.props.map,
             bars: this.props.bars
@@ -11645,21 +11647,83 @@ var SearchBar = function (_React$Component) {
   function SearchBar(props) {
     _classCallCheck(this, SearchBar);
 
-    return _possibleConstructorReturn(this, (SearchBar.__proto__ || Object.getPrototypeOf(SearchBar)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (SearchBar.__proto__ || Object.getPrototypeOf(SearchBar)).call(this, props));
+
+    _this.state = {
+      textInput: '',
+      sortedBars: [],
+      matches: []
+    };
+    _this.handleTextChange = _this.handleTextChange.bind(_this);
+    return _this;
   }
 
   _createClass(SearchBar, [{
-    key: "render",
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      if (this.props.bars !== nextProps.bars) this.sortBars(nextProps);
+    }
+  }, {
+    key: 'sortBars',
+    value: function sortBars(props) {
+      var sortedBars = props.bars.map(function (bar) {
+        return bar.name;
+      }).sort();
+      this.setState({ sortedBars: sortedBars });
+    }
+  }, {
+    key: 'handleTextChange',
+    value: function handleTextChange(e) {
+      var input = e.target.value;
+      this.setState({ textInput: input });
+      if (input.length > 2) this.findMatches(input);
+    }
+  }, {
+    key: 'findMatches',
+    value: function findMatches(input) {
+      var pattern = input;
+      var re = new RegExp(pattern, "gi");
+      var matches = this.state.sortedBars.filter(function (bar) {
+        return bar.match(re);
+      });
+      this.setState({ matches: matches });
+    }
+  }, {
+    key: 'showMatches',
+    value: function showMatches(matches) {
+      var matchDisplay = void 0;
+      if (matches) {
+        matchDisplay = matches.map(function (match) {
+          return _react2.default.createElement(
+            'div',
+            { className: 'search-results' },
+            _react2.default.createElement(
+              'p',
+              null,
+              match
+            )
+          );
+        });
+      }
+      return matchDisplay;
+    }
+  }, {
+    key: 'render',
     value: function render() {
+      var _this2 = this;
+
       return _react2.default.createElement(
-        "div",
+        'div',
         null,
-        _react2.default.createElement("input", { className: "search-box", type: "text" }),
+        _react2.default.createElement('input', { className: 'search-box', type: 'text', value: this.state.textInput, onChange: function onChange(e) {
+            return _this2.handleTextChange(e);
+          } }),
         _react2.default.createElement(
-          "div",
-          { className: "search-button" },
-          _react2.default.createElement("img", { className: "search-image", src: "./images/DWD_Icon_Search-25.svg" })
-        )
+          'div',
+          { className: 'search-button' },
+          _react2.default.createElement('img', { className: 'search-image', src: './images/DWD_Icon_Search-25.svg' })
+        ),
+        this.showMatches(this.state.matches)
       );
     }
   }]);

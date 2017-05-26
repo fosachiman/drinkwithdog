@@ -12,7 +12,9 @@ export default class Map extends React.Component {
     return (
       <div className="map-container">
         <div id="map">
-          <SearchBar />
+          <SearchBar
+            bars={this.props.bars}
+          />
           <BarMenu
             map={this.props.map}
             bars={this.props.bars}
