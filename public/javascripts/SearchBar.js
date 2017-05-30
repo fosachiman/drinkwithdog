@@ -10,6 +10,7 @@ export default class SearchBar extends React.Component {
     this.state = {
       matches: null
     }
+    this.clearMatches = this.clearMatches.bind(this);
   }
 
   searchBars(bars, input) {
@@ -47,11 +48,16 @@ export default class SearchBar extends React.Component {
             createMarker={this.props.createMarker}
             closeLastMarker={this.props.closeLastMarker}
             map={this.props.map}
+            clearMatches={this.clearMatches}
           />
         )
       })
     }
     return matchDisplay;
+  }
+
+  clearMatches() {
+    this.setState({ matches: null });
   }
 
   render() {

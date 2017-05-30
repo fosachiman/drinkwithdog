@@ -11187,11 +11187,16 @@ var BarListing = function (_React$Component) {
   function BarListing(props) {
     _classCallCheck(this, BarListing);
 
-    return _possibleConstructorReturn(this, (BarListing.__proto__ || Object.getPrototypeOf(BarListing)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (BarListing.__proto__ || Object.getPrototypeOf(BarListing)).call(this, props));
+
+    _this.state = {
+      style: {}
+    };
+    return _this;
   }
 
   _createClass(BarListing, [{
-    key: "handleBarClick",
+    key: 'handleBarClick',
     value: function handleBarClick(bar, marker) {
       this.props.closeLastMarker();
       this.props.singleBarView(bar, marker);
@@ -11199,34 +11204,51 @@ var BarListing = function (_React$Component) {
       this.props.map.flyTo({ center: [this.props.longitude, this.props.latitude] });
     }
   }, {
-    key: "openPopup",
+    key: 'openPopup',
     value: function openPopup(marker) {
       marker.togglePopup();
     }
   }, {
-    key: "render",
+    key: 'addStyle',
+    value: function addStyle() {
+      this.setState({ style: { backgroundColor: "rgb(253,176,46)" } });
+    }
+  }, {
+    key: 'removeStyle',
+    value: function removeStyle() {
+      this.setState({ style: {} });
+    }
+  }, {
+    key: 'render',
     value: function render() {
       var _this2 = this;
 
+      var marker = document.getElementById(this.props.bar.name.replace(/\s/g, '') + '-marker');
+      marker.addEventListener('mouseover', function () {
+        return _this2.addStyle();
+      });
+      marker.addEventListener('mouseout', function () {
+        return _this2.removeStyle();
+      });
       return _react2.default.createElement(
-        "div",
-        { className: "bar-listing", onClick: function onClick() {
+        'div',
+        { className: 'bar-listing', style: this.state.style, onClick: function onClick() {
             _this2.handleBarClick(_this2.props.bar, _this2.props.marker);
           } },
         _react2.default.createElement(
-          "div",
-          { className: "bar-name" },
+          'div',
+          { className: 'bar-name' },
           this.props.name
         ),
         _react2.default.createElement(
-          "div",
-          { className: "bar-type" },
+          'div',
+          { className: 'bar-type' },
           this.props.type,
-          " - "
+          ' - '
         ),
         _react2.default.createElement(
-          "div",
-          { className: "dog-policy" },
+          'div',
+          { className: 'dog-policy' },
           this.props.policy
         )
       );
@@ -11282,29 +11304,7 @@ var BarMenu = function (_React$Component) {
     _classCallCheck(this, BarMenu);
 
     return _possibleConstructorReturn(this, (BarMenu.__proto__ || Object.getPrototypeOf(BarMenu)).call(this, props));
-    // this.state = {
-    //   menu: 'list',
-    //   singleBar: null,
-    //   singleMarker: null,
-    // }
-    // this.singleBarView = this.singleBarView.bind(this);
-    // this.multiBarView = this.multiBarView.bind(this);
-    // this.closeLastMarker = this.closeLastMarker.bind(this);
   }
-
-  // closeLastMarker() {
-  //   if (this.props.singleMarker) {
-  //     let popup = this.props.singleMarker.getPopup();
-  //     if (popup.isOpen())
-  //       this.props.singleMarker.togglePopup();
-  //   }
-  // }
-
-  // singleBarView(bar, marker) {
-  //   this.setState({ singleBar: bar });
-  //   this.setState({ singleMarker: marker });
-  //   this.setState({ menu: 'bar' });
-  // }
 
   _createClass(BarMenu, [{
     key: 'renderSingleBarMenu',
@@ -11314,24 +11314,6 @@ var BarMenu = function (_React$Component) {
         marker: this.props.singleMarker
       });
     }
-    // multiBarView() {
-    //   this.setState({ menu: 'list' })
-    // }
-
-    // createMarker(bar) {
-    //   let el = document.createElement('div');
-    //   el.className = 'marker';
-    //   el.setAttribute('id', bar.name.replace(/\s/g, '') + '-marker');
-    //   let popup = new mapboxgl.Popup({closeButton: false, offset:25})
-    //     .setText(bar.name)
-    //   let marker = new mapboxgl.Marker(el, {offset:[-25, -25]})
-    //     .setLngLat([bar.longitude, bar.latitude])
-    //     .setPopup(popup)
-    //     .addTo(this.props.map);
-    //   el.addEventListener('click', () => this.singleBarView(bar, marker));
-    //   return marker;
-    // }
-
   }, {
     key: 'render',
     value: function render() {
@@ -11712,6 +11694,7 @@ var SearchBar = function (_React$Component) {
     _this.state = {
       matches: null
     };
+    _this.clearMatches = _this.clearMatches.bind(_this);
     return _this;
   }
 
@@ -11752,11 +11735,17 @@ var SearchBar = function (_React$Component) {
             singleBarView: _this2.props.singleBarView,
             createMarker: _this2.props.createMarker,
             closeLastMarker: _this2.props.closeLastMarker,
-            map: _this2.props.map
+            map: _this2.props.map,
+            clearMatches: _this2.clearMatches
           });
         });
       }
       return matchDisplay;
+    }
+  }, {
+    key: 'clearMatches',
+    value: function clearMatches() {
+      this.setState({ matches: null });
     }
   }, {
     key: 'render',
@@ -24833,6 +24822,12 @@ var SearchResult = function (_React$Component) {
       this.props.singleBarView(bar, marker);
       marker.togglePopup();
       this.props.map.flyTo({ center: [bar.longitude, bar.latitude] });
+      this.resetMatches();
+    }
+  }, {
+    key: 'resetMatches',
+    value: function resetMatches() {
+      this.props.clearMatches();
     }
   }, {
     key: 'render',

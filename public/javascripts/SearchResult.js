@@ -15,6 +15,11 @@ export default class SearchResult extends React.Component {
     this.props.singleBarView(bar, marker);
     marker.togglePopup();
     this.props.map.flyTo({ center: [bar.longitude, bar.latitude] });
+    this.resetMatches();
+  }
+
+  resetMatches() {
+    this.props.clearMatches()
   }
 
   render() {

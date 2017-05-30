@@ -7,29 +7,7 @@ export default class BarMenu extends React.Component {
 
   constructor(props) {
     super(props);
-    // this.state = {
-    //   menu: 'list',
-    //   singleBar: null,
-    //   singleMarker: null,
-    // }
-    // this.singleBarView = this.singleBarView.bind(this);
-    // this.multiBarView = this.multiBarView.bind(this);
-    // this.closeLastMarker = this.closeLastMarker.bind(this);
   }
-
-  // closeLastMarker() {
-  //   if (this.props.singleMarker) {
-  //     let popup = this.props.singleMarker.getPopup();
-  //     if (popup.isOpen())
-  //       this.props.singleMarker.togglePopup();
-  //   }
-  // }
-
-  // singleBarView(bar, marker) {
-  //   this.setState({ singleBar: bar });
-  //   this.setState({ singleMarker: marker });
-  //   this.setState({ menu: 'bar' });
-  // }
 
   renderSingleBarMenu(bar) {
     return (
@@ -39,23 +17,6 @@ export default class BarMenu extends React.Component {
       />
       )
   }
-  // multiBarView() {
-  //   this.setState({ menu: 'list' })
-  // }
-
-  // createMarker(bar) {
-  //   let el = document.createElement('div');
-  //   el.className = 'marker';
-  //   el.setAttribute('id', bar.name.replace(/\s/g, '') + '-marker');
-  //   let popup = new mapboxgl.Popup({closeButton: false, offset:25})
-  //     .setText(bar.name)
-  //   let marker = new mapboxgl.Marker(el, {offset:[-25, -25]})
-  //     .setLngLat([bar.longitude, bar.latitude])
-  //     .setPopup(popup)
-  //     .addTo(this.props.map);
-  //   el.addEventListener('click', () => this.singleBarView(bar, marker));
-  //   return marker;
-  // }
 
   render() {
     let renderBars;
