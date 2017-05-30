@@ -11281,74 +11281,69 @@ var BarMenu = function (_React$Component) {
   function BarMenu(props) {
     _classCallCheck(this, BarMenu);
 
-    var _this = _possibleConstructorReturn(this, (BarMenu.__proto__ || Object.getPrototypeOf(BarMenu)).call(this, props));
-
-    _this.state = {
-      menu: 'list',
-      singleBar: null,
-      singleMarker: null
-    };
-    _this.singleBarView = _this.singleBarView.bind(_this);
-    _this.multiBarView = _this.multiBarView.bind(_this);
-    _this.closeLastMarker = _this.closeLastMarker.bind(_this);
-    return _this;
+    return _possibleConstructorReturn(this, (BarMenu.__proto__ || Object.getPrototypeOf(BarMenu)).call(this, props));
+    // this.state = {
+    //   menu: 'list',
+    //   singleBar: null,
+    //   singleMarker: null,
+    // }
+    // this.singleBarView = this.singleBarView.bind(this);
+    // this.multiBarView = this.multiBarView.bind(this);
+    // this.closeLastMarker = this.closeLastMarker.bind(this);
   }
 
+  // closeLastMarker() {
+  //   if (this.props.singleMarker) {
+  //     let popup = this.props.singleMarker.getPopup();
+  //     if (popup.isOpen())
+  //       this.props.singleMarker.togglePopup();
+  //   }
+  // }
+
+  // singleBarView(bar, marker) {
+  //   this.setState({ singleBar: bar });
+  //   this.setState({ singleMarker: marker });
+  //   this.setState({ menu: 'bar' });
+  // }
+
   _createClass(BarMenu, [{
-    key: 'closeLastMarker',
-    value: function closeLastMarker() {
-      if (this.state.singleMarker) {
-        var popup = this.state.singleMarker.getPopup();
-        if (popup.isOpen()) this.state.singleMarker.togglePopup();
-      }
-    }
-  }, {
-    key: 'singleBarView',
-    value: function singleBarView(bar, marker) {
-      this.setState({ singleBar: bar });
-      this.setState({ singleMarker: marker });
-      this.setState({ menu: 'bar' });
-    }
-  }, {
     key: 'renderSingleBarMenu',
     value: function renderSingleBarMenu(bar) {
       return _react2.default.createElement(_ExpandedBar2.default, {
         bar: bar,
-        marker: this.state.singleMarker
+        marker: this.props.singleMarker
       });
     }
-  }, {
-    key: 'multiBarView',
-    value: function multiBarView() {
-      this.setState({ menu: 'list' });
-    }
-  }, {
-    key: 'createMarker',
-    value: function createMarker(bar) {
-      var _this2 = this;
+    // multiBarView() {
+    //   this.setState({ menu: 'list' })
+    // }
 
-      var el = document.createElement('div');
-      el.className = 'marker';
-      el.setAttribute('id', bar.name.replace(/\s/g, '') + '-marker');
-      var popup = new mapboxgl.Popup({ closeButton: false, offset: 25 }).setText(bar.name);
-      var marker = new mapboxgl.Marker(el, { offset: [-25, -25] }).setLngLat([bar.longitude, bar.latitude]).setPopup(popup).addTo(this.props.map);
-      el.addEventListener('click', function () {
-        return _this2.singleBarView(bar, marker);
-      });
-      return marker;
-    }
+    // createMarker(bar) {
+    //   let el = document.createElement('div');
+    //   el.className = 'marker';
+    //   el.setAttribute('id', bar.name.replace(/\s/g, '') + '-marker');
+    //   let popup = new mapboxgl.Popup({closeButton: false, offset:25})
+    //     .setText(bar.name)
+    //   let marker = new mapboxgl.Marker(el, {offset:[-25, -25]})
+    //     .setLngLat([bar.longitude, bar.latitude])
+    //     .setPopup(popup)
+    //     .addTo(this.props.map);
+    //   el.addEventListener('click', () => this.singleBarView(bar, marker));
+    //   return marker;
+    // }
+
   }, {
     key: 'render',
     value: function render() {
-      var _this3 = this;
+      var _this2 = this;
 
       var renderBars = void 0;
-      if (this.state.menu === 'bar') {
-        renderBars = this.renderSingleBarMenu(this.state.singleBar);
+      if (this.props.menu === 'bar') {
+        renderBars = this.renderSingleBarMenu(this.props.singleBar);
       } else {
         if (this.props.map) {
           renderBars = this.props.bars.map(function (bar, index) {
-            var marker = _this3.createMarker(bar);
+            var marker = _this2.props.createMarker(bar);
             return _react2.default.createElement(_BarListing2.default, {
               key: index,
               name: bar.name,
@@ -11360,11 +11355,11 @@ var BarMenu = function (_React$Component) {
               policy: bar.dogPolicy,
               latitude: bar.latitude,
               longitude: bar.longitude,
-              map: _this3.props.map,
+              map: _this2.props.map,
               bar: bar,
               marker: marker,
-              singleBarView: _this3.singleBarView,
-              closeLastMarker: _this3.closeLastMarker
+              singleBarView: _this2.props.singleBarView,
+              closeLastMarker: _this2.props.closeLastMarker
             });
           });
         }
@@ -11372,7 +11367,7 @@ var BarMenu = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         { className: 'bar-menu' },
-        _react2.default.createElement(_MenuHeader2.default, { menuState: this.state.menu, multiBarView: this.multiBarView }),
+        _react2.default.createElement(_MenuHeader2.default, { menuState: this.props.menu, multiBarView: this.props.multiBarView }),
         renderBars
       );
     }
@@ -11496,10 +11491,56 @@ var Map = function (_React$Component) {
   function Map(props) {
     _classCallCheck(this, Map);
 
-    return _possibleConstructorReturn(this, (Map.__proto__ || Object.getPrototypeOf(Map)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (Map.__proto__ || Object.getPrototypeOf(Map)).call(this, props));
+
+    _this.state = {
+      menu: 'list',
+      singleBar: null,
+      singleMarker: null
+    };
+    _this.singleBarView = _this.singleBarView.bind(_this);
+    _this.multiBarView = _this.multiBarView.bind(_this);
+    _this.createMarker = _this.createMarker.bind(_this);
+    _this.closeLastMarker = _this.closeLastMarker.bind(_this);
+    return _this;
   }
 
   _createClass(Map, [{
+    key: 'singleBarView',
+    value: function singleBarView(bar, marker) {
+      this.setState({ singleBar: bar });
+      this.setState({ singleMarker: marker });
+      this.setState({ menu: 'bar' });
+    }
+  }, {
+    key: 'multiBarView',
+    value: function multiBarView() {
+      this.setState({ menu: 'list' });
+    }
+  }, {
+    key: 'createMarker',
+    value: function createMarker(bar) {
+      var _this2 = this;
+
+      var el = document.createElement('div');
+      el.className = 'marker';
+      el.setAttribute('id', bar.name.replace(/\s/g, '') + '-marker');
+      var popup = new mapboxgl.Popup({ closeButton: false, offset: 25 }).setText(bar.name);
+      var marker = new mapboxgl.Marker(el, { offset: [-25, -25] }).setLngLat([bar.longitude, bar.latitude]).setPopup(popup).addTo(this.props.map);
+      el.addEventListener('click', function () {
+        return _this2.singleBarView(bar, marker);
+      });
+      return marker;
+    }
+  }, {
+    key: 'closeLastMarker',
+    value: function closeLastMarker() {
+      if (this.state.singleMarker) {
+        var popup = this.state.singleMarker.getPopup();
+        if (popup.isOpen()) this.state.singleMarker.togglePopup();
+      }
+    }
+  }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
@@ -11509,11 +11550,22 @@ var Map = function (_React$Component) {
           'div',
           { id: 'map' },
           _react2.default.createElement(_SearchBar2.default, {
-            bars: this.props.bars
+            bars: this.props.bars,
+            singleBarView: this.singleBarView,
+            createMarker: this.createMarker,
+            closeLastMarker: this.closeLastMarker,
+            map: this.props.map
           }),
           _react2.default.createElement(_Barmenu2.default, {
             map: this.props.map,
-            bars: this.props.bars
+            bars: this.props.bars,
+            menu: this.state.menu,
+            singleBar: this.state.singleBar,
+            singleMarker: this.state.singleMarker,
+            singleBarView: this.singleBarView,
+            multiBarView: this.multiBarView,
+            createMarker: this.createMarker,
+            closeLastMarker: this.closeLastMarker
           })
         )
       );
@@ -11637,6 +11689,10 @@ var _fuse = __webpack_require__(215);
 
 var _fuse2 = _interopRequireDefault(_fuse);
 
+var _SearchResult = __webpack_require__(216);
+
+var _SearchResult2 = _interopRequireDefault(_SearchResult);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -11685,18 +11741,19 @@ var SearchBar = function (_React$Component) {
   }, {
     key: 'showMatches',
     value: function showMatches(matches) {
+      var _this2 = this;
+
       var matchDisplay = void 0;
       if (matches) {
         matchDisplay = matches.map(function (match) {
-          return _react2.default.createElement(
-            'div',
-            { className: 'search-results' },
-            _react2.default.createElement(
-              'p',
-              null,
-              match.name
-            )
-          );
+          return _react2.default.createElement(_SearchResult2.default, {
+            name: match.name,
+            bar: match,
+            singleBarView: _this2.props.singleBarView,
+            createMarker: _this2.props.createMarker,
+            closeLastMarker: _this2.props.closeLastMarker,
+            map: _this2.props.map
+          });
         });
       }
       return matchDisplay;
@@ -11704,13 +11761,13 @@ var SearchBar = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _this2 = this;
+      var _this3 = this;
 
       return _react2.default.createElement(
         'div',
-        null,
+        { className: 'search-container' },
         _react2.default.createElement('input', { className: 'search-box', type: 'text', onChange: function onChange(e) {
-            return _this2.handleTextChange(e);
+            return _this3.handleTextChange(e);
           } }),
         _react2.default.createElement(
           'div',
@@ -24731,6 +24788,75 @@ module.exports = Fuse;
 /******/ ]);
 });
 //# sourceMappingURL=fuse.js.map
+
+/***/ }),
+/* 216 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(10);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var SearchResult = function (_React$Component) {
+  _inherits(SearchResult, _React$Component);
+
+  function SearchResult(props) {
+    _classCallCheck(this, SearchResult);
+
+    return _possibleConstructorReturn(this, (SearchResult.__proto__ || Object.getPrototypeOf(SearchResult)).call(this, props));
+  }
+
+  _createClass(SearchResult, [{
+    key: 'handleClick',
+    value: function handleClick(bar) {
+      var markerFind = document.getElementById(bar.name.replace(/\s/g, '') + '-marker');
+      if (markerFind) markerFind.parentNode.removeChild(markerFind);
+      var marker = this.props.createMarker(bar);
+      this.props.closeLastMarker();
+      this.props.singleBarView(bar, marker);
+      marker.togglePopup();
+      this.props.map.flyTo({ center: [bar.longitude, bar.latitude] });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
+
+      return _react2.default.createElement(
+        'div',
+        { className: 'search-results', onClick: function onClick() {
+            return _this2.handleClick(_this2.props.bar);
+          } },
+        _react2.default.createElement(
+          'p',
+          null,
+          this.props.name
+        )
+      );
+    }
+  }]);
+
+  return SearchResult;
+}(_react2.default.Component);
+
+exports.default = SearchResult;
 
 /***/ })
 /******/ ]);

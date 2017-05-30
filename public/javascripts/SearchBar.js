@@ -1,5 +1,6 @@
 import React from 'react';
 import Fuse from 'fuse.js';
+import SearchResult from './SearchResult';
 
 export default class SearchBar extends React.Component {
 
@@ -39,9 +40,14 @@ export default class SearchBar extends React.Component {
     if (matches) {
       matchDisplay = matches.map((match) => {
         return (
-          <div className="search-results">
-            <p>{match.name}</p>
-          </div>
+          <SearchResult
+            name={match.name}
+            bar={match}
+            singleBarView={this.props.singleBarView}
+            createMarker={this.props.createMarker}
+            closeLastMarker={this.props.closeLastMarker}
+            map={this.props.map}
+          />
         )
       })
     }
@@ -50,7 +56,7 @@ export default class SearchBar extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="search-container">
         <input className="search-box" type="text" onChange={(e) => this.handleTextChange(e)}/>
         <div className="search-button"><img className="search-image" src="./images/DWD_Icon_Search-25.svg" /></div>
         {this.showMatches(this.state.matches)}
