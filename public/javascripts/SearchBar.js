@@ -1,4 +1,5 @@
 import React from 'react';
+import Fuse from 'fuse.js';
 
 export default class SearchBar extends React.Component {
 
@@ -6,39 +7,31 @@ export default class SearchBar extends React.Component {
     super(props);
 
     this.state = {
-      textInput: '',
-      sortedBars: [],
-      matches: []
+      matches: null
     }
-    this.handleTextChange = this.handleTextChange.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props.bars !== nextProps.bars)
-      this.sortBars(nextProps)
-  }
-
-  sortBars(props) {
-    let sortedBars = props.bars.map((bar) => {
-        return bar.name;
-      }).sort();
-    this.setState({ sortedBars })
+  searchBars(bars, input) {
+    let options = {
+      shouldSort: true,
+      threshold: 0.2,
+      location: 0,
+      distance: 100,
+      maxPatternLength: 32,
+      minMatchCharLength: 3,
+      keys: [
+        "name"
+      ]
+    };
+    let fuse = new Fuse(bars, options);
+    let result = fuse.search(input);
+    console.log(result);
+    this.setState({ matches: result })
   }
 
   handleTextChange(e) {
     let input = e.target.value
-    this.setState({ textInput: input })
-    if (input.length > 2)
-      this.findMatches(input)
-  }
-
-  findMatches(input) {
-    let pattern = input;
-    let re = new RegExp(pattern, "gi");
-    let matches = this.state.sortedBars.filter((bar) => {
-      return bar.match(re)
-    })
-    this.setState({ matches })
+    this.searchBars(this.props.bars, input)
   }
 
   showMatches(matches) {
@@ -47,7 +40,7 @@ export default class SearchBar extends React.Component {
       matchDisplay = matches.map((match) => {
         return (
           <div className="search-results">
-            <p>{match}</p>
+            <p>{match.name}</p>
           </div>
         )
       })
@@ -56,10 +49,9 @@ export default class SearchBar extends React.Component {
   }
 
   render() {
-
     return (
       <div>
-        <input className="search-box" type="text" value={this.state.textInput} onChange={(e) => this.handleTextChange(e)}/>
+        <input className="search-box" type="text" onChange={(e) => this.handleTextChange(e)}/>
         <div className="search-button"><img className="search-image" src="./images/DWD_Icon_Search-25.svg" /></div>
         {this.showMatches(this.state.matches)}
       </div>

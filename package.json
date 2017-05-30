@@ -7,7 +7,6 @@
     "start": "nodemon ./bin/www"
   },
   "dependencies": {
-    "@google/maps": "^0.3.1",
     "axios": "^0.15.3",
     "babel-cli": "^6.24.0",
     "babel-core": "^6.24.0",
@@ -21,6 +20,7 @@
     "dotenv": "^4.0.0",
     "ejs": "~2.5.2",
     "express": "~4.14.0",
+    "fuse.js": "^3.0.4",
     "mongodb": "^2.2.25",
     "mongoose": "^4.9.3",
     "morgan": "~1.7.0",
