@@ -11517,9 +11517,6 @@ var Map = function (_React$Component) {
       el.addEventListener('click', function () {
         return _this2.singleBarView(bar, marker);
       });
-      // el.addEventListener('mouseover', () => this.highlight());
-      // el.addEventListener('mouseout', () => this.removeHighlight());
-      // console.log(marker._element)
       return marker;
     }
   }, {

@@ -251,17 +251,6 @@ let bars = [
 
 // THIS CODE ADDS ALL BARS TO DATABASE
 // function updateBars(barData) {
-//   db.once('open', function() {
-//     barData.forEach((bar) => {
-//       bar.save(function (err, barData) {
-//         if (err) return console.error(err);
-//         console.log(barData);
-//       })
-//     })
-//   });
-// }
-
-// function updateBars(barData) {
 //   barData.forEach((bar) => {
 //     Bar.create(bar, function (err, barData) {
 //       if (err) return console.error(err);
