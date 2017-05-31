@@ -38,6 +38,9 @@ export default class Map extends React.Component {
       .setPopup(popup)
       .addTo(this.props.map);
     el.addEventListener('click', () => this.singleBarView(bar, marker));
+    // el.addEventListener('mouseover', () => this.highlight());
+    // el.addEventListener('mouseout', () => this.removeHighlight());
+    // console.log(marker._element)
       return marker;
   }
 

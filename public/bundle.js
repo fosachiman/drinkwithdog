@@ -11196,6 +11196,18 @@ var BarListing = function (_React$Component) {
   }
 
   _createClass(BarListing, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      this.props.marker._element.addEventListener('mouseover', function () {
+        return _this2.addStyle();
+      });
+      this.props.marker._element.addEventListener('mouseout', function () {
+        return _this2.removeStyle();
+      });
+    }
+  }, {
     key: 'handleBarClick',
     value: function handleBarClick(bar, marker) {
       this.props.closeLastMarker();
@@ -11221,19 +11233,12 @@ var BarListing = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _this2 = this;
+      var _this3 = this;
 
-      var marker = document.getElementById(this.props.bar.name.replace(/\s/g, '') + '-marker');
-      marker.addEventListener('mouseover', function () {
-        return _this2.addStyle();
-      });
-      marker.addEventListener('mouseout', function () {
-        return _this2.removeStyle();
-      });
       return _react2.default.createElement(
         'div',
         { className: 'bar-listing', style: this.state.style, onClick: function onClick() {
-            _this2.handleBarClick(_this2.props.bar, _this2.props.marker);
+            _this3.handleBarClick(_this3.props.bar, _this3.props.marker);
           } },
         _react2.default.createElement(
           'div',
@@ -11512,6 +11517,9 @@ var Map = function (_React$Component) {
       el.addEventListener('click', function () {
         return _this2.singleBarView(bar, marker);
       });
+      // el.addEventListener('mouseover', () => this.highlight());
+      // el.addEventListener('mouseout', () => this.removeHighlight());
+      // console.log(marker._element)
       return marker;
     }
   }, {

@@ -10,6 +10,11 @@ export default class BarListing extends React.Component {
     }
   }
 
+  componentDidMount() {
+    this.props.marker._element.addEventListener('mouseover', () => this.addStyle())
+    this.props.marker._element.addEventListener('mouseout', () => this.removeStyle())
+  }
+
   handleBarClick(bar, marker) {
     this.props.closeLastMarker()
     this.props.singleBarView(bar, marker);
@@ -30,9 +35,6 @@ export default class BarListing extends React.Component {
   }
 
   render() {
-    let marker = document.getElementById(this.props.bar.name.replace(/\s/g, '') + '-marker');
-    marker.addEventListener('mouseover', () => this.addStyle())
-    marker.addEventListener('mouseout', () => this.removeStyle())
     return (
       <div className="bar-listing" style={this.state.style} onClick={() => {this.handleBarClick(this.props.bar, this.props.marker)}}>
         <div className="bar-name">{this.props.name}</div>
