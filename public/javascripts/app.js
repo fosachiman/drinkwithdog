@@ -17,7 +17,7 @@ export default class App extends React.Component {
 
   componentDidMount() {
     mapboxgl.accessToken = 'pk.eyJ1IjoiZm9zYWNoaW1hbiIsImEiOiJjajB4eng5M2owMW5sMzJtdGRzNHBjaGxsIn0.yWVExsYazGI3TOlGhLNv-w';
-    let location = this.getCurrentPosition();
+    this.getCurrentPosition();
     this.getBars();
   }
 
@@ -33,13 +33,19 @@ export default class App extends React.Component {
 
   getCurrentPosition() {
     let geo = navigator.geolocation;
-    geo.getCurrentPosition(this.success, error);
-    let error = (err) => {
-      console.log(err);
+    let geoOptions = {
+      maximumAge: 5 * 60 * 1000,
+      timeout: 10 * 1000
     }
+    geo.getCurrentPosition(this.success, this.error, geoOptions);
+  }
+
+  error(err) {
+    console.log(err)
   }
 
   success(pos) {
+    console.log('HELLO')
     let crd = pos.coords;
     let lat = crd.latitude;
     let lng = crd.longitude;

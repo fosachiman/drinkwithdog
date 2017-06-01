@@ -9816,7 +9816,7 @@ var App = function (_React$Component) {
     key: 'componentDidMount',
     value: function componentDidMount() {
       mapboxgl.accessToken = 'pk.eyJ1IjoiZm9zYWNoaW1hbiIsImEiOiJjajB4eng5M2owMW5sMzJtdGRzNHBjaGxsIn0.yWVExsYazGI3TOlGhLNv-w';
-      var location = this.getCurrentPosition();
+      this.getCurrentPosition();
       this.getBars();
     }
   }, {
@@ -9834,14 +9834,21 @@ var App = function (_React$Component) {
     key: 'getCurrentPosition',
     value: function getCurrentPosition() {
       var geo = navigator.geolocation;
-      geo.getCurrentPosition(this.success, error);
-      var error = function error(err) {
-        console.log(err);
+      var geoOptions = {
+        maximumAge: 5 * 60 * 1000,
+        timeout: 10 * 1000
       };
+      geo.getCurrentPosition(this.success, this.error, geoOptions);
+    }
+  }, {
+    key: 'error',
+    value: function error(err) {
+      console.log(err);
     }
   }, {
     key: 'success',
     value: function success(pos) {
+      console.log('HELLO');
       var crd = pos.coords;
       var lat = crd.latitude;
       var lng = crd.longitude;
@@ -11200,6 +11207,7 @@ var BarListing = function (_React$Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
+      console.log('oh shit');
       this.props.marker._element.addEventListener('mouseover', function () {
         return _this2.addStyle();
       });
