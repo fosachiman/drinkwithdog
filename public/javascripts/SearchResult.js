@@ -23,8 +23,11 @@ export default class SearchResult extends React.Component {
   }
 
   render() {
+    let style;
+    if (!this.props.focused)
+      style = {visibility: 'hidden'}
     return (
-      <div className="search-results" onClick={() => this.handleClick(this.props.bar)}>
+      <div className="search-results" style={style} onClick={() => this.handleClick(this.props.bar)}>
         <p>{this.props.name}</p>
       </div>
     );

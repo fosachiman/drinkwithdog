@@ -8,7 +8,8 @@ export default class SearchBar extends React.Component {
     super(props);
 
     this.state = {
-      matches: null
+      matches: null,
+      focused: false
     }
     this.clearMatches = this.clearMatches.bind(this);
   }
@@ -49,6 +50,7 @@ export default class SearchBar extends React.Component {
             closeLastMarker={this.props.closeLastMarker}
             map={this.props.map}
             clearMatches={this.clearMatches}
+            focused={this.state.focused}
           />
         )
       })
@@ -60,10 +62,22 @@ export default class SearchBar extends React.Component {
     this.setState({ matches: null });
   }
 
+  focus() {
+    this.setState({ focused: true })
+  }
+
+  focusOut() {
+    this.setState({ focused: false })
+  }
+
   render() {
     return (
       <div className="search-container">
-        <input className="search-box" type="text" onChange={(e) => this.handleTextChange(e)}/>
+        <input className="search-box" type="text"
+          onChange={(e) => this.handleTextChange(e)}
+          onFocus={() => this.focus()}
+          onBlur={() => this.focusOut()}
+        />
         <div className="search-button"><img className="search-image" src="./images/DWD_Icon_Search-25.svg" /></div>
         {this.showMatches(this.state.matches)}
       </div>

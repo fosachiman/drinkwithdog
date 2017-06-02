@@ -9834,11 +9834,11 @@ var App = function (_React$Component) {
     key: 'getCurrentPosition',
     value: function getCurrentPosition() {
       var geo = navigator.geolocation;
-      var geoOptions = {
-        maximumAge: 5 * 60 * 1000,
-        timeout: 10 * 1000
-      };
-      geo.getCurrentPosition(this.success, this.error, geoOptions);
+      // let geoOptions = {
+      //   maximumAge: 5 * 60 * 1000,
+      //   timeout: 10 * 1000
+      // }
+      geo.getCurrentPosition(this.success, this.error);
     }
   }, {
     key: 'error',
@@ -9848,7 +9848,6 @@ var App = function (_React$Component) {
   }, {
     key: 'success',
     value: function success(pos) {
-      console.log('HELLO');
       var crd = pos.coords;
       var lat = crd.latitude;
       var lng = crd.longitude;
@@ -11207,7 +11206,7 @@ var BarListing = function (_React$Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      console.log('oh shit');
+      // console.log('oh shit');
       this.props.marker._element.addEventListener('mouseover', function () {
         return _this2.addStyle();
       });
@@ -11705,7 +11704,8 @@ var SearchBar = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (SearchBar.__proto__ || Object.getPrototypeOf(SearchBar)).call(this, props));
 
     _this.state = {
-      matches: null
+      matches: null,
+      focused: false
     };
     _this.clearMatches = _this.clearMatches.bind(_this);
     return _this;
@@ -11749,7 +11749,8 @@ var SearchBar = function (_React$Component) {
             createMarker: _this2.props.createMarker,
             closeLastMarker: _this2.props.closeLastMarker,
             map: _this2.props.map,
-            clearMatches: _this2.clearMatches
+            clearMatches: _this2.clearMatches,
+            focused: _this2.state.focused
           });
         });
       }
@@ -11761,6 +11762,16 @@ var SearchBar = function (_React$Component) {
       this.setState({ matches: null });
     }
   }, {
+    key: 'focus',
+    value: function focus() {
+      this.setState({ focused: true });
+    }
+  }, {
+    key: 'focusOut',
+    value: function focusOut() {
+      this.setState({ focused: false });
+    }
+  }, {
     key: 'render',
     value: function render() {
       var _this3 = this;
@@ -11768,9 +11779,17 @@ var SearchBar = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         { className: 'search-container' },
-        _react2.default.createElement('input', { className: 'search-box', type: 'text', onChange: function onChange(e) {
+        _react2.default.createElement('input', { className: 'search-box', type: 'text',
+          onChange: function onChange(e) {
             return _this3.handleTextChange(e);
-          } }),
+          },
+          onFocus: function onFocus() {
+            return _this3.focus();
+          },
+          onBlur: function onBlur() {
+            return _this3.focusOut();
+          }
+        }),
         _react2.default.createElement(
           'div',
           { className: 'search-button' },
@@ -24847,9 +24866,11 @@ var SearchResult = function (_React$Component) {
     value: function render() {
       var _this2 = this;
 
+      var style = void 0;
+      if (!this.props.focused) style = { visibility: 'hidden' };
       return _react2.default.createElement(
         'div',
-        { className: 'search-results', onClick: function onClick() {
+        { className: 'search-results', style: style, onClick: function onClick() {
             return _this2.handleClick(_this2.props.bar);
           } },
         _react2.default.createElement(

@@ -33,11 +33,11 @@ export default class App extends React.Component {
 
   getCurrentPosition() {
     let geo = navigator.geolocation;
-    let geoOptions = {
-      maximumAge: 5 * 60 * 1000,
-      timeout: 10 * 1000
-    }
-    geo.getCurrentPosition(this.success, this.error, geoOptions);
+    // let geoOptions = {
+    //   maximumAge: 5 * 60 * 1000,
+    //   timeout: 10 * 1000
+    // }
+    geo.getCurrentPosition(this.success, this.error);
   }
 
   error(err) {
@@ -45,7 +45,6 @@ export default class App extends React.Component {
   }
 
   success(pos) {
-    console.log('HELLO')
     let crd = pos.coords;
     let lat = crd.latitude;
     let lng = crd.longitude;
