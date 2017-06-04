@@ -28,7 +28,6 @@ export default class SearchBar extends React.Component {
     };
     let fuse = new Fuse(bars, options);
     let result = fuse.search(input);
-    console.log(result);
     this.setState({ matches: result })
   }
 
@@ -72,11 +71,10 @@ export default class SearchBar extends React.Component {
 
   render() {
     return (
-      <div className="search-container">
+      <div className="search-container" tabIndex="1" onBlur={() => this.focusOut()} onFocus={() => this.focus()}>
         <input className="search-box" type="text"
           onChange={(e) => this.handleTextChange(e)}
-          onFocus={() => this.focus()}
-          onBlur={() => this.focusOut()}
+
         />
         <div className="search-button"><img className="search-image" src="./images/DWD_Icon_Search-25.svg" /></div>
         {this.showMatches(this.state.matches)}
