@@ -11,7 +11,6 @@ export default class BarListing extends React.Component {
   }
 
   componentDidMount() {
-    // console.log('oh shit');
     this.props.marker._element.addEventListener('mouseover', () => this.addStyle())
     this.props.marker._element.addEventListener('mouseout', () => this.removeStyle())
   }

@@ -25,16 +25,29 @@ a
   color: #00B7FF
 
 #map
-  height: 600px
+  height: 100%
   width: 100%
   position: absolute
   margin: 0
   padding: 0
 
+#app
+  height: 100%
+
+#app > div
+  height: inherit
+
+#app > div > div
+  height: inherit
+
+
 .map-container
   height: 100%
   width: 100%
   position: relative
+
+.mapboxgl-canvas
+  height: 100% !important
 
 .bar-menu
   position: fixed
