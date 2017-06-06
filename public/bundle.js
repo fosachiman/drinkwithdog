@@ -11506,6 +11506,7 @@ var Map = function (_React$Component) {
     _this.multiBarView = _this.multiBarView.bind(_this);
     _this.createMarker = _this.createMarker.bind(_this);
     _this.closeLastMarker = _this.closeLastMarker.bind(_this);
+    _this.getBarDistances = _this.getBarDistances.bind(_this);
     return _this;
   }
 
@@ -11532,9 +11533,7 @@ var Map = function (_React$Component) {
       var _this2 = this;
 
       var center = map.getCenter();
-      console.log(center);
       var currentLatitude = center.lat;
-      console.log(currentLatitude);
       var currentLongitude = center.lng;
       var closeBars = this.props.bars.map(function (bar) {
         return { distance: [_this2.distance(bar.latitude, bar.longitude, currentLatitude, currentLongitude)], bar: bar };
@@ -11596,7 +11595,8 @@ var Map = function (_React$Component) {
             singleBarView: this.singleBarView,
             createMarker: this.createMarker,
             closeLastMarker: this.closeLastMarker,
-            map: this.props.map
+            map: this.props.map,
+            getBarDistances: this.getBarDistances
           }),
           _react2.default.createElement(_Barmenu2.default, {
             map: this.props.map,
@@ -11834,12 +11834,18 @@ var SearchBar = function (_React$Component) {
           onChange: function onChange(e) {
             return _this3.handleTextChange(e);
           }
-
         }),
         _react2.default.createElement(
           'div',
           { className: 'search-button' },
           _react2.default.createElement('img', { className: 'search-image', src: './images/DWD_Icon_Search-25.svg' })
+        ),
+        _react2.default.createElement(
+          'button',
+          { onClick: function onClick() {
+              return _this3.props.getBarDistances(_this3.props.map);
+            } },
+          'BUTTON'
         ),
         this.showMatches(this.state.matches)
       );

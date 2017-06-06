@@ -15,7 +15,7 @@ export default class BarMenu extends React.Component {
         bar={bar}
         marker={this.props.singleMarker}
       />
-      )
+    )
   }
 
   render() {

@@ -16,6 +16,7 @@ export default class Map extends React.Component {
     this.multiBarView = this.multiBarView.bind(this);
     this.createMarker = this.createMarker.bind(this);
     this.closeLastMarker = this.closeLastMarker.bind(this);
+    this.getBarDistances = this.getBarDistances.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -35,9 +36,7 @@ export default class Map extends React.Component {
 
   getBarDistances(map) {
     let center = map.getCenter();
-    console.log(center);
     let currentLatitude = center.lat;
-    console.log(currentLatitude)
     let currentLongitude = center.lng;
     let closeBars = this.props.bars.map((bar) => {
       return {distance: [this.distance(bar.latitude, bar.longitude, currentLatitude, currentLongitude)], bar: bar}
@@ -95,6 +94,7 @@ export default class Map extends React.Component {
             createMarker={this.createMarker}
             closeLastMarker={this.closeLastMarker}
             map={this.props.map}
+            getBarDistances={this.getBarDistances}
           />
           <BarMenu
             map={this.props.map}

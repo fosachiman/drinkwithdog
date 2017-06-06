@@ -74,9 +74,9 @@ export default class SearchBar extends React.Component {
       <div className="search-container" tabIndex="1" onBlur={() => this.focusOut()} onFocus={() => this.focus()}>
         <input className="search-box" type="text"
           onChange={(e) => this.handleTextChange(e)}
-
         />
         <div className="search-button"><img className="search-image" src="./images/DWD_Icon_Search-25.svg" /></div>
+        <button onClick={() => this.props.getBarDistances(this.props.map)}>BUTTON</button>
         {this.showMatches(this.state.matches)}
       </div>
     );
