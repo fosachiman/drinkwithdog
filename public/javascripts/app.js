@@ -56,6 +56,16 @@ export default class App extends React.Component {
       hash: true,
       center: this.state.latlng
     });
+    // let geoLocateControl = map.addControl(new mapboxgl.GeolocateControl({
+    //   positionOptions: {
+    //       enableHighAccuracy: true,
+    //   },
+    //   trackUserLocation: {
+    //     showUserLocation: true,
+    //     trackUserLocation: true
+    //   }
+    // }));
+    // console.log(geoLocateControl)
     this.setState({ map });
   }
 

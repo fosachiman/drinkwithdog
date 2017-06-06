@@ -9859,6 +9859,16 @@ var App = function (_React$Component) {
         hash: true,
         center: this.state.latlng
       });
+      // let geoLocateControl = map.addControl(new mapboxgl.GeolocateControl({
+      //   positionOptions: {
+      //       enableHighAccuracy: true,
+      //   },
+      //   trackUserLocation: {
+      //     showUserLocation: true,
+      //     trackUserLocation: true
+      //   }
+      // }));
+      // console.log(geoLocateControl)
       this.setState({ map: map });
     }
   }, {
@@ -11489,7 +11499,8 @@ var Map = function (_React$Component) {
     _this.state = {
       menu: 'list',
       singleBar: null,
-      singleMarker: null
+      singleMarker: null,
+      closeBars: []
     };
     _this.singleBarView = _this.singleBarView.bind(_this);
     _this.multiBarView = _this.multiBarView.bind(_this);
@@ -11499,6 +11510,11 @@ var Map = function (_React$Component) {
   }
 
   _createClass(Map, [{
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      if (this.props.map !== nextProps.map) this.getBarDistances(nextProps.map);
+    }
+  }, {
     key: 'singleBarView',
     value: function singleBarView(bar, marker) {
       this.setState({ singleBar: bar });
@@ -11511,9 +11527,42 @@ var Map = function (_React$Component) {
       this.setState({ menu: 'list' });
     }
   }, {
+    key: 'getBarDistances',
+    value: function getBarDistances(map) {
+      var _this2 = this;
+
+      var center = map.getCenter();
+      console.log(center);
+      var currentLatitude = center.lat;
+      console.log(currentLatitude);
+      var currentLongitude = center.lng;
+      var closeBars = this.props.bars.map(function (bar) {
+        return { distance: [_this2.distance(bar.latitude, bar.longitude, currentLatitude, currentLongitude)], bar: bar };
+      }).sort(function (a, b) {
+        return a.distance - b.distance;
+      }).filter(function (bar, index) {
+        return index < 7;
+      }).map(function (bar) {
+        return bar.bar;
+      });
+      this.setState({ closeBars: closeBars });
+    }
+
+    //distance calculation copied from StackOverflow (Haverstine Formula Thread)
+
+  }, {
+    key: 'distance',
+    value: function distance(lat1, lon1, lat2, lon2) {
+      var p = 0.017453292519943295; // Math.PI / 180
+      var c = Math.cos;
+      var a = 0.5 - c((lat2 - lat1) * p) / 2 + c(lat1 * p) * c(lat2 * p) * (1 - c((lon2 - lon1) * p)) / 2;
+
+      return 12742 * Math.asin(Math.sqrt(a)); // 2 * R; R = 6371 km
+    }
+  }, {
     key: 'createMarker',
     value: function createMarker(bar) {
-      var _this2 = this;
+      var _this3 = this;
 
       var el = document.createElement('div');
       el.className = 'marker';
@@ -11521,7 +11570,7 @@ var Map = function (_React$Component) {
       var popup = new mapboxgl.Popup({ closeButton: false, offset: 25 }).setText(bar.name);
       var marker = new mapboxgl.Marker(el, { offset: [-25, -25] }).setLngLat([bar.longitude, bar.latitude]).setPopup(popup).addTo(this.props.map);
       el.addEventListener('click', function () {
-        return _this2.singleBarView(bar, marker);
+        return _this3.singleBarView(bar, marker);
       });
       return marker;
     }
@@ -11551,7 +11600,7 @@ var Map = function (_React$Component) {
           }),
           _react2.default.createElement(_Barmenu2.default, {
             map: this.props.map,
-            bars: this.props.bars,
+            bars: this.state.closeBars,
             menu: this.state.menu,
             singleBar: this.state.singleBar,
             singleMarker: this.state.singleMarker,
