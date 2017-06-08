@@ -9,6 +9,14 @@ export default class BarMenu extends React.Component {
     super(props);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.bars !== nextProps.bars) {
+      this.props.bars.forEach((bar) => {
+        bar.marker.remove()
+      })
+    }
+  }
+
   renderSingleBarMenu(bar) {
     return (
       <ExpandedBar
@@ -24,26 +32,19 @@ export default class BarMenu extends React.Component {
       renderBars = this.renderSingleBarMenu(this.props.singleBar);
     }
     else {
+      let markers = []
       if (this.props.map) {
         renderBars = this.props.bars.map((bar, index) => {
-          let marker = this.props.createMarker(bar);
+          let marker = bar.marker;
         return (
           <BarListing
             key={index}
-            name={bar.name}
-            address={bar.address}
-            copy={bar.copy}
-            hours={bar.hours}
-            website={bar.website}
-            type={bar.type}
-            policy={bar.dogPolicy}
-            latitude={bar.latitude}
-            longitude={bar.longitude}
             map={this.props.map}
-            bar={bar}
+            bar={bar.bar.bar}
             marker={marker}
             singleBarView={this.props.singleBarView}
             closeLastMarker={this.props.closeLastMarker}
+            createMarker={this.props.createMarker}
           />
         )
         })

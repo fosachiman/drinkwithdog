@@ -7,10 +7,14 @@ export default class SearchResult extends React.Component {
   }
 
   handleClick(bar) {
+    let marker;
     let markerFind = document.getElementById(bar.name.replace(/\s/g, '') + '-marker');
-    if (markerFind)
-      markerFind.parentNode.removeChild(markerFind);
-    let marker = this.props.createMarker(bar);
+    if (!markerFind)
+      marker = this.props.createMarker(bar, this.props.map);
+    else {
+      let clickedBar = this.props.closeBarsAndMarkers.find(closeBar => closeBar.bar.bar === bar)
+      marker = clickedBar.marker;
+    }
     this.props.closeLastMarker();
     this.props.singleBarView(bar, marker);
     marker.togglePopup();

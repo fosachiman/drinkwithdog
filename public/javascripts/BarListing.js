@@ -15,11 +15,18 @@ export default class BarListing extends React.Component {
     this.props.marker._element.addEventListener('mouseout', () => this.removeStyle())
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.marker !== nextProps.marker) {
+      nextProps.marker._element.addEventListener('mouseover', () => this.addStyle())
+      nextProps.marker._element.addEventListener('mouseout', () => this.removeStyle())
+    }
+  }
+
   handleBarClick(bar, marker) {
     this.props.closeLastMarker()
     this.props.singleBarView(bar, marker);
     this.openPopup(marker);
-    this.props.map.flyTo({ center: [this.props.longitude, this.props.latitude] });
+    this.props.map.flyTo({ center: [this.props.bar.longitude, this.props.bar.latitude] });
   }
 
   openPopup(marker) {
@@ -37,9 +44,9 @@ export default class BarListing extends React.Component {
   render() {
     return (
       <div className="bar-listing" style={this.state.style} onClick={() => {this.handleBarClick(this.props.bar, this.props.marker)}}>
-        <div className="bar-name">{this.props.name}</div>
-        <div className="bar-type">{this.props.type} - </div>
-        <div className="dog-policy">{this.props.policy}</div>
+        <div className="bar-name">{this.props.bar.name}</div>
+        <div className="bar-type">{this.props.bar.type} - </div>
+        <div className="dog-policy">{this.props.bar.dogPolicy}</div>
       </div>
     );
   }

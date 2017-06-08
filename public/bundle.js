@@ -11224,12 +11224,26 @@ var BarListing = function (_React$Component) {
       });
     }
   }, {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      var _this3 = this;
+
+      if (this.props.marker !== nextProps.marker) {
+        nextProps.marker._element.addEventListener('mouseover', function () {
+          return _this3.addStyle();
+        });
+        nextProps.marker._element.addEventListener('mouseout', function () {
+          return _this3.removeStyle();
+        });
+      }
+    }
+  }, {
     key: 'handleBarClick',
     value: function handleBarClick(bar, marker) {
       this.props.closeLastMarker();
       this.props.singleBarView(bar, marker);
       this.openPopup(marker);
-      this.props.map.flyTo({ center: [this.props.longitude, this.props.latitude] });
+      this.props.map.flyTo({ center: [this.props.bar.longitude, this.props.bar.latitude] });
     }
   }, {
     key: 'openPopup',
@@ -11249,28 +11263,28 @@ var BarListing = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _this3 = this;
+      var _this4 = this;
 
       return _react2.default.createElement(
         'div',
         { className: 'bar-listing', style: this.state.style, onClick: function onClick() {
-            _this3.handleBarClick(_this3.props.bar, _this3.props.marker);
+            _this4.handleBarClick(_this4.props.bar, _this4.props.marker);
           } },
         _react2.default.createElement(
           'div',
           { className: 'bar-name' },
-          this.props.name
+          this.props.bar.name
         ),
         _react2.default.createElement(
           'div',
           { className: 'bar-type' },
-          this.props.type,
+          this.props.bar.type,
           ' - '
         ),
         _react2.default.createElement(
           'div',
           { className: 'dog-policy' },
-          this.props.policy
+          this.props.bar.dogPolicy
         )
       );
     }
@@ -11328,6 +11342,15 @@ var BarMenu = function (_React$Component) {
   }
 
   _createClass(BarMenu, [{
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      if (this.props.bars !== nextProps.bars) {
+        this.props.bars.forEach(function (bar) {
+          bar.marker.remove();
+        });
+      }
+    }
+  }, {
     key: 'renderSingleBarMenu',
     value: function renderSingleBarMenu(bar) {
       return _react2.default.createElement(_ExpandedBar2.default, {
@@ -11344,25 +11367,18 @@ var BarMenu = function (_React$Component) {
       if (this.props.menu === 'bar') {
         renderBars = this.renderSingleBarMenu(this.props.singleBar);
       } else {
+        var markers = [];
         if (this.props.map) {
           renderBars = this.props.bars.map(function (bar, index) {
-            var marker = _this2.props.createMarker(bar);
+            var marker = bar.marker;
             return _react2.default.createElement(_BarListing2.default, {
               key: index,
-              name: bar.name,
-              address: bar.address,
-              copy: bar.copy,
-              hours: bar.hours,
-              website: bar.website,
-              type: bar.type,
-              policy: bar.dogPolicy,
-              latitude: bar.latitude,
-              longitude: bar.longitude,
               map: _this2.props.map,
-              bar: bar,
+              bar: bar.bar.bar,
               marker: marker,
               singleBarView: _this2.props.singleBarView,
-              closeLastMarker: _this2.props.closeLastMarker
+              closeLastMarker: _this2.props.closeLastMarker,
+              createMarker: _this2.props.createMarker
             });
           });
         }
@@ -11500,7 +11516,7 @@ var Map = function (_React$Component) {
       menu: 'list',
       singleBar: null,
       singleMarker: null,
-      closeBars: []
+      closeBarsAndMarkers: []
     };
     _this.singleBarView = _this.singleBarView.bind(_this);
     _this.multiBarView = _this.multiBarView.bind(_this);
@@ -11518,6 +11534,7 @@ var Map = function (_React$Component) {
   }, {
     key: 'singleBarView',
     value: function singleBarView(bar, marker) {
+      if (!marker) marker = this.createMarker(bar, this.props.map);
       this.setState({ singleBar: bar });
       this.setState({ singleMarker: marker });
       this.setState({ menu: 'bar' });
@@ -11535,16 +11552,16 @@ var Map = function (_React$Component) {
       var center = map.getCenter();
       var currentLatitude = center.lat;
       var currentLongitude = center.lng;
-      var closeBars = this.props.bars.map(function (bar) {
+      var closeBarsAndMarkers = this.props.bars.map(function (bar) {
         return { distance: [_this2.distance(bar.latitude, bar.longitude, currentLatitude, currentLongitude)], bar: bar };
       }).sort(function (a, b) {
         return a.distance - b.distance;
       }).filter(function (bar, index) {
         return index < 7;
       }).map(function (bar) {
-        return bar.bar;
+        return { bar: bar, marker: _this2.createMarker(bar.bar, map) };
       });
-      this.setState({ closeBars: closeBars });
+      this.setState({ closeBarsAndMarkers: closeBarsAndMarkers });
     }
 
     //distance calculation copied from StackOverflow (Haverstine Formula Thread)
@@ -11560,14 +11577,14 @@ var Map = function (_React$Component) {
     }
   }, {
     key: 'createMarker',
-    value: function createMarker(bar) {
+    value: function createMarker(bar, map) {
       var _this3 = this;
 
       var el = document.createElement('div');
       el.className = 'marker';
       el.setAttribute('id', bar.name.replace(/\s/g, '') + '-marker');
       var popup = new mapboxgl.Popup({ closeButton: false, offset: 25 }).setText(bar.name);
-      var marker = new mapboxgl.Marker(el, { offset: [-25, -25] }).setLngLat([bar.longitude, bar.latitude]).setPopup(popup).addTo(this.props.map);
+      var marker = new mapboxgl.Marker(el, { offset: [-25, -25] }).setLngLat([bar.longitude, bar.latitude]).setPopup(popup).addTo(map);
       el.addEventListener('click', function () {
         return _this3.singleBarView(bar, marker);
       });
@@ -11596,18 +11613,20 @@ var Map = function (_React$Component) {
             createMarker: this.createMarker,
             closeLastMarker: this.closeLastMarker,
             map: this.props.map,
-            getBarDistances: this.getBarDistances
+            getBarDistances: this.getBarDistances,
+            closeBarsAndMarkers: this.state.closeBarsAndMarkers
           }),
           _react2.default.createElement(_Barmenu2.default, {
             map: this.props.map,
-            bars: this.state.closeBars,
+            bars: this.state.closeBarsAndMarkers,
             menu: this.state.menu,
             singleBar: this.state.singleBar,
             singleMarker: this.state.singleMarker,
             singleBarView: this.singleBarView,
             multiBarView: this.multiBarView,
             createMarker: this.createMarker,
-            closeLastMarker: this.closeLastMarker
+            closeLastMarker: this.closeLastMarker,
+            setMarkerState: this.setMarkerState
           })
         )
       );
@@ -11662,7 +11681,7 @@ var MenuHeader = function (_React$Component) {
         _react2.default.createElement(
           'h3',
           { className: 'menu-title' },
-          'List View'
+          'Bars Nearest You'
         )
       );
     }
@@ -11797,7 +11816,8 @@ var SearchBar = function (_React$Component) {
             closeLastMarker: _this2.props.closeLastMarker,
             map: _this2.props.map,
             clearMatches: _this2.clearMatches,
-            focused: _this2.state.focused
+            focused: _this2.state.focused,
+            closeBarsAndMarkers: _this2.props.closeBarsAndMarkers
           });
         });
       }
@@ -11894,9 +11914,14 @@ var SearchResult = function (_React$Component) {
   _createClass(SearchResult, [{
     key: 'handleClick',
     value: function handleClick(bar) {
+      var marker = void 0;
       var markerFind = document.getElementById(bar.name.replace(/\s/g, '') + '-marker');
-      if (markerFind) markerFind.parentNode.removeChild(markerFind);
-      var marker = this.props.createMarker(bar);
+      if (!markerFind) marker = this.props.createMarker(bar, this.props.map);else {
+        var clickedBar = this.props.closeBarsAndMarkers.find(function (closeBar) {
+          return closeBar.bar.bar === bar;
+        });
+        marker = clickedBar.marker;
+      }
       this.props.closeLastMarker();
       this.props.singleBarView(bar, marker);
       marker.togglePopup();

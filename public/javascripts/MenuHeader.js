@@ -9,7 +9,7 @@ export default class MenuHeader extends React.Component {
   listMenuHeader() {
     return (
       <div className='menu-header'>
-        <h3 className="menu-title">List View</h3>
+        <h3 className="menu-title">Bars Nearest You</h3>
       </div>
     )
   }

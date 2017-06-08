@@ -10,7 +10,7 @@ export default class Map extends React.Component {
       menu: 'list',
       singleBar: null,
       singleMarker: null,
-      closeBars:[]
+      closeBarsAndMarkers: []
     }
     this.singleBarView = this.singleBarView.bind(this);
     this.multiBarView = this.multiBarView.bind(this);
@@ -25,6 +25,8 @@ export default class Map extends React.Component {
   }
 
   singleBarView(bar, marker) {
+    if (!marker)
+      marker = this.createMarker(bar, this.props.map)
     this.setState({ singleBar: bar });
     this.setState({ singleMarker: marker });
     this.setState({ menu: 'bar' });
@@ -38,7 +40,7 @@ export default class Map extends React.Component {
     let center = map.getCenter();
     let currentLatitude = center.lat;
     let currentLongitude = center.lng;
-    let closeBars = this.props.bars.map((bar) => {
+    let closeBarsAndMarkers = this.props.bars.map((bar) => {
       return {distance: [this.distance(bar.latitude, bar.longitude, currentLatitude, currentLongitude)], bar: bar}
     })
     .sort((a,b) => { return a.distance - b.distance })
@@ -46,9 +48,9 @@ export default class Map extends React.Component {
       return index < 7;
     })
     .map((bar) => {
-      return bar.bar;
+      return {bar: bar, marker:this.createMarker(bar.bar, map)}
     })
-    this.setState({ closeBars })
+    this.setState({ closeBarsAndMarkers })
   }
 
   //distance calculation copied from StackOverflow (Haverstine Formula Thread)
@@ -62,7 +64,7 @@ export default class Map extends React.Component {
     return 12742 * Math.asin(Math.sqrt(a)); // 2 * R; R = 6371 km
   }
 
-  createMarker(bar) {
+  createMarker(bar, map) {
     let el = document.createElement('div');
     el.className = 'marker';
     el.setAttribute('id', bar.name.replace(/\s/g, '') + '-marker');
@@ -71,7 +73,7 @@ export default class Map extends React.Component {
     let marker = new mapboxgl.Marker(el, {offset:[-25, -25]})
       .setLngLat([bar.longitude, bar.latitude])
       .setPopup(popup)
-      .addTo(this.props.map);
+      .addTo(map);
     el.addEventListener('click', () => this.singleBarView(bar, marker));
       return marker;
   }
@@ -95,10 +97,11 @@ export default class Map extends React.Component {
             closeLastMarker={this.closeLastMarker}
             map={this.props.map}
             getBarDistances={this.getBarDistances}
+            closeBarsAndMarkers={this.state.closeBarsAndMarkers}
           />
           <BarMenu
             map={this.props.map}
-            bars={this.state.closeBars}
+            bars={this.state.closeBarsAndMarkers}
             menu={this.state.menu}
             singleBar={this.state.singleBar}
             singleMarker={this.state.singleMarker}
@@ -106,6 +109,7 @@ export default class Map extends React.Component {
             multiBarView={this.multiBarView}
             createMarker={this.createMarker}
             closeLastMarker={this.closeLastMarker}
+            setMarkerState={this.setMarkerState}
           />
         </div>
       </div>

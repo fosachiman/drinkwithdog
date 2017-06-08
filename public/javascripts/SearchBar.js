@@ -50,6 +50,7 @@ export default class SearchBar extends React.Component {
             map={this.props.map}
             clearMatches={this.clearMatches}
             focused={this.state.focused}
+            closeBarsAndMarkers={this.props.closeBarsAndMarkers}
           />
         )
       })
