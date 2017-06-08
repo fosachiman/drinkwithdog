@@ -10,6 +10,11 @@ export default class SingleBarInfo extends React.Component {
     this.toggleState = this.toggleState.bind(this);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.bar !== nextProps.bar)
+      this.setState({ view: 'info' })
+  }
+
   toggleState() {
     if (this.state.view === 'copy')
       this.setState({ view: 'info' })

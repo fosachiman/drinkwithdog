@@ -12018,6 +12018,11 @@ var SingleBarInfo = function (_React$Component) {
   }
 
   _createClass(SingleBarInfo, [{
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      if (this.props.bar !== nextProps.bar) this.setState({ view: 'info' });
+    }
+  }, {
     key: 'toggleState',
     value: function toggleState() {
       if (this.state.view === 'copy') this.setState({ view: 'info' });else this.setState({ view: 'copy' });
