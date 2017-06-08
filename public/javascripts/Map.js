@@ -75,7 +75,21 @@ export default class Map extends React.Component {
       .setPopup(popup)
       .addTo(map);
     el.addEventListener('click', () => this.singleBarView(bar, marker));
+    el.addEventListener('mouseenter', () => this.showBarName(marker));
+    el.addEventListener('mouseleave', () => this.unShowBarName(marker));
       return marker;
+  }
+
+  showBarName(marker) {
+    let popup = marker.getPopup();
+    if (!popup.isOpen())
+      marker.togglePopup();
+  }
+
+  unShowBarName(marker) {
+    let popup = marker.getPopup();
+    if (popup.isOpen())
+      marker.togglePopup();
   }
 
   closeLastMarker() {

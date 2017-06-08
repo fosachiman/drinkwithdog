@@ -11588,7 +11588,25 @@ var Map = function (_React$Component) {
       el.addEventListener('click', function () {
         return _this3.singleBarView(bar, marker);
       });
+      el.addEventListener('mouseenter', function () {
+        return _this3.showBarName(marker);
+      });
+      el.addEventListener('mouseleave', function () {
+        return _this3.unShowBarName(marker);
+      });
       return marker;
+    }
+  }, {
+    key: 'showBarName',
+    value: function showBarName(marker) {
+      var popup = marker.getPopup();
+      if (!popup.isOpen()) marker.togglePopup();
+    }
+  }, {
+    key: 'unShowBarName',
+    value: function unShowBarName(marker) {
+      var popup = marker.getPopup();
+      if (popup.isOpen()) marker.togglePopup();
     }
   }, {
     key: 'closeLastMarker',
