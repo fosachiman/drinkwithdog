@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "webpack": "webpack",
-    "start": "nodemon ./bin/www"
+    "start": "webpack & ./bin/www",
+    "dev": "nodemon ./bin/www & webpack"
   },
   "dependencies": {
     "axios": "^0.15.3",
