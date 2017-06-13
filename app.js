@@ -23,9 +23,9 @@ var bars = require('./models/data');
 db.on('error', console.error.bind(console, 'connection error:'));
 
 // THIS CODE REMOVES ALL BARS FROM DATA MODEL BY TYPE
-// dataModel.remove({ type: "Bar with craft beer" }, function (err) {
-//   if (err) return handleError(err);
-// })
+dataModel.remove({ type: "Bar with craft beer" }, function (err) {
+  if (err) return handleError(err);
+})
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
