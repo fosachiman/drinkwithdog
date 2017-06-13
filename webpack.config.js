@@ -1,10 +1,13 @@
+const path = require('path');
 const webpack = require('webpack');
+
 
 module.exports = {
   entry: "./public/reactApp.js",
   output: {
-    path: __dirname + "/public",
-    filename: "bundle.js"
+    path: path.join(__dirname, "/public"),
+    filename: "bundle.js",
+    publicPath: '/public'
   },
   resolve: {
     alias: {
