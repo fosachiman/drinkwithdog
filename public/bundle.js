@@ -11880,10 +11880,10 @@ var SearchBar = function (_React$Component) {
         ),
         _react2.default.createElement(
           'button',
-          { onClick: function onClick() {
+          { className: 'refresh-button', onClick: function onClick() {
               return _this3.props.getBarDistances(_this3.props.map);
             } },
-          'BUTTON'
+          'Refresh Search Area'
         ),
         this.showMatches(this.state.matches)
       );

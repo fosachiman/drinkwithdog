@@ -107,6 +107,15 @@ input:focus {
   background-color: #fdb02e;
   cursor: pointer; }
 
+.refresh-button {
+  font-family: LeagueSpartan;
+  padding: 12px;
+  border-radius: 0;
+  border: none;
+  margin-left: 10px;
+  background-color: #fdb02e;
+  font-size: 1.2em; }
+
 .bar-listing {
   border-bottom: 3px solid #ef7048;
   cursor: pointer;

@@ -77,7 +77,7 @@ export default class SearchBar extends React.Component {
           onChange={(e) => this.handleTextChange(e)}
         />
         <div className="search-button"><img className="search-image" src="./images/DWD_Icon_Search-25.svg" /></div>
-        <button onClick={() => this.props.getBarDistances(this.props.map)}>BUTTON</button>
+        <button className="refresh-button" onClick={() => this.props.getBarDistances(this.props.map)}>Refresh Search Area</button>
         {this.showMatches(this.state.matches)}
       </div>
     );
