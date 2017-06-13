@@ -250,36 +250,36 @@ let bars = [
 ]
 
 // THIS CODE ADDS ALL BARS TO DATABASE
-// function updateBars(barData) {
-//   barData.forEach((bar) => {
-//     Bar.create(bar, function (err, barData) {
-//       if (err) return console.error(err);
-//         console.log(barData);
-//     })
-//   })
-// }
+function updateBars(barData) {
+  barData.forEach((bar) => {
+    Bar.create(bar, function (err, barData) {
+      if (err) return console.error(err);
+        console.log(barData);
+    })
+  })
+}
 
-// let promise = new Promise((resolve, reject) => {
-//   let promiseCounter = 0;
-//   bars.forEach((bar, index) => {
-//     helpers.getHours(bar.name, bar.latitude, bar.longitude)
-//     .then((result) => {
-//       bar.hours = result
-//       promiseCounter++
-//       if (bars.length === promiseCounter)
-//         resolve()
-//     })
-//   })
-// })
+let promise = new Promise((resolve, reject) => {
+  let promiseCounter = 0;
+  bars.forEach((bar, index) => {
+    helpers.getHours(bar.name, bar.latitude, bar.longitude)
+    .then((result) => {
+      bar.hours = result
+      promiseCounter++
+      if (bars.length === promiseCounter)
+        resolve()
+    })
+  })
+})
 
-// promise.then(() => {
-//   updateBars(bars);
-//   console.log('ok');
-// })
+promise.then(() => {
+  updateBars(bars);
+  console.log('ok');
+})
 
-// promise.catch((err) => {
-//   console.log(err)
-// })
+promise.catch((err) => {
+  console.log(err)
+})
 
 
 module.exports = bars;

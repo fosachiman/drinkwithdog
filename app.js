@@ -13,7 +13,9 @@ var users = require('./routes/users');
 
 var app = express();
 
-mongoose.connect('mongodb://localhost/test');
+var uristring = process.env.MONGOURI || 'mongodb://localhost/test'
+
+mongoose.connect(uristring);
 var db = mongoose.connection;
 var dataModel = require('./models/bars');
 
