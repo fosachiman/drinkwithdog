@@ -13,7 +13,7 @@ var users = require('./routes/users');
 
 var app = express();
 
-var uristring = process.env.MONGOURI || 'mongodb://localhost/test'
+var uristring =  process.env.MONGODB_URI || 'mongodb://localhost/test';
 
 mongoose.connect(uristring);
 var db = mongoose.connection;
