@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "webpack & ./bin/www",
+    "start": "./bin/www & webpack",
     "dev": "nodemon ./bin/www & webpack"
   },
   "dependencies": {
