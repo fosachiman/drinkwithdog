@@ -52,8 +52,7 @@ export default class App extends React.Component {
     let map = new mapboxgl.Map({
       container: 'map',
       style: 'mapbox://styles/mapbox/light-v9',
-      zoom: 13,
-      hash: true,
+      zoom: 14,
       center: this.state.latlng
     });
     // let geoLocateControl = map.addControl(new mapboxgl.GeolocateControl({
