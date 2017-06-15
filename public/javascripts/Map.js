@@ -7,13 +7,8 @@ export default class Map extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      menu: 'list',
-      singleBar: null,
-      singleMarker: null,
       closeBarsAndMarkers: []
     }
-    this.singleBarView = this.singleBarView.bind(this);
-    this.multiBarView = this.multiBarView.bind(this);
     this.createMarker = this.createMarker.bind(this);
     this.closeLastMarker = this.closeLastMarker.bind(this);
     this.getBarDistances = this.getBarDistances.bind(this);
@@ -24,20 +19,8 @@ export default class Map extends React.Component {
       this.getBarDistances(nextProps.map)
   }
 
-  singleBarView(bar, marker) {
-    if (!marker)
-      marker = this.createMarker(bar, this.props.map)
-    this.setState({ singleBar: bar });
-    this.setState({ singleMarker: marker });
-    this.setState({ menu: 'bar' });
-  }
-
-  multiBarView() {
-    this.setState({ menu: 'list' })
-  }
-
-  getBarDistances(map) {
-    let center = map.getCenter();
+  getBarDistances(theMap) {
+    let center = theMap.getCenter();
     let currentLatitude = center.lat;
     let currentLongitude = center.lng;
     let closeBarsAndMarkers = this.props.bars.map((bar) => {
@@ -48,7 +31,7 @@ export default class Map extends React.Component {
       return index < 7;
     })
     .map((bar) => {
-      return {bar: bar, marker:this.createMarker(bar.bar, map)}
+      return {bar: bar, marker:this.createMarker(bar.bar, theMap)}
     })
     this.setState({ closeBarsAndMarkers })
   }
@@ -74,7 +57,7 @@ export default class Map extends React.Component {
       .setLngLat([bar.longitude, bar.latitude])
       .setPopup(popup)
       .addTo(map);
-    el.addEventListener('click', () => this.singleBarView(bar, marker));
+    el.addEventListener('click', () => this.props.singleBarView(bar, marker));
     el.addEventListener('mouseenter', () => this.showBarName(marker));
     el.addEventListener('mouseleave', () => this.unShowBarName(marker));
       return marker;
@@ -87,16 +70,20 @@ export default class Map extends React.Component {
   }
 
   unShowBarName(marker) {
+    if (marker === this.props.singleMarker) {
+      console.log('same marker');
+      return null;
+    }
     let popup = marker.getPopup();
     if (popup.isOpen())
       marker.togglePopup();
   }
 
   closeLastMarker() {
-    if (this.state.singleMarker) {
-      let popup = this.state.singleMarker.getPopup();
+    if (this.props.singleMarker) {
+      let popup = this.props.singleMarker.getPopup();
       if (popup.isOpen())
-        this.state.singleMarker.togglePopup();
+        this.props.singleMarker.togglePopup();
     }
   }
 
@@ -106,7 +93,7 @@ export default class Map extends React.Component {
         <div id="map">
           <SearchBar
             bars={this.props.bars}
-            singleBarView={this.singleBarView}
+            singleBarView={this.props.singleBarView}
             createMarker={this.createMarker}
             closeLastMarker={this.closeLastMarker}
             map={this.props.map}
@@ -116,11 +103,11 @@ export default class Map extends React.Component {
           <BarMenu
             map={this.props.map}
             bars={this.state.closeBarsAndMarkers}
-            menu={this.state.menu}
-            singleBar={this.state.singleBar}
-            singleMarker={this.state.singleMarker}
-            singleBarView={this.singleBarView}
-            multiBarView={this.multiBarView}
+            menu={this.props.menu}
+            singleBar={this.props.singleBar}
+            singleMarker={this.props.singleMarker}
+            singleBarView={this.props.singleBarView}
+            multiBarView={this.props.multiBarView}
             createMarker={this.createMarker}
             closeLastMarker={this.closeLastMarker}
             setMarkerState={this.setMarkerState}

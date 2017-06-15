@@ -1,4 +1,4 @@
- import React from 'react';
+import React from 'react';
 import Fuse from 'fuse.js';
 import SearchResult from './SearchResult';
 

@@ -9805,10 +9805,16 @@ var App = function (_React$Component) {
     _this.state = {
       map: null,
       latlng: [50, 50],
-      bars: []
+      bars: [],
+      singleBar: null,
+      singleMarker: null,
+      menu: 'list'
     };
     _this.getCurrentPosition = _this.getCurrentPosition.bind(_this);
     _this.success = _this.success.bind(_this);
+    _this.error = _this.error.bind(_this);
+    _this.singleBarView = _this.singleBarView.bind(_this);
+    _this.multiBarView = _this.multiBarView.bind(_this);
     return _this;
   }
 
@@ -9844,6 +9850,14 @@ var App = function (_React$Component) {
     key: 'error',
     value: function error(err) {
       console.log(err);
+      this.setState({ latlng: [-73.999, 40.673] });
+      var map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/light-v9',
+        zoom: 14,
+        center: this.state.latlng
+      });
+      this.setState({ map: map });
     }
   }, {
     key: 'success',
@@ -9871,12 +9885,36 @@ var App = function (_React$Component) {
       this.setState({ map: map });
     }
   }, {
+    key: 'singleBarView',
+    value: function singleBarView(bar, marker) {
+      var popup = marker.getPopup();
+      if (popup.isOpen()) marker.togglePopup();
+      // if (!marker)
+      //   marker = this.createMarker(bar, this.props.map)
+      this.setState({ singleBar: bar });
+      this.setState({ singleMarker: marker });
+      this.setState({ menu: 'bar' });
+    }
+  }, {
+    key: 'multiBarView',
+    value: function multiBarView() {
+      this.setState({ menu: 'list' });
+    }
+  }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
         'div',
         null,
-        _react2.default.createElement(_Map2.default, { map: this.state.map, latlng: this.state.latlng, bars: this.state.bars })
+        _react2.default.createElement(_Map2.default, {
+          map: this.state.map,
+          latlng: this.state.latlng,
+          bars: this.state.bars,
+          singleBarView: this.singleBarView,
+          multiBarView: this.multiBarView,
+          singleBar: this.state.singleBar,
+          singleMarker: this.state.singleMarker,
+          menu: this.state.menu })
       );
     }
   }]);
@@ -11512,13 +11550,8 @@ var Map = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (Map.__proto__ || Object.getPrototypeOf(Map)).call(this, props));
 
     _this.state = {
-      menu: 'list',
-      singleBar: null,
-      singleMarker: null,
       closeBarsAndMarkers: []
     };
-    _this.singleBarView = _this.singleBarView.bind(_this);
-    _this.multiBarView = _this.multiBarView.bind(_this);
     _this.createMarker = _this.createMarker.bind(_this);
     _this.closeLastMarker = _this.closeLastMarker.bind(_this);
     _this.getBarDistances = _this.getBarDistances.bind(_this);
@@ -11531,24 +11564,11 @@ var Map = function (_React$Component) {
       if (this.props.map !== nextProps.map) this.getBarDistances(nextProps.map);
     }
   }, {
-    key: 'singleBarView',
-    value: function singleBarView(bar, marker) {
-      if (!marker) marker = this.createMarker(bar, this.props.map);
-      this.setState({ singleBar: bar });
-      this.setState({ singleMarker: marker });
-      this.setState({ menu: 'bar' });
-    }
-  }, {
-    key: 'multiBarView',
-    value: function multiBarView() {
-      this.setState({ menu: 'list' });
-    }
-  }, {
     key: 'getBarDistances',
-    value: function getBarDistances(map) {
+    value: function getBarDistances(theMap) {
       var _this2 = this;
 
-      var center = map.getCenter();
+      var center = theMap.getCenter();
       var currentLatitude = center.lat;
       var currentLongitude = center.lng;
       var closeBarsAndMarkers = this.props.bars.map(function (bar) {
@@ -11558,7 +11578,7 @@ var Map = function (_React$Component) {
       }).filter(function (bar, index) {
         return index < 7;
       }).map(function (bar) {
-        return { bar: bar, marker: _this2.createMarker(bar.bar, map) };
+        return { bar: bar, marker: _this2.createMarker(bar.bar, theMap) };
       });
       this.setState({ closeBarsAndMarkers: closeBarsAndMarkers });
     }
@@ -11585,7 +11605,7 @@ var Map = function (_React$Component) {
       var popup = new mapboxgl.Popup({ closeButton: false, offset: 25 }).setText(bar.name);
       var marker = new mapboxgl.Marker(el, { offset: [-25, -25] }).setLngLat([bar.longitude, bar.latitude]).setPopup(popup).addTo(map);
       el.addEventListener('click', function () {
-        return _this3.singleBarView(bar, marker);
+        return _this3.props.singleBarView(bar, marker);
       });
       el.addEventListener('mouseenter', function () {
         return _this3.showBarName(marker);
@@ -11604,15 +11624,19 @@ var Map = function (_React$Component) {
   }, {
     key: 'unShowBarName',
     value: function unShowBarName(marker) {
+      if (marker === this.props.singleMarker) {
+        console.log('same marker');
+        return null;
+      }
       var popup = marker.getPopup();
       if (popup.isOpen()) marker.togglePopup();
     }
   }, {
     key: 'closeLastMarker',
     value: function closeLastMarker() {
-      if (this.state.singleMarker) {
-        var popup = this.state.singleMarker.getPopup();
-        if (popup.isOpen()) this.state.singleMarker.togglePopup();
+      if (this.props.singleMarker) {
+        var popup = this.props.singleMarker.getPopup();
+        if (popup.isOpen()) this.props.singleMarker.togglePopup();
       }
     }
   }, {
@@ -11626,7 +11650,7 @@ var Map = function (_React$Component) {
           { id: 'map' },
           _react2.default.createElement(_SearchBar2.default, {
             bars: this.props.bars,
-            singleBarView: this.singleBarView,
+            singleBarView: this.props.singleBarView,
             createMarker: this.createMarker,
             closeLastMarker: this.closeLastMarker,
             map: this.props.map,
@@ -11636,11 +11660,11 @@ var Map = function (_React$Component) {
           _react2.default.createElement(_Barmenu2.default, {
             map: this.props.map,
             bars: this.state.closeBarsAndMarkers,
-            menu: this.state.menu,
-            singleBar: this.state.singleBar,
-            singleMarker: this.state.singleMarker,
-            singleBarView: this.singleBarView,
-            multiBarView: this.multiBarView,
+            menu: this.props.menu,
+            singleBar: this.props.singleBar,
+            singleMarker: this.props.singleMarker,
+            singleBarView: this.props.singleBarView,
+            multiBarView: this.props.multiBarView,
             createMarker: this.createMarker,
             closeLastMarker: this.closeLastMarker,
             setMarkerState: this.setMarkerState
