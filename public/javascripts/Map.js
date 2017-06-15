@@ -15,9 +15,8 @@ export default class Map extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps)
     if(this.props.map !== nextProps.map) {
-      this.getBarDistances(nextProps.map, nextProps.bars)
+      this.getBarDistances(nextProps.map)
     }
   }
 
@@ -72,8 +71,7 @@ export default class Map extends React.Component {
   }
 
   unShowBarName(marker) {
-    if (marker === this.props.singleMarker) {
-      console.log('same marker');
+    if (marker === this.props.singleMarker && this.props.menu === 'bar') {
       return null;
     }
     let popup = marker.getPopup();

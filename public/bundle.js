@@ -11562,9 +11562,8 @@ var Map = function (_React$Component) {
   _createClass(Map, [{
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
-      console.log(nextProps);
       if (this.props.map !== nextProps.map) {
-        this.getBarDistances(nextProps.map, nextProps.bars);
+        this.getBarDistances(nextProps.map);
       }
     }
   }, {
@@ -11628,8 +11627,7 @@ var Map = function (_React$Component) {
   }, {
     key: 'unShowBarName',
     value: function unShowBarName(marker) {
-      if (marker === this.props.singleMarker) {
-        console.log('same marker');
+      if (marker === this.props.singleMarker && this.props.menu === 'bar') {
         return null;
       }
       var popup = marker.getPopup();
