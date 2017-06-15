@@ -19,11 +19,11 @@ export default class App extends React.Component {
     this.error = this.error.bind(this);
     this.singleBarView = this.singleBarView.bind(this);
     this.multiBarView = this.multiBarView.bind(this);
+    this.getBars = this.getBars.bind(this);
   }
 
   componentDidMount() {
     mapboxgl.accessToken = 'pk.eyJ1IjoiZm9zYWNoaW1hbiIsImEiOiJjajB4eng5M2owMW5sMzJtdGRzNHBjaGxsIn0.yWVExsYazGI3TOlGhLNv-w';
-    this.getCurrentPosition();
     this.getBars();
   }
 
@@ -31,7 +31,7 @@ export default class App extends React.Component {
     axios.get('api')
     .then((response) => {
       this.setState({ bars: response.data.bars })
-    })
+    }).then(() => this.getCurrentPosition())
     .catch((error) => {
       console.log(error);
     })
@@ -52,7 +52,7 @@ export default class App extends React.Component {
     let map = new mapboxgl.Map({
       container: 'map',
       style: 'mapbox://styles/mapbox/light-v9',
-      zoom: 14,
+      zoom: 11,
       center: this.state.latlng
     });
     this.setState({ map })
@@ -86,8 +86,6 @@ export default class App extends React.Component {
     let popup = marker.getPopup();
     if (popup.isOpen())
       marker.togglePopup();
-    // if (!marker)
-    //   marker = this.createMarker(bar, this.props.map)
     this.setState({ singleBar: bar });
     this.setState({ singleMarker: marker });
     this.setState({ menu: 'bar' });
@@ -108,7 +106,8 @@ export default class App extends React.Component {
           multiBarView={this.multiBarView}
           singleBar={this.state.singleBar}
           singleMarker={this.state.singleMarker}
-          menu={this.state.menu}/>
+          menu={this.state.menu}
+          getBars={this.getBars}/>
       </div>
     );
   }

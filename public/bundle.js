@@ -9815,6 +9815,7 @@ var App = function (_React$Component) {
     _this.error = _this.error.bind(_this);
     _this.singleBarView = _this.singleBarView.bind(_this);
     _this.multiBarView = _this.multiBarView.bind(_this);
+    _this.getBars = _this.getBars.bind(_this);
     return _this;
   }
 
@@ -9822,7 +9823,6 @@ var App = function (_React$Component) {
     key: 'componentDidMount',
     value: function componentDidMount() {
       mapboxgl.accessToken = 'pk.eyJ1IjoiZm9zYWNoaW1hbiIsImEiOiJjajB4eng5M2owMW5sMzJtdGRzNHBjaGxsIn0.yWVExsYazGI3TOlGhLNv-w';
-      this.getCurrentPosition();
       this.getBars();
     }
   }, {
@@ -9832,6 +9832,8 @@ var App = function (_React$Component) {
 
       _axios2.default.get('api').then(function (response) {
         _this2.setState({ bars: response.data.bars });
+      }).then(function () {
+        return _this2.getCurrentPosition();
       }).catch(function (error) {
         console.log(error);
       });
@@ -9854,7 +9856,7 @@ var App = function (_React$Component) {
       var map = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/mapbox/light-v9',
-        zoom: 14,
+        zoom: 11,
         center: this.state.latlng
       });
       this.setState({ map: map });
@@ -9889,8 +9891,6 @@ var App = function (_React$Component) {
     value: function singleBarView(bar, marker) {
       var popup = marker.getPopup();
       if (popup.isOpen()) marker.togglePopup();
-      // if (!marker)
-      //   marker = this.createMarker(bar, this.props.map)
       this.setState({ singleBar: bar });
       this.setState({ singleMarker: marker });
       this.setState({ menu: 'bar' });
@@ -9914,7 +9914,8 @@ var App = function (_React$Component) {
           multiBarView: this.multiBarView,
           singleBar: this.state.singleBar,
           singleMarker: this.state.singleMarker,
-          menu: this.state.menu })
+          menu: this.state.menu,
+          getBars: this.getBars })
       );
     }
   }]);
@@ -11561,7 +11562,10 @@ var Map = function (_React$Component) {
   _createClass(Map, [{
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
-      if (this.props.map !== nextProps.map) this.getBarDistances(nextProps.map);
+      console.log(nextProps);
+      if (this.props.map !== nextProps.map) {
+        this.getBarDistances(nextProps.map, nextProps.bars);
+      }
     }
   }, {
     key: 'getBarDistances',

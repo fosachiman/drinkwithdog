@@ -15,8 +15,10 @@ export default class Map extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if(this.props.map !== nextProps.map)
-      this.getBarDistances(nextProps.map)
+    console.log(nextProps)
+    if(this.props.map !== nextProps.map) {
+      this.getBarDistances(nextProps.map, nextProps.bars)
+    }
   }
 
   getBarDistances(theMap) {
