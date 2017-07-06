@@ -8,12 +8,14 @@ export default class Map extends React.Component {
     super(props);
     this.state = {
       closeBarsAndMarkers: [],
-      hasMoved: false
+      hasMoved: false,
+      boxChecked: false
     }
     this.createMarker = this.createMarker.bind(this);
     this.closeLastMarker = this.closeLastMarker.bind(this);
     this.getBarDistances = this.getBarDistances.bind(this);
     this.handleMapMove = this.handleMapMove.bind(this);
+    this.changeBoxCheckState = this.changeBoxCheckState.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -24,9 +26,21 @@ export default class Map extends React.Component {
   }
 
   handleMapMove() {
+    if (this.state.boxChecked) {
+      this.getBarDistances(this.props.map);
+      return null;
+    }
     this.setState({ hasMoved: true })
     console.log('we movin');
   }
+
+  changeBoxCheckState(bool) {
+    if (bool)
+      this.setState({ boxChecked: true });
+    else
+      this.setState({ boxChecked: false });
+  }
+
 
   getBarDistances(theMap) {
     let center = theMap.getCenter();
@@ -109,6 +123,7 @@ export default class Map extends React.Component {
             getBarDistances={this.getBarDistances}
             closeBarsAndMarkers={this.state.closeBarsAndMarkers}
             hasMoved={this.state.hasMoved}
+            changeBoxCheckState={this.changeBoxCheckState}
           />
           <BarMenu
             map={this.props.map}

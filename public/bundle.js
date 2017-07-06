@@ -11556,12 +11556,14 @@ var Map = function (_React$Component) {
 
     _this.state = {
       closeBarsAndMarkers: [],
-      hasMoved: false
+      hasMoved: false,
+      boxChecked: false
     };
     _this.createMarker = _this.createMarker.bind(_this);
     _this.closeLastMarker = _this.closeLastMarker.bind(_this);
     _this.getBarDistances = _this.getBarDistances.bind(_this);
     _this.handleMapMove = _this.handleMapMove.bind(_this);
+    _this.changeBoxCheckState = _this.changeBoxCheckState.bind(_this);
     return _this;
   }
 
@@ -11576,8 +11578,17 @@ var Map = function (_React$Component) {
   }, {
     key: 'handleMapMove',
     value: function handleMapMove() {
+      if (this.state.boxChecked) {
+        this.getBarDistances(this.props.map);
+        return null;
+      }
       this.setState({ hasMoved: true });
       console.log('we movin');
+    }
+  }, {
+    key: 'changeBoxCheckState',
+    value: function changeBoxCheckState(bool) {
+      if (bool) this.setState({ boxChecked: true });else this.setState({ boxChecked: false });
     }
   }, {
     key: 'getBarDistances',
@@ -11669,7 +11680,8 @@ var Map = function (_React$Component) {
           map: this.props.map,
           getBarDistances: this.getBarDistances,
           closeBarsAndMarkers: this.state.closeBarsAndMarkers,
-          hasMoved: this.state.hasMoved
+          hasMoved: this.state.hasMoved,
+          changeBoxCheckState: this.changeBoxCheckState
         }),
         _react2.default.createElement(_Barmenu2.default, {
           map: this.props.map,
@@ -11863,6 +11875,11 @@ var SearchBar = function (_React$Component) {
       this.searchBars(this.props.bars, input);
     }
   }, {
+    key: 'handleCheckboxChange',
+    value: function handleCheckboxChange(e) {
+      if (e.target.checked) this.props.changeBoxCheckState(true);else this.props.changeBoxCheckState(false);
+    }
+  }, {
     key: 'showMatches',
     value: function showMatches(matches) {
       var _this2 = this;
@@ -11906,7 +11923,11 @@ var SearchBar = function (_React$Component) {
       var _this3 = this;
 
       var searchStyle = { visibility: 'hidden' };
-      if (this.props.hasMoved) searchStyle = { visibility: 'visible' };
+      var boxStyle = { visibility: 'visible' };
+      if (this.props.hasMoved) {
+        searchStyle = { visibility: 'visible' };
+        boxStyle = { visibility: 'hidden' };
+      }
       return _react2.default.createElement(
         'div',
         { className: 'search-container', tabIndex: '1', onBlur: function onBlur() {
@@ -11932,6 +11953,14 @@ var SearchBar = function (_React$Component) {
             },
             style: searchStyle },
           'Redo Search in this Area'
+        ),
+        _react2.default.createElement('input', { style: boxStyle, type: 'checkbox', id: 'search-check', onChange: function onChange(e) {
+            _this3.handleCheckboxChange(e);
+          } }),
+        _react2.default.createElement(
+          'label',
+          { style: boxStyle, 'for': 'search-check' },
+          'Update bars automatically'
         ),
         this.showMatches(this.state.matches)
       );
