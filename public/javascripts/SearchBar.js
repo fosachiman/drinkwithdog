@@ -9,7 +9,7 @@ export default class SearchBar extends React.Component {
 
     this.state = {
       matches: null,
-      focused: false
+      focused: false,
     }
     this.clearMatches = this.clearMatches.bind(this);
   }
@@ -77,7 +77,7 @@ export default class SearchBar extends React.Component {
           onChange={(e) => this.handleTextChange(e)}
         />
         <div className="search-button"><img className="search-image" src="./images/DWD_Icon_Search-25.svg" /></div>
-        <button className="refresh-button" onClick={() => this.props.getBarDistances(this.props.map)}>Refresh Search Area</button>
+        <button className="refresh-button" onClick={() => this.props.getBarDistances(this.props.map)}>Redo Search in this Area</button>
         {this.showMatches(this.state.matches)}
       </div>
     );

@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
 /******/
 /******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "";
+/******/ 	__webpack_require__.p = "/public";
 /******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(__webpack_require__.s = 117);
@@ -9871,7 +9871,7 @@ var App = function (_React$Component) {
       var map = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/mapbox/light-v9',
-        zoom: 14,
+        zoom: 12,
         center: this.state.latlng
       });
       // let geoLocateControl = map.addControl(new mapboxgl.GeolocateControl({
@@ -9903,19 +9903,48 @@ var App = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
+      // let loaded = (
+      // <div className='map-container'>
+      //   <div id='map'>
+      //     <Map
+      //       map={this.state.map}
+      //       latlng={this.state.latlng}
+      //       bars={this.state.bars}
+      //       singleBarView={this.singleBarView}
+      //       multiBarView={this.multiBarView}
+      //       singleBar={this.state.singleBar}
+      //       singleMarker={this.state.singleMarker}
+      //       menu={this.state.menu}
+      //       getBars={this.getBars}/>
+      //   </div>
+      // </div>
+      // );
+      // if (this.state.map) {
+      //   return loaded
+      // }
+      // else
+      //   return (
+      //     <div className='map-container'>
+      //       <h2>LOADING</h2>
+      //     </div>
+      //     )
       return _react2.default.createElement(
         'div',
-        null,
-        _react2.default.createElement(_Map2.default, {
-          map: this.state.map,
-          latlng: this.state.latlng,
-          bars: this.state.bars,
-          singleBarView: this.singleBarView,
-          multiBarView: this.multiBarView,
-          singleBar: this.state.singleBar,
-          singleMarker: this.state.singleMarker,
-          menu: this.state.menu,
-          getBars: this.getBars })
+        { className: 'map-container' },
+        _react2.default.createElement(
+          'div',
+          { id: 'map' },
+          _react2.default.createElement(_Map2.default, {
+            map: this.state.map,
+            latlng: this.state.latlng,
+            bars: this.state.bars,
+            singleBarView: this.singleBarView,
+            multiBarView: this.multiBarView,
+            singleBar: this.state.singleBar,
+            singleMarker: this.state.singleMarker,
+            menu: this.state.menu,
+            getBars: this.getBars })
+        )
       );
     }
   }]);
@@ -11644,33 +11673,37 @@ var Map = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      return _react2.default.createElement(
+      if (this.props.map) return _react2.default.createElement(
         'div',
-        { className: 'map-container' },
+        null,
+        _react2.default.createElement(_SearchBar2.default, {
+          bars: this.props.bars,
+          singleBarView: this.props.singleBarView,
+          createMarker: this.createMarker,
+          closeLastMarker: this.closeLastMarker,
+          map: this.props.map,
+          getBarDistances: this.getBarDistances,
+          closeBarsAndMarkers: this.state.closeBarsAndMarkers
+        }),
+        _react2.default.createElement(_Barmenu2.default, {
+          map: this.props.map,
+          bars: this.state.closeBarsAndMarkers,
+          menu: this.props.menu,
+          singleBar: this.props.singleBar,
+          singleMarker: this.props.singleMarker,
+          singleBarView: this.props.singleBarView,
+          multiBarView: this.props.multiBarView,
+          createMarker: this.createMarker,
+          closeLastMarker: this.closeLastMarker,
+          setMarkerState: this.setMarkerState
+        })
+      );else return _react2.default.createElement(
+        'div',
+        null,
         _react2.default.createElement(
-          'div',
-          { id: 'map' },
-          _react2.default.createElement(_SearchBar2.default, {
-            bars: this.props.bars,
-            singleBarView: this.props.singleBarView,
-            createMarker: this.createMarker,
-            closeLastMarker: this.closeLastMarker,
-            map: this.props.map,
-            getBarDistances: this.getBarDistances,
-            closeBarsAndMarkers: this.state.closeBarsAndMarkers
-          }),
-          _react2.default.createElement(_Barmenu2.default, {
-            map: this.props.map,
-            bars: this.state.closeBarsAndMarkers,
-            menu: this.props.menu,
-            singleBar: this.props.singleBar,
-            singleMarker: this.props.singleMarker,
-            singleBarView: this.props.singleBarView,
-            multiBarView: this.props.multiBarView,
-            createMarker: this.createMarker,
-            closeLastMarker: this.closeLastMarker,
-            setMarkerState: this.setMarkerState
-          })
+          'h2',
+          null,
+          'LOADING...'
         )
       );
     }
@@ -11908,7 +11941,7 @@ var SearchBar = function (_React$Component) {
           { className: 'refresh-button', onClick: function onClick() {
               return _this3.props.getBarDistances(_this3.props.map);
             } },
-          'Refresh Search Area'
+          'Redo Search in this Area'
         ),
         this.showMatches(this.state.matches)
       );

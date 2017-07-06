@@ -66,7 +66,7 @@ export default class App extends React.Component {
     let map = new mapboxgl.Map({
       container: 'map',
       style: 'mapbox://styles/mapbox/light-v9',
-      zoom: 14,
+      zoom: 12,
       center: this.state.latlng
     });
     // let geoLocateControl = map.addControl(new mapboxgl.GeolocateControl({
@@ -96,18 +96,45 @@ export default class App extends React.Component {
   }
 
   render() {
+    // let loaded = (
+    // <div className='map-container'>
+    //   <div id='map'>
+    //     <Map
+    //       map={this.state.map}
+    //       latlng={this.state.latlng}
+    //       bars={this.state.bars}
+    //       singleBarView={this.singleBarView}
+    //       multiBarView={this.multiBarView}
+    //       singleBar={this.state.singleBar}
+    //       singleMarker={this.state.singleMarker}
+    //       menu={this.state.menu}
+    //       getBars={this.getBars}/>
+    //   </div>
+    // </div>
+    // );
+    // if (this.state.map) {
+    //   return loaded
+    // }
+    // else
+    //   return (
+    //     <div className='map-container'>
+    //       <h2>LOADING</h2>
+    //     </div>
+    //     )
     return (
-      <div>
-        <Map
-          map={this.state.map}
-          latlng={this.state.latlng}
-          bars={this.state.bars}
-          singleBarView={this.singleBarView}
-          multiBarView={this.multiBarView}
-          singleBar={this.state.singleBar}
-          singleMarker={this.state.singleMarker}
-          menu={this.state.menu}
-          getBars={this.getBars}/>
+      <div className='map-container'>
+        <div id='map'>
+          <Map
+            map={this.state.map}
+            latlng={this.state.latlng}
+            bars={this.state.bars}
+            singleBarView={this.singleBarView}
+            multiBarView={this.multiBarView}
+            singleBar={this.state.singleBar}
+            singleMarker={this.state.singleMarker}
+            menu={this.state.menu}
+            getBars={this.getBars}/>
+        </div>
       </div>
     );
   }

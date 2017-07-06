@@ -88,9 +88,9 @@ export default class Map extends React.Component {
   }
 
   render() {
-    return (
-      <div className="map-container">
-        <div id="map">
+    if (this.props.map)
+      return (
+        <div>
           <SearchBar
             bars={this.props.bars}
             singleBarView={this.props.singleBarView}
@@ -113,7 +113,12 @@ export default class Map extends React.Component {
             setMarkerState={this.setMarkerState}
           />
         </div>
-      </div>
-    );
+      );
+    else
+      return (
+        <div>
+          <h2>LOADING...</h2>
+        </div>
+      )
   }
 }
