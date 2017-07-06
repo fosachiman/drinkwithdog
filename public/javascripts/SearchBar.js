@@ -71,13 +71,20 @@ export default class SearchBar extends React.Component {
   }
 
   render() {
+    let searchStyle = {visibility: 'hidden'};
+    if (this.props.hasMoved)
+      searchStyle = {visibility: 'visible'};
     return (
       <div className="search-container" tabIndex="1" onBlur={() => this.focusOut()} onFocus={() => this.focus()}>
         <input className="search-box" type="text"
           onChange={(e) => this.handleTextChange(e)}
         />
         <div className="search-button"><img className="search-image" src="./images/DWD_Icon_Search-25.svg" /></div>
-        <button className="refresh-button" onClick={() => this.props.getBarDistances(this.props.map)}>Redo Search in this Area</button>
+        <button className="refresh-button"
+          onClick={() => this.props.getBarDistances(this.props.map)}
+          style={searchStyle}>
+            Redo Search in this Area
+          </button>
         {this.showMatches(this.state.matches)}
       </div>
     );

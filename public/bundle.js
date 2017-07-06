@@ -9903,31 +9903,6 @@ var App = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      // let loaded = (
-      // <div className='map-container'>
-      //   <div id='map'>
-      //     <Map
-      //       map={this.state.map}
-      //       latlng={this.state.latlng}
-      //       bars={this.state.bars}
-      //       singleBarView={this.singleBarView}
-      //       multiBarView={this.multiBarView}
-      //       singleBar={this.state.singleBar}
-      //       singleMarker={this.state.singleMarker}
-      //       menu={this.state.menu}
-      //       getBars={this.getBars}/>
-      //   </div>
-      // </div>
-      // );
-      // if (this.state.map) {
-      //   return loaded
-      // }
-      // else
-      //   return (
-      //     <div className='map-container'>
-      //       <h2>LOADING</h2>
-      //     </div>
-      //     )
       return _react2.default.createElement(
         'div',
         { className: 'map-container' },
@@ -11580,11 +11555,13 @@ var Map = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (Map.__proto__ || Object.getPrototypeOf(Map)).call(this, props));
 
     _this.state = {
-      closeBarsAndMarkers: []
+      closeBarsAndMarkers: [],
+      hasMoved: false
     };
     _this.createMarker = _this.createMarker.bind(_this);
     _this.closeLastMarker = _this.closeLastMarker.bind(_this);
     _this.getBarDistances = _this.getBarDistances.bind(_this);
+    _this.handleMapMove = _this.handleMapMove.bind(_this);
     return _this;
   }
 
@@ -11593,7 +11570,14 @@ var Map = function (_React$Component) {
     value: function componentWillReceiveProps(nextProps) {
       if (this.props.map !== nextProps.map) {
         this.getBarDistances(nextProps.map);
+        nextProps.map.on('moveend', this.handleMapMove);
       }
+    }
+  }, {
+    key: 'handleMapMove',
+    value: function handleMapMove() {
+      this.setState({ hasMoved: true });
+      console.log('we movin');
     }
   }, {
     key: 'getBarDistances',
@@ -11613,6 +11597,7 @@ var Map = function (_React$Component) {
         return { bar: bar, marker: _this2.createMarker(bar.bar, theMap) };
       });
       this.setState({ closeBarsAndMarkers: closeBarsAndMarkers });
+      this.setState({ hasMoved: false });
     }
 
     //distance calculation copied from StackOverflow (Haverstine Formula Thread)
@@ -11683,7 +11668,8 @@ var Map = function (_React$Component) {
           closeLastMarker: this.closeLastMarker,
           map: this.props.map,
           getBarDistances: this.getBarDistances,
-          closeBarsAndMarkers: this.state.closeBarsAndMarkers
+          closeBarsAndMarkers: this.state.closeBarsAndMarkers,
+          hasMoved: this.state.hasMoved
         }),
         _react2.default.createElement(_Barmenu2.default, {
           map: this.props.map,
@@ -11919,6 +11905,8 @@ var SearchBar = function (_React$Component) {
     value: function render() {
       var _this3 = this;
 
+      var searchStyle = { visibility: 'hidden' };
+      if (this.props.hasMoved) searchStyle = { visibility: 'visible' };
       return _react2.default.createElement(
         'div',
         { className: 'search-container', tabIndex: '1', onBlur: function onBlur() {
@@ -11938,9 +11926,11 @@ var SearchBar = function (_React$Component) {
         ),
         _react2.default.createElement(
           'button',
-          { className: 'refresh-button', onClick: function onClick() {
+          { className: 'refresh-button',
+            onClick: function onClick() {
               return _this3.props.getBarDistances(_this3.props.map);
-            } },
+            },
+            style: searchStyle },
           'Redo Search in this Area'
         ),
         this.showMatches(this.state.matches)

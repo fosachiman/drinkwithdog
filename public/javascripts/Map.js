@@ -7,17 +7,25 @@ export default class Map extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      closeBarsAndMarkers: []
+      closeBarsAndMarkers: [],
+      hasMoved: false
     }
     this.createMarker = this.createMarker.bind(this);
     this.closeLastMarker = this.closeLastMarker.bind(this);
     this.getBarDistances = this.getBarDistances.bind(this);
+    this.handleMapMove = this.handleMapMove.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
     if(this.props.map !== nextProps.map) {
       this.getBarDistances(nextProps.map)
+      nextProps.map.on('moveend', this.handleMapMove);
     }
+  }
+
+  handleMapMove() {
+    this.setState({ hasMoved: true })
+    console.log('we movin');
   }
 
   getBarDistances(theMap) {
@@ -35,6 +43,7 @@ export default class Map extends React.Component {
       return {bar: bar, marker:this.createMarker(bar.bar, theMap)}
     })
     this.setState({ closeBarsAndMarkers })
+    this.setState({ hasMoved: false })
   }
 
   //distance calculation copied from StackOverflow (Haverstine Formula Thread)
@@ -99,6 +108,7 @@ export default class Map extends React.Component {
             map={this.props.map}
             getBarDistances={this.getBarDistances}
             closeBarsAndMarkers={this.state.closeBarsAndMarkers}
+            hasMoved={this.state.hasMoved}
           />
           <BarMenu
             map={this.props.map}
