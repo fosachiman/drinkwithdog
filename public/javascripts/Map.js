@@ -1,6 +1,7 @@
 import React from 'react';
 import BarMenu from './Barmenu';
 import SearchBar from './SearchBar';
+import Filters from './Filters';
 
 export default class Map extends React.Component {
 
@@ -120,10 +121,14 @@ export default class Map extends React.Component {
             createMarker={this.createMarker}
             closeLastMarker={this.closeLastMarker}
             map={this.props.map}
-            getBarDistances={this.getBarDistances}
             closeBarsAndMarkers={this.state.closeBarsAndMarkers}
-            hasMoved={this.state.hasMoved}
+          />
+          <Filters
+            getBarDistances={this.getBarDistances}
             changeBoxCheckState={this.changeBoxCheckState}
+            hasMoved={this.state.hasMoved}
+            getBarDistances={this.getBarDistances}
+            map={this.props.map}
           />
           <BarMenu
             map={this.props.map}

@@ -71,6 +71,7 @@ input:focus {
   outline: none; }
 
 .search-box {
+  font-size: 1.17em;
   z-index: 100000;
   overflow: hidden;
   background-color: white;
@@ -275,5 +276,27 @@ input:focus {
 
 .single-bar-linecont {
   margin-bottom: 15px; }
+
+.filter-container {
+  position: fixed;
+  left: 330px;
+  top: 2%;
+  z-index: 100000; }
+
+.refresh-container {
+  background-color: #fdb02e;
+  position: fixed;
+  left: 330px;
+  top: 2%;
+  padding: 12px 0;
+  padding-left: 2px; }
+
+.auto-refresh {
+  font-family: LeagueSpartan;
+  padding: 12px;
+  border-radius: 0;
+  border: none;
+  background-color: #fdb02e;
+  font-size: 1.2em; }
 
 /*# sourceMappingURL=style.css.map */

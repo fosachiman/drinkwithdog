@@ -11532,7 +11532,13 @@ var _SearchBar = __webpack_require__(114);
 
 var _SearchBar2 = _interopRequireDefault(_SearchBar);
 
+var _Filters = __webpack_require__(217);
+
+var _Filters2 = _interopRequireDefault(_Filters);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -11663,6 +11669,8 @@ var Map = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
+      var _React$createElement;
+
       if (this.props.map) return _react2.default.createElement(
         'div',
         null,
@@ -11672,11 +11680,13 @@ var Map = function (_React$Component) {
           createMarker: this.createMarker,
           closeLastMarker: this.closeLastMarker,
           map: this.props.map,
-          getBarDistances: this.getBarDistances,
-          closeBarsAndMarkers: this.state.closeBarsAndMarkers,
-          hasMoved: this.state.hasMoved,
-          changeBoxCheckState: this.changeBoxCheckState
+          closeBarsAndMarkers: this.state.closeBarsAndMarkers
         }),
+        _react2.default.createElement(_Filters2.default, (_React$createElement = {
+          getBarDistances: this.getBarDistances,
+          changeBoxCheckState: this.changeBoxCheckState,
+          hasMoved: this.state.hasMoved
+        }, _defineProperty(_React$createElement, 'getBarDistances', this.getBarDistances), _defineProperty(_React$createElement, 'map', this.props.map), _React$createElement)),
         _react2.default.createElement(_Barmenu2.default, {
           map: this.props.map,
           bars: this.state.closeBarsAndMarkers,
@@ -11869,11 +11879,6 @@ var SearchBar = function (_React$Component) {
       this.searchBars(this.props.bars, input);
     }
   }, {
-    key: 'handleCheckboxChange',
-    value: function handleCheckboxChange(e) {
-      if (e.target.checked) this.props.changeBoxCheckState(true);else this.props.changeBoxCheckState(false);
-    }
-  }, {
     key: 'showMatches',
     value: function showMatches(matches) {
       var _this2 = this;
@@ -11916,12 +11921,6 @@ var SearchBar = function (_React$Component) {
     value: function render() {
       var _this3 = this;
 
-      var searchStyle = { visibility: 'hidden' };
-      var boxStyle = { visibility: 'visible' };
-      if (this.props.hasMoved) {
-        searchStyle = { visibility: 'visible' };
-        boxStyle = { visibility: 'hidden' };
-      }
       return _react2.default.createElement(
         'div',
         { className: 'search-container', tabIndex: '1', onBlur: function onBlur() {
@@ -11938,23 +11937,6 @@ var SearchBar = function (_React$Component) {
           'div',
           { className: 'search-button' },
           _react2.default.createElement('img', { className: 'search-image', src: './images/DWD_Icon_Search-25.svg' })
-        ),
-        _react2.default.createElement(
-          'button',
-          { className: 'refresh-button',
-            onClick: function onClick() {
-              return _this3.props.getBarDistances(_this3.props.map);
-            },
-            style: searchStyle },
-          'Redo Search in this Area'
-        ),
-        _react2.default.createElement('input', { className: 'check-box', style: boxStyle, type: 'checkbox', id: 'search-check', onChange: function onChange(e) {
-            _this3.handleCheckboxChange(e);
-          } }),
-        _react2.default.createElement(
-          'label',
-          { className: 'refresh-button', style: boxStyle, 'for': 'search-check' },
-          'Update bars automatically'
         ),
         this.showMatches(this.state.matches)
       );
@@ -25055,6 +25037,86 @@ module.exports = require("util");
 /***/ (function(module, exports) {
 
 module.exports = require("zlib");
+
+/***/ }),
+/* 217 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(9);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Filters = function (_React$Component) {
+  _inherits(Filters, _React$Component);
+
+  function Filters(props) {
+    _classCallCheck(this, Filters);
+
+    return _possibleConstructorReturn(this, (Filters.__proto__ || Object.getPrototypeOf(Filters)).call(this, props));
+  }
+
+  _createClass(Filters, [{
+    key: "handleCheckboxChange",
+    value: function handleCheckboxChange(e) {
+      if (e.target.checked) this.props.changeBoxCheckState(true);else this.props.changeBoxCheckState(false);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this2 = this;
+
+      var render = _react2.default.createElement(
+        "div",
+        { className: "refresh-container" },
+        _react2.default.createElement("input", { className: "check-box", type: "checkbox", id: "search-check", onChange: function onChange(e) {
+            _this2.handleCheckboxChange(e);
+          } }),
+        _react2.default.createElement(
+          "label",
+          { className: "auto-refresh", "for": "search-check" },
+          "Update bars automatically"
+        )
+      );
+      if (this.props.hasMoved) {
+        render = _react2.default.createElement(
+          "button",
+          { className: "refresh-button",
+            onClick: function onClick() {
+              return _this2.props.getBarDistances(_this2.props.map);
+            }
+          },
+          "Redo Search in this Area"
+        );
+      }
+      return _react2.default.createElement(
+        "div",
+        { className: "filter-container" },
+        render
+      );
+    }
+  }]);
+
+  return Filters;
+}(_react2.default.Component);
+
+exports.default = Filters;
 
 /***/ })
 /******/ ]);

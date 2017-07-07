@@ -35,12 +35,7 @@ export default class SearchBar extends React.Component {
     let input = e.target.value
     this.searchBars(this.props.bars, input)
   }
-  handleCheckboxChange(e) {
-    if (e.target.checked)
-      this.props.changeBoxCheckState(true);
-    else
-      this.props.changeBoxCheckState(false);
-  }
+
 
   showMatches(matches) {
     let matchDisplay;
@@ -77,27 +72,15 @@ export default class SearchBar extends React.Component {
   }
 
   render() {
-    let searchStyle = {visibility: 'hidden'};
-    let boxStyle = {visibility: 'visible'};
-    if (this.props.hasMoved) {
-      searchStyle = {visibility: 'visible'};
-      boxStyle = {visibility: 'hidden'};
-    }
     return (
       <div className="search-container" tabIndex="1" onBlur={() => this.focusOut()} onFocus={() => this.focus()}>
         <input className="search-box" type="text"
           onChange={(e) => this.handleTextChange(e)}
         />
         <div className="search-button"><img className="search-image" src="./images/DWD_Icon_Search-25.svg" /></div>
-        <button className="refresh-button"
-          onClick={() => this.props.getBarDistances(this.props.map)}
-          style={searchStyle}>
-            Redo Search in this Area
-        </button>
-          <input className="check-box" style={boxStyle} type='checkbox' id='search-check' onChange={(e) => {this.handleCheckboxChange(e)}}/>
-          <label className="refresh-button" style={boxStyle} for='search-check'>Update bars automatically</label>
         {this.showMatches(this.state.matches)}
       </div>
     );
   }
 }
+
