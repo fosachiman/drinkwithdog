@@ -11885,8 +11885,8 @@ var SearchBar = function (_React$Component) {
 
       var matchDisplay = void 0;
       if (matches) {
-        matchDisplay = matches.map(function (match) {
-          return _react2.default.createElement(_SearchResult2.default, {
+        matchDisplay = matches.map(function (match, index) {
+          if (index < 7) return _react2.default.createElement(_SearchResult2.default, {
             name: match.name,
             bar: match,
             singleBarView: _this2.props.singleBarView,

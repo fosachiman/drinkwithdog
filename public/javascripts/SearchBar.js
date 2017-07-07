@@ -40,7 +40,8 @@ export default class SearchBar extends React.Component {
   showMatches(matches) {
     let matchDisplay;
     if (matches) {
-      matchDisplay = matches.map((match) => {
+      matchDisplay = matches.map((match, index) => {
+        if (index < 7)
         return (
           <SearchResult
             name={match.name}
