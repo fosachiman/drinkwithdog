@@ -11686,7 +11686,7 @@ var Map = function (_React$Component) {
           getBarDistances: this.getBarDistances,
           changeBoxCheckState: this.changeBoxCheckState,
           hasMoved: this.state.hasMoved
-        }, _defineProperty(_React$createElement, 'getBarDistances', this.getBarDistances), _defineProperty(_React$createElement, 'map', this.props.map), _React$createElement)),
+        }, _defineProperty(_React$createElement, 'getBarDistances', this.getBarDistances), _defineProperty(_React$createElement, 'map', this.props.map), _defineProperty(_React$createElement, 'multiBarView', this.props.multiBarView), _React$createElement)),
         _react2.default.createElement(_Barmenu2.default, {
           map: this.props.map,
           bars: this.state.closeBarsAndMarkers,
@@ -25088,6 +25088,12 @@ var Filters = function (_React$Component) {
       if (e.target.checked) this.props.changeBoxCheckState(true);else this.props.changeBoxCheckState(false);
     }
   }, {
+    key: "handleRefreshButtonClick",
+    value: function handleRefreshButtonClick() {
+      this.props.multiBarView();
+      this.props.getBarDistances(this.props.map);
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this2 = this;
@@ -25109,7 +25115,7 @@ var Filters = function (_React$Component) {
           "button",
           { className: "refresh-button",
             onClick: function onClick() {
-              return _this2.props.getBarDistances(_this2.props.map);
+              return _this2.handleRefreshButtonClick();
             }
           },
           "Redo Search in this Area"

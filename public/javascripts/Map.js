@@ -129,6 +129,7 @@ export default class Map extends React.Component {
             hasMoved={this.state.hasMoved}
             getBarDistances={this.getBarDistances}
             map={this.props.map}
+            multiBarView={this.props.multiBarView}
           />
           <BarMenu
             map={this.props.map}

@@ -13,6 +13,11 @@ export default class Filters extends React.Component {
       this.props.changeBoxCheckState(false);
   }
 
+  handleRefreshButtonClick() {
+    this.props.multiBarView();
+    this.props.getBarDistances(this.props.map)
+  }
+
   render() {
     let render = (
       <div className="refresh-container">
@@ -23,7 +28,7 @@ export default class Filters extends React.Component {
     if (this.props.hasMoved) {
       render = (
         <button className="refresh-button"
-          onClick={() => this.props.getBarDistances(this.props.map)}
+          onClick={() => this.handleRefreshButtonClick()}
         >Redo Search in this Area
         </button>
       )
