@@ -105,7 +105,7 @@ input:focus {
   font-family: LeagueSpartan;
   margin: 0;
   padding: 5px 10px;
-  border-bottom: 3px solid #ef7048;
+  border-bottom: 3px solid #dd5119;
   max-width: 275px; }
 
 .search-results:hover {
@@ -125,7 +125,7 @@ input:focus {
   outline: none; }
 
 .bar-listing {
-  border-bottom: 3px solid #ef7048;
+  border-bottom: 3px solid #dd5119;
   padding: 8px 2px;
   cursor: pointer;
   font-family: LeagueSpartan;
@@ -164,9 +164,15 @@ input:focus {
 .mapboxgl-popup-anchor-top .mapboxgl-popup-tip {
   border-bottom-color: #fdb02e; }
 
+.mapboxgl-popup-anchor-left .mapboxgl-popup-tip {
+  border-right-color: #fdb02e; }
+
+.mapboxgl-popup-anchor-right .mapboxgl-popup-tip {
+  border-left-color: #fdb02e; }
+
 .single-bar-header {
   padding: 14px 2px;
-  background-color: #ef7048;
+  background-color: #dd5119;
   text-align: center;
   font-family: LeagueSpartan; }
 

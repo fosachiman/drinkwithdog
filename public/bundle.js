@@ -11295,7 +11295,7 @@ var BarListing = function (_React$Component) {
   }, {
     key: 'addStyle',
     value: function addStyle() {
-      this.setState({ style: { backgroundColor: "rgb(253,176,46)" } });
+      this.setState({ style: { backgroundColor: "#fdb02e" } });
     }
   }, {
     key: 'removeStyle',

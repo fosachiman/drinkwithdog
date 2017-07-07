@@ -34,7 +34,7 @@ export default class BarListing extends React.Component {
   }
 
   addStyle() {
-    this.setState({ style: { backgroundColor: "rgb(253,176,46)" } })
+    this.setState({ style: { backgroundColor: "#fdb02e" } })
   }
 
   removeStyle() {
