@@ -33,7 +33,7 @@ export default class SingleBarInfo extends React.Component {
       website = (
         <div className="single-bar-linecont">
           <img className="single-bar-icon" src="./images/DWD_Icon_Link.svg"/>
-          <div className="single-bar-line">{this.props.bar.website}</div>
+          <div className="single-bar-line"><a target="_blank" href={"http://" + this.props.bar.website}>{this.props.bar.website}</a></div>
         </div>
       )
     let moreInfo;

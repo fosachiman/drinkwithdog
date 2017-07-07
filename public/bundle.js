@@ -12099,7 +12099,11 @@ var SingleBarInfo = function (_React$Component) {
         _react2.default.createElement(
           'div',
           { className: 'single-bar-line' },
-          this.props.bar.website
+          _react2.default.createElement(
+            'a',
+            { target: '_blank', href: "http://" + this.props.bar.website },
+            this.props.bar.website
+          )
         )
       );
       var moreInfo = void 0;
