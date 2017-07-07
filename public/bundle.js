@@ -12091,6 +12091,32 @@ var SingleBarInfo = function (_React$Component) {
     value: function infoState() {
       var _this2 = this;
 
+      var website = void 0;
+      if (this.props.bar.website) website = _react2.default.createElement(
+        'div',
+        { className: 'single-bar-linecont' },
+        _react2.default.createElement('img', { className: 'single-bar-icon', src: './images/DWD_Icon_Link.svg' }),
+        _react2.default.createElement(
+          'div',
+          { className: 'single-bar-line' },
+          this.props.bar.website
+        )
+      );
+      var moreInfo = void 0;
+      if (this.props.bar.copy) moreInfo = _react2.default.createElement(
+        'div',
+        { className: 'arrow-area' },
+        _react2.default.createElement(
+          'p',
+          { onClick: function onClick() {
+              return _this2.toggleState();
+            }, className: 'arrow-label' },
+          'More Info'
+        ),
+        _react2.default.createElement('img', { className: 'down-arrow', onClick: function onClick() {
+            return _this2.toggleState();
+          }, src: './images/DWD_Icon_Arrow.svg' })
+      );
       return _react2.default.createElement(
         'div',
         null,
@@ -12124,30 +12150,8 @@ var SingleBarInfo = function (_React$Component) {
             this.hoursFormat(this.props.bar.hours)
           )
         ),
-        _react2.default.createElement(
-          'div',
-          { className: 'single-bar-linecont' },
-          _react2.default.createElement('img', { className: 'single-bar-icon', src: './images/DWD_Icon_Link.svg' }),
-          _react2.default.createElement(
-            'div',
-            { className: 'single-bar-line' },
-            this.props.bar.website
-          )
-        ),
-        _react2.default.createElement(
-          'div',
-          { className: 'arrow-area' },
-          _react2.default.createElement(
-            'p',
-            { onClick: function onClick() {
-                return _this2.toggleState();
-              }, className: 'arrow-label' },
-            'More Info'
-          ),
-          _react2.default.createElement('img', { className: 'down-arrow', onClick: function onClick() {
-              return _this2.toggleState();
-            }, src: './images/DWD_Icon_Arrow.svg' })
-        )
+        website,
+        moreInfo
       );
     }
   }, {

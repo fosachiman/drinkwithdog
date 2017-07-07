@@ -28,6 +28,22 @@ export default class SingleBarInfo extends React.Component {
   }
 
   infoState() {
+    let website;
+    if (this.props.bar.website)
+      website = (
+        <div className="single-bar-linecont">
+          <img className="single-bar-icon" src="./images/DWD_Icon_Link.svg"/>
+          <div className="single-bar-line">{this.props.bar.website}</div>
+        </div>
+      )
+    let moreInfo;
+    if (this.props.bar.copy)
+      moreInfo = (
+        <div className="arrow-area">
+          <p onClick={() => this.toggleState()} className="arrow-label">More Info</p>
+          <img className="down-arrow" onClick={() => this.toggleState()} src="./images/DWD_Icon_Arrow.svg" />
+        </div>
+      )
     return (
       <div>
         <div className="single-bar-linecont">
@@ -42,14 +58,8 @@ export default class SingleBarInfo extends React.Component {
           <img className="single-bar-icon" src="./images/DWD_Icon_Clock.svg"/>
           <div className="single-bar-line">{this.hoursFormat(this.props.bar.hours)}</div>
         </div>
-        <div className="single-bar-linecont">
-          <img className="single-bar-icon" src="./images/DWD_Icon_Link.svg"/>
-          <div className="single-bar-line">{this.props.bar.website}</div>
-        </div>
-        <div className="arrow-area">
-          <p onClick={() => this.toggleState()} className="arrow-label">More Info</p>
-          <img className="down-arrow" onClick={() => this.toggleState()} src="./images/DWD_Icon_Arrow.svg" />
-        </div>
+        {website}
+        {moreInfo}
       </div>
     )
   }
