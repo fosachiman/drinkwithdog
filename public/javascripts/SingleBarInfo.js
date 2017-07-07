@@ -22,6 +22,11 @@ export default class SingleBarInfo extends React.Component {
       this.setState({ view: 'copy' })
   }
 
+  hoursFormat(barHours) {
+    let formatted = barHours.replace(/,/g, '\r\n');
+    return formatted;
+  }
+
   infoState() {
     return (
       <div>
@@ -35,7 +40,7 @@ export default class SingleBarInfo extends React.Component {
         </div>
         <div className="single-bar-linecont">
           <img className="single-bar-icon" src="./images/DWD_Icon_Clock.svg"/>
-          <div className="single-bar-line">{this.props.bar.hours}</div>
+          <div className="single-bar-line">{this.hoursFormat(this.props.bar.hours)}</div>
         </div>
         <div className="single-bar-linecont">
           <img className="single-bar-icon" src="./images/DWD_Icon_Link.svg"/>

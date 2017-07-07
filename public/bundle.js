@@ -12081,6 +12081,12 @@ var SingleBarInfo = function (_React$Component) {
       if (this.state.view === 'copy') this.setState({ view: 'info' });else this.setState({ view: 'copy' });
     }
   }, {
+    key: 'hoursFormat',
+    value: function hoursFormat(barHours) {
+      var formatted = barHours.replace(/,/g, '\r\n');
+      return formatted;
+    }
+  }, {
     key: 'infoState',
     value: function infoState() {
       var _this2 = this;
@@ -12115,7 +12121,7 @@ var SingleBarInfo = function (_React$Component) {
           _react2.default.createElement(
             'div',
             { className: 'single-bar-line' },
-            this.props.bar.hours
+            this.hoursFormat(this.props.bar.hours)
           )
         ),
         _react2.default.createElement(

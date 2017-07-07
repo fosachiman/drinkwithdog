@@ -269,6 +269,7 @@ input:focus {
   vertical-align: top; }
 
 .single-bar-line {
+  white-space: pre-line;
   display: inline-block;
   margin-left: 20px;
   max-width: 80%;
