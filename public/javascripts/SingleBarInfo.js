@@ -25,26 +25,26 @@ export default class SingleBarInfo extends React.Component {
   infoState() {
     return (
       <div>
-      <div className="single-bar-linecont">
-        <img className="single-bar-icon" src="./images/DWD_Icon_Paw.svg"/>
-        <div className="single-bar-line">{this.props.bar.dogPolicy}</div>
-      </div>
-      <div className="single-bar-linecont">
-        <img className="single-bar-icon" src="./images/DWD_Icon_Location.svg"/>
-        <div className="single-bar-line">{this.props.bar.address}</div>
-      </div>
-      <div className="single-bar-linecont">
-        <img className="single-bar-icon" src="./images/DWD_Icon_Clock.svg"/>
-        <div className="single-bar-line">{this.props.bar.hours}</div>
-      </div>
-      <div className="single-bar-linecont">
-        <img className="single-bar-icon" src="./images/DWD_Icon_Link.svg"/>
-        <div className="single-bar-line">{this.props.bar.website}</div>
-      </div>
-      <div className="arrow-area">
-        <p onClick={() => this.toggleState()} className="arrow-label">More Info</p>
-        <img className="down-arrow" onClick={() => this.toggleState()} src="./images/DWD_Icon_Arrow.svg" />
-      </div>
+        <div className="single-bar-linecont">
+          <img className="single-bar-icon" src="./images/DWD_Icon_Paw.svg"/>
+          <div className="single-bar-line">{this.props.bar.dogPolicy}</div>
+        </div>
+        <div className="single-bar-linecont">
+          <img className="single-bar-icon" src="./images/DWD_Icon_Location.svg"/>
+          <div className="single-bar-line">{this.props.bar.address}</div>
+        </div>
+        <div className="single-bar-linecont">
+          <img className="single-bar-icon" src="./images/DWD_Icon_Clock.svg"/>
+          <div className="single-bar-line">{this.props.bar.hours}</div>
+        </div>
+        <div className="single-bar-linecont">
+          <img className="single-bar-icon" src="./images/DWD_Icon_Link.svg"/>
+          <div className="single-bar-line">{this.props.bar.website}</div>
+        </div>
+        <div className="arrow-area">
+          <p onClick={() => this.toggleState()} className="arrow-label">More Info</p>
+          <img className="down-arrow" onClick={() => this.toggleState()} src="./images/DWD_Icon_Arrow.svg" />
+        </div>
       </div>
     )
   }

@@ -45,9 +45,13 @@ export default class BarListing extends React.Component {
     return (
       <div className="bar-listing" style={this.state.style} onClick={() => {this.handleBarClick(this.props.bar, this.props.marker)}}>
         <div className="bar-name">{this.props.bar.name}</div>
-        <div className="bar-type">{this.props.bar.type} - </div>
-        <div className="dog-policy">{this.props.bar.dogPolicy}</div>
+        <div className="bar-type">{this.props.bar.type}</div>
+
       </div>
     );
   }
 }
+
+
+
+// <div className="dog-policy">{this.props.bar.dogPolicy}</div>

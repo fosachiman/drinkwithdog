@@ -12,11 +12,13 @@ export default class ExpandedBar extends React.Component {
       <div>
         <div className="single-bar-header">
           <div className="bar-name-single">{this.props.bar.name}</div>
-          <div className="bar-type">{this.props.bar.type} - </div>
-          <div className="dog-policy">{this.props.bar.dogPolicy}</div>
+          <div className="bar-type">{this.props.bar.type}</div>
         </div>
         <SingleBarInfo bar={this.props.bar} />
       </div>
     );
   }
 }
+
+
+          // <div className="dog-policy">{this.props.bar.dogPolicy}</div>

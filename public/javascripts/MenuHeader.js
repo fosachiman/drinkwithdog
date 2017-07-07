@@ -21,7 +21,7 @@ export default class MenuHeader extends React.Component {
           <img className="back-arrow" src="./images/DWD_Icon_Arrow.svg" onClick={() => this.props.multiBarView()} />
         </div>
         <div className="menu-cont">
-        <h3 className="menu-title">Return to List View</h3>
+          <h3 className="menu-title">Return to List View</h3>
         </div>
       </div>
     )

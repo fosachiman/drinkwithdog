@@ -11320,13 +11320,7 @@ var BarListing = function (_React$Component) {
         _react2.default.createElement(
           'div',
           { className: 'bar-type' },
-          this.props.bar.type,
-          ' - '
-        ),
-        _react2.default.createElement(
-          'div',
-          { className: 'dog-policy' },
-          this.props.bar.dogPolicy
+          this.props.bar.type
         )
       );
     }
@@ -11334,6 +11328,9 @@ var BarListing = function (_React$Component) {
 
   return BarListing;
 }(_react2.default.Component);
+
+// <div className="dog-policy">{this.props.bar.dogPolicy}</div>
+
 
 exports.default = BarListing;
 
@@ -11494,13 +11491,7 @@ var ExpandedBar = function (_React$Component) {
           _react2.default.createElement(
             'div',
             { className: 'bar-type' },
-            this.props.bar.type,
-            ' - '
-          ),
-          _react2.default.createElement(
-            'div',
-            { className: 'dog-policy' },
-            this.props.bar.dogPolicy
+            this.props.bar.type
           )
         ),
         _react2.default.createElement(_SingleBarInfo2.default, { bar: this.props.bar })
@@ -11510,6 +11501,9 @@ var ExpandedBar = function (_React$Component) {
 
   return ExpandedBar;
 }(_react2.default.Component);
+
+// <div className="dog-policy">{this.props.bar.dogPolicy}</div>
+
 
 exports.default = ExpandedBar;
 
@@ -11954,12 +11948,12 @@ var SearchBar = function (_React$Component) {
             style: searchStyle },
           'Redo Search in this Area'
         ),
-        _react2.default.createElement('input', { style: boxStyle, type: 'checkbox', id: 'search-check', onChange: function onChange(e) {
+        _react2.default.createElement('input', { className: 'check-box', style: boxStyle, type: 'checkbox', id: 'search-check', onChange: function onChange(e) {
             _this3.handleCheckboxChange(e);
           } }),
         _react2.default.createElement(
           'label',
-          { style: boxStyle, 'for': 'search-check' },
+          { className: 'refresh-button', style: boxStyle, 'for': 'search-check' },
           'Update bars automatically'
         ),
         this.showMatches(this.state.matches)

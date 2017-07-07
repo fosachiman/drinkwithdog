@@ -94,8 +94,8 @@ export default class SearchBar extends React.Component {
           style={searchStyle}>
             Redo Search in this Area
         </button>
-          <input style={boxStyle} type='checkbox' id='search-check' onChange={(e) => {this.handleCheckboxChange(e)}}/>
-          <label style={boxStyle} for='search-check'>Update bars automatically</label>
+          <input className="check-box" style={boxStyle} type='checkbox' id='search-check' onChange={(e) => {this.handleCheckboxChange(e)}}/>
+          <label className="refresh-button" style={boxStyle} for='search-check'>Update bars automatically</label>
         {this.showMatches(this.state.matches)}
       </div>
     );
